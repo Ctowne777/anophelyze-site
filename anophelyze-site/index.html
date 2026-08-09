@@ -54,15 +54,6 @@
     font-size:15px;color:var(--gb0);margin:0 0 14px;line-height:1.4;
   }
 
-  /* ---- top marquee ---- */
-  .marquee{
-    background:var(--gb0);color:var(--gb3);
-    font-family:'Press Start 2P';font-size:10px;letter-spacing:1px;
-    padding:8px 0;white-space:nowrap;overflow:hidden;
-  }
-  .marquee span{display:inline-block;padding-left:100%;animation:scroll 18s linear infinite;}
-  @keyframes scroll{to{transform:translateX(-100%);}}
-
   /* ---- hero ---- */
   .hero{text-align:center;padding:34px 0 8px;}
   .hero h1{
@@ -131,8 +122,6 @@
 </head>
 <body>
 
-<div class="marquee"><span>&#129439; ANOPHELYZE &#8226; PATENT-PENDING VECTOR CONTROL &#8226; SAFE FOR HUMANS &#8226; ENVIRONMENTALLY NEUTRAL &#8226; MOSQUITOES ARE CREPUSCULAR &mdash; SO ARE WE &#8226; MORE COMING SOON &#8226; </span></div>
-
 <div class="wrap">
 
   <!-- HERO -->
@@ -173,21 +162,6 @@
     mitigation.</p>
   </div>
 
-  <!-- TEAM -->
-  <div class="box">
-    <h2>&#9658; THE TEAM</h2>
-    <div class="team">
-      <div class="card">
-        <span class="role">OWNER / PRESIDENT</span>
-        <span class="name">Camden Towne</span>
-      </div>
-      <div class="card">
-        <span class="role">EMPLOYEE</span>
-        <span class="name">Morgan Towne</span>
-      </div>
-    </div>
-  </div>
-
   <!-- FUN FACT -->
   <div class="box">
     <span class="badge">MOSQUITO FACT &#8226; NEW EVERY 3 DAYS</span>
@@ -196,13 +170,6 @@
     <div class="spriterow">
       <svg class="sprite float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
     </div>
-  </div>
-
-  <!-- COUNTER -->
-  <div class="box" style="text-align:center">
-    <h2>&#9658; PEOPLE BUZZING IN</h2>
-    <div class="stat" id="buzz">&#129439; &hellip;</div>
-    <p style="margin:10px 0 0;font-size:18px;color:var(--gb1)">Thanks for stopping by the swarm.</p>
   </div>
 
   <footer>
@@ -223,7 +190,6 @@
 <div id="chat" role="dialog" aria-label="Anophelyze chatbot">
   <div class="head"><span>SKEETER BOT</span><button id="chatClose" aria-label="Close">&times;</button></div>
   <div id="log"></div>
-  <div class="quick" id="quick"></div>
   <form id="chatForm" autocomplete="off">
     <input id="chatInput" placeholder="Type a question..." aria-label="Ask a question" />
     <button class="send" type="submit">SEND</button>
@@ -307,16 +273,16 @@ const FACTS = [
 
 /* ---------- Buzzing-in counter ---------- */
 (function(){
-  const el = document.getElementById('buzz');
   fetch('/api/buzz', {method:'POST'})
     .then(r=>r.json())
-    .then(d=>{ el.innerHTML = '🦟 ' + Number(d.count).toLocaleString() + ' buzzing in'; })
-    .catch(()=>{ el.innerHTML = '🦟 the swarm is gathering…'; });
+    .then(d=>{ window.__buzzCount = Number(d.count); })
+    .catch(()=>{ window.__buzzCount = null; });
 })();
 
 /* ---------- Chatbot (self-contained FAQ + email fallback) ---------- */
 const EMAIL = "camden.m.towne@gmail.com";
 const KB = [
+  {k:["visitor","visitors","count","how many","people","buzzing","buzzed","traffic","views","stats"], count:true, a:""},
   {k:["what","do","product","device","how","work","anophelyze is","about"],
    a:"Anophelyze is developing a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in an environmentally neutral way that's safe for humans — no toxic chemicals and no lasers."},
   {k:["safe","human","danger","harm","eye","laser","fire","burn","skin"],
@@ -340,8 +306,6 @@ const KB = [
   {k:["contact","email","reach","talk"],
    a:"You can reach Camden at "+EMAIL+"."}
 ];
-const QUICK = ["What is Anophelyze?","Is it safe for humans?","Why the name?","Investment opportunities","Who's on the team?"];
-
 const chat=document.getElementById('chat'), log=document.getElementById('log');
 document.getElementById('chatBtn').onclick=()=>{chat.classList.add('open');if(!log.dataset.init){greet();log.dataset.init=1;}document.getElementById('chatInput').focus();};
 document.getElementById('chatClose').onclick=()=>chat.classList.remove('open');
@@ -349,8 +313,6 @@ document.getElementById('chatClose').onclick=()=>chat.classList.remove('open');
 function add(text,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
 function greet(){
   add("Bzzt! I'm Skeeter Bot 🦟 Ask me about Anophelyze — what it is, whether it's safe, the team, and more.","bot");
-  const q=document.getElementById('quick');
-  QUICK.forEach(txt=>{const b=document.createElement('button');b.textContent=txt;b.onclick=()=>{answer(txt);};q.appendChild(b);});
 }
 function answer(q){
   add(q,'me');
@@ -358,7 +320,7 @@ function answer(q){
   let best=null,score=0;
   KB.forEach(item=>{let s=0;item.k.forEach(kw=>{if(low.includes(kw))s++;});if(s>score){score=s;best=item;}});
   setTimeout(()=>{
-    if(best&&score>0){add(best.a,'bot');}
+    if(best&&score>0){ if(best.count){ const c=window.__buzzCount; add(c!=null ? ('\uD83E\uDD9F '+c.toLocaleString()+' people have buzzed in so far.') : 'The swarm is still gathering \u2014 I couldn\u2019t reach the counter just now.','bot'); } else { add(best.a,'bot'); } }
     else{add("Hmm, I don't have that one yet. For anything I can't answer, email Camden at <a href='mailto:"+EMAIL+"?subject=Question%20from%20anophelyze.com'>"+EMAIL+"</a> and he'll get back to you.","bot");}
   },250);
 }
