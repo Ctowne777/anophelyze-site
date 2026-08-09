@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ANOPHELYZE</title>
+<meta name="description" content="Anophelyze — a patent-pending device that detects and incapacitates mosquitoes in an environmentally neutral way that's safe for humans." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%9F%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Game Boy DMG palette + Pokemon Red accent */
+    --gb0:#0f380f;  /* darkest */
+    --gb1:#306230;  /* dark */
+    --gb2:#8bac0f;  /* light */
+    --gb3:#9bbc0f;  /* lightest */
+    --red:#c1121f;
+    --red2:#e63946;
+    --paper:#e8f0c8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--gb3);
+    color:var(--gb0);
+    font-family:'VT323', monospace;
+    font-size:22px;
+    line-height:1.35;
+    image-rendering:pixelated;
+    -webkit-font-smoothing:none;
+    overflow-x:hidden;
+  }
+  /* faint scanline overlay for CRT feel */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+    background:repeating-linear-gradient(0deg, rgba(15,56,15,.06) 0 2px, transparent 2px 4px);
+  }
+  h1,h2,h3,.press{font-family:'Press Start 2P', monospace;}
+  a{color:var(--red);}
+  .wrap{max-width:880px;margin:0 auto;padding:20px 16px 80px;}
+
+  /* Pixel dialogue box (Pokemon textbox style) */
+  .box{
+    background:var(--paper);
+    border:4px solid var(--gb0);
+    box-shadow:0 0 0 4px var(--gb2), 6px 6px 0 4px var(--gb0);
+    padding:18px 20px;
+    margin:22px 0;
+    position:relative;
+  }
+  .box h2{
+    font-size:15px;color:var(--gb0);margin:0 0 14px;line-height:1.4;
+  }
+
+  /* ---- top marquee ---- */
+  .marquee{
+    background:var(--gb0);color:var(--gb3);
+    font-family:'Press Start 2P';font-size:10px;letter-spacing:1px;
+    padding:8px 0;white-space:nowrap;overflow:hidden;
+  }
+  .marquee span{display:inline-block;padding-left:100%;animation:scroll 18s linear infinite;}
+  @keyframes scroll{to{transform:translateX(-100%);}}
+
+  /* ---- hero ---- */
+  .hero{text-align:center;padding:34px 0 8px;}
+  .hero h1{
+    font-size:clamp(28px,9vw,60px);color:var(--gb0);
+    text-shadow:4px 4px 0 var(--gb2), 8px 8px 0 var(--red);
+    margin:0;letter-spacing:2px;
+  }
+  .hero .tag{font-size:26px;margin-top:16px;color:var(--gb1);}
+  .press-start{
+    font-family:'Press Start 2P';font-size:12px;margin-top:26px;color:var(--red);
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---- sprites ---- */
+  .sprite{width:64px;height:64px;image-rendering:pixelated;vertical-align:middle;}
+  .sprite.sm{width:44px;height:44px;}
+  .sprite.lg{width:110px;height:110px;}
+  .float{animation:bob 2.2s ease-in-out infinite;}
+  .float.b{animation-delay:.5s;}
+  .float.c{animation-delay:1s;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-10px) rotate(3deg);}}
+  .spriterow{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:8px 0 6px;}
+
+  .stat{font-family:'Press Start 2P';font-size:14px;color:var(--red);}
+  .team{display:flex;gap:18px;flex-wrap:wrap;}
+  .team .card{flex:1 1 220px;border:3px dashed var(--gb1);padding:12px 14px;background:#f3f7de;}
+  .team .role{font-family:'Press Start 2P';font-size:9px;color:var(--gb1);display:block;margin-bottom:8px;}
+  .team .name{font-size:26px;}
+
+  .funfact{min-height:40px;}
+  .badge{display:inline-block;background:var(--red);color:#fff;font-family:'Press Start 2P';
+    font-size:8px;padding:5px 8px;margin-bottom:10px;}
+
+  footer{text-align:center;font-size:18px;color:var(--gb1);margin-top:30px;line-height:1.6;}
+  footer .press{font-size:9px;}
+
+  /* ---- chatbot ---- */
+  #chatBtn{
+    position:fixed;right:16px;bottom:16px;z-index:10000;
+    font-family:'Press Start 2P';font-size:10px;
+    background:var(--red);color:#fff;border:4px solid var(--gb0);
+    box-shadow:4px 4px 0 var(--gb0);padding:12px 14px;cursor:pointer;
+  }
+  #chatBtn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--gb0);}
+  #chat{
+    position:fixed;right:16px;bottom:70px;z-index:10000;width:min(360px,92vw);
+    background:var(--paper);border:4px solid var(--gb0);
+    box-shadow:0 0 0 4px var(--gb2),6px 6px 0 4px var(--gb0);
+    display:none;flex-direction:column;max-height:70vh;
+  }
+  #chat.open{display:flex;}
+  #chat .head{background:var(--gb0);color:var(--gb3);font-family:'Press Start 2P';
+    font-size:10px;padding:10px;display:flex;justify-content:space-between;align-items:center;}
+  #chat .head button{background:none;border:none;color:var(--gb3);font-family:'Press Start 2P';cursor:pointer;font-size:12px;}
+  #log{padding:12px;overflow-y:auto;flex:1;font-size:19px;}
+  .msg{margin:8px 0;padding:8px 10px;border:2px solid var(--gb1);}
+  .msg.bot{background:#f3f7de;}
+  .msg.me{background:#dfeeae;text-align:right;}
+  #chat form{display:flex;border-top:4px solid var(--gb0);}
+  #chat input{flex:1;border:none;padding:12px;font-family:'VT323';font-size:20px;background:#fff;}
+  #chat button.send{border:none;background:var(--red);color:#fff;font-family:'Press Start 2P';font-size:9px;padding:0 14px;cursor:pointer;}
+  .quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px;}
+  .quick button{font-family:'VT323';font-size:16px;background:#fff;border:2px solid var(--gb1);cursor:pointer;padding:4px 8px;}
+</style>
+</head>
+<body>
+
+<div class="marquee"><span>&#129439; ANOPHELYZE &#8226; PATENT-PENDING VECTOR CONTROL &#8226; SAFE FOR HUMANS &#8226; ENVIRONMENTALLY NEUTRAL &#8226; MOSQUITOES ARE CREPUSCULAR &mdash; SO ARE WE &#8226; MORE COMING SOON &#8226; </span></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="spriterow">
+      <svg class="sprite lg float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+    </div>
+    <h1>ANOPHELYZE</h1>
+    <div class="tag">Eliminating mosquitoes the environmentally neutral way.</div>
+    <div class="press-start">&#9658; MORE COMING SOON</div>
+  </section>
+
+  <!-- MISSION -->
+  <div class="box">
+    <h2>&#9658; WHAT IS ANOPHELYZE?</h2>
+    <p>Anophelyze is building a <strong>patent-pending device</strong> that detects and
+    incapacitates mosquitoes &mdash; and other disease-carrying vectors &mdash; in a way
+    that is <strong>environmentally conscious and safe for humans</strong>.</p>
+    <p>No toxic chemicals. No lasers. Just a smarter approach to one of the world's
+    deadliest animals. Mosquitoes are <em>crepuscular</em>, most active at dawn and dusk &mdash;
+    that's exactly when our device is on watch.</p>
+    <div class="spriterow">
+      <svg class="sprite sm float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+      <svg class="sprite sm float b" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+      <svg class="sprite sm float c" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="box">
+    <h2>&#9658; WHY WE EXIST</h2>
+    <p>Mosquito-borne diseases &mdash; malaria, dengue, yellow fever, Zika, and more &mdash;
+    cause preventable death and life-disrupting illness across much of the world, hitting
+    young children hardest. Historic control efforts leaned on toxic chemicals like DDT or
+    had limited success.</p>
+    <p>Anophelyze was <strong>founded in 2026</strong> by Camden Towne, after several years
+    of preparation, out of a need for environmentally neutral approaches to disease-vector
+    mitigation.</p>
+  </div>
+
+  <!-- TEAM -->
+  <div class="box">
+    <h2>&#9658; THE TEAM</h2>
+    <div class="team">
+      <div class="card">
+        <span class="role">OWNER / PRESIDENT</span>
+        <span class="name">Camden Towne</span>
+      </div>
+      <div class="card">
+        <span class="role">EMPLOYEE</span>
+        <span class="name">Morgan Towne</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUN FACT -->
+  <div class="box">
+    <span class="badge">MOSQUITO FACT &#8226; NEW EVERY 3 DAYS</span>
+    <h2 style="margin-bottom:8px">&#9658; DID YOU KNOW?</h2>
+    <p class="funfact" id="funfact">&hellip;</p>
+    <div class="spriterow">
+      <svg class="sprite float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+    </div>
+  </div>
+
+  <!-- COUNTER -->
+  <div class="box" style="text-align:center">
+    <h2>&#9658; PEOPLE BUZZING IN</h2>
+    <div class="stat" id="buzz">&#129439; &hellip;</div>
+    <p style="margin:10px 0 0;font-size:18px;color:var(--gb1)">Thanks for stopping by the swarm.</p>
+  </div>
+
+  <footer>
+    <div class="spriterow">
+      <svg class="sprite sm float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+      <svg class="sprite sm float b" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+    </div>
+    <p class="press">ANOPHELYZE LLC</p>
+    <p>Patent pending &middot; U.S. Provisional Application No. 63/849,611<br>
+    Questions? Ask the chatbot &#8600; or email
+    <a href="mailto:camden.m.towne@gmail.com">camden.m.towne@gmail.com</a></p>
+  </footer>
+
+</div>
+
+<!-- CHATBOT -->
+<button id="chatBtn">&#128172; ASK THE SKEETER</button>
+<div id="chat" role="dialog" aria-label="Anophelyze chatbot">
+  <div class="head"><span>SKEETER BOT</span><button id="chatClose" aria-label="Close">&times;</button></div>
+  <div id="log"></div>
+  <div class="quick" id="quick"></div>
+  <form id="chatForm" autocomplete="off">
+    <input id="chatInput" placeholder="Type a question..." aria-label="Ask a question" />
+    <button class="send" type="submit">SEND</button>
+  </form>
+</div>
+
+<!-- SVG SPRITE DEFINITIONS (original pixel mosquitoes) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- mosquito sprite 1 -->
+    <g id="skeeter">
+      <rect width="16" height="16" fill="none"/>
+      <!-- wings -->
+      <rect x="2" y="3" width="3" height="1" fill="#306230"/>
+      <rect x="1" y="4" width="4" height="1" fill="#306230"/>
+      <rect x="11" y="3" width="3" height="1" fill="#306230"/>
+      <rect x="11" y="4" width="4" height="1" fill="#306230"/>
+      <!-- head/eyes -->
+      <rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
+      <rect x="6" y="5" width="1" height="1" fill="#c1121f"/>
+      <rect x="9" y="5" width="1" height="1" fill="#c1121f"/>
+      <!-- proboscis -->
+      <rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
+      <!-- thorax/body -->
+      <rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
+      <rect x="7" y="9" width="2" height="4" fill="#306230"/>
+      <rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
+      <rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
+      <!-- legs -->
+      <rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
+      <rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
+      <rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
+      <rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
+      <rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
+      <rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
+    </g>
+    <!-- mosquito sprite 2 (red morph) -->
+    <g id="skeeter2">
+      <rect x="2" y="4" width="4" height="1" fill="#c1121f"/>
+      <rect x="1" y="5" width="5" height="1" fill="#e63946"/>
+      <rect x="10" y="4" width="4" height="1" fill="#c1121f"/>
+      <rect x="10" y="5" width="5" height="1" fill="#e63946"/>
+      <rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
+      <rect x="6" y="5" width="1" height="1" fill="#9bbc0f"/>
+      <rect x="9" y="5" width="1" height="1" fill="#9bbc0f"/>
+      <rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
+      <rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
+      <rect x="7" y="9" width="2" height="4" fill="#c1121f"/>
+      <rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
+      <rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
+      <rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
+      <rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
+      <rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
+      <rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
+      <rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
+      <rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
+    </g>
+  </defs>
+</svg>
+
+<script>
+/* ---------- Fun fact: rotates every 3 days, same for everyone ---------- */
+const FACTS = [
+  "Mosquitoes are the deadliest animal on Earth to humans, spreading diseases that kill hundreds of thousands of people every year.",
+  "Only female mosquitoes bite — they need the protein in blood to develop their eggs.",
+  "Mosquitoes are crepuscular: many species are most active at dawn and dusk, avoiding the midday heat.",
+  "A mosquito can detect the carbon dioxide you exhale from over 30 meters away.",
+  "Mosquitoes beat their wings 300–600 times per second — that's the source of their signature whine.",
+  "The genus name 'Anopheles' was coined in 1818 and carries the mosquito that transmits malaria.",
+  "Mosquitoes can ride the air current from an approaching swat to escape — which is exactly what smarter detection aims to beat.",
+  "Some mosquitoes overwinter as adults, hiding in sheltered spots until temperatures rise again.",
+  "Mosquito larvae live in water and breathe air through a snorkel-like tube called a siphon.",
+  "Warmer climates may expand the range of disease-carrying mosquitoes in the years ahead."
+];
+(function(){
+  const period = 3; // days
+  const dayIndex = Math.floor(Date.now() / 86400000);
+  const idx = Math.floor(dayIndex / period) % FACTS.length;
+  document.getElementById('funfact').textContent = FACTS[idx];
+})();
+
+/* ---------- Buzzing-in counter ---------- */
+(function(){
+  const el = document.getElementById('buzz');
+  fetch('/api/buzz', {method:'POST'})
+    .then(r=>r.json())
+    .then(d=>{ el.innerHTML = '🦟 ' + Number(d.count).toLocaleString() + ' buzzing in'; })
+    .catch(()=>{ el.innerHTML = '🦟 the swarm is gathering…'; });
+})();
+
+/* ---------- Chatbot (self-contained FAQ + email fallback) ---------- */
+const EMAIL = "camden.m.towne@gmail.com";
+const KB = [
+  {k:["what","do","product","device","how","work","anophelyze is","about"],
+   a:"Anophelyze is developing a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in an environmentally neutral way that's safe for humans — no toxic chemicals and no lasers."},
+  {k:["safe","human","danger","harm","eye","laser","fire","burn","skin"],
+   a:"Yes — it's designed to be safe for humans. Anophelyze's device uses eye-safe liquids and is designed to prevent fires, corneal and retinal damage, and burning of the skin."},
+  {k:["name","anophelyze mean","etymology","why called","origin of the name"],
+   a:"'Anopheles' comes from the Ancient Greek 'an' (not) and 'ophelos' (benefit) — literally 'useless.' German entomologist Johann Wilhelm Meigen coined it in 1818 for a group of mosquitoes. 'Lyze' / 'lyse' means to break. The name was coined by Camden's clever friend, Dr. Stephan Elliott."},
+  {k:["logo","design","artist","who made the logo"],
+   a:"The logo is by Elia Boe, an artist and friend out of Philadelphia."},
+  {k:["invest","investment","funding","money","opportunit"],
+   a:"For investment opportunities, please reach out to Camden at "+EMAIL+"."},
+  {k:["who","team","owner","president","founder","camden","morgan","runs"],
+   a:"Camden Towne is the owner and president. Morgan Towne is an employee. Anophelyze was founded in 2026."},
+  {k:["found","start","2026","history","when"],
+   a:"Anophelyze was founded in 2026 after several years of preparation by Camden Towne, who saw the need for environmentally neutral approaches to disease-vector mitigation."},
+  {k:["patent","provisional","ip","intellectual"],
+   a:"The device is patent pending (U.S. Provisional Application No. 63/849,611, filed July 23, 2025)."},
+  {k:["environment","eco","green","chemical","ddt","neutral"],
+   a:"Anophelyze takes an environmentally neutral approach — avoiding the toxic chemicals (like DDT) that historic vector-control efforts relied on."},
+  {k:["crepuscular"],
+   a:"Crepuscular means active at dawn and dusk — which is when many mosquito species are busiest, and when our device is on watch."},
+  {k:["contact","email","reach","talk"],
+   a:"You can reach Camden at "+EMAIL+"."}
+];
+const QUICK = ["What is Anophelyze?","Is it safe for humans?","Why the name?","Investment opportunities","Who's on the team?"];
+
+const chat=document.getElementById('chat'), log=document.getElementById('log');
+document.getElementById('chatBtn').onclick=()=>{chat.classList.add('open');if(!log.dataset.init){greet();log.dataset.init=1;}document.getElementById('chatInput').focus();};
+document.getElementById('chatClose').onclick=()=>chat.classList.remove('open');
+
+function add(text,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
+function greet(){
+  add("Bzzt! I'm Skeeter Bot 🦟 Ask me about Anophelyze — what it is, whether it's safe, the team, and more.","bot");
+  const q=document.getElementById('quick');
+  QUICK.forEach(txt=>{const b=document.createElement('button');b.textContent=txt;b.onclick=()=>{answer(txt);};q.appendChild(b);});
+}
+function answer(q){
+  add(q,'me');
+  const low=q.toLowerCase();
+  let best=null,score=0;
+  KB.forEach(item=>{let s=0;item.k.forEach(kw=>{if(low.includes(kw))s++;});if(s>score){score=s;best=item;}});
+  setTimeout(()=>{
+    if(best&&score>0){add(best.a,'bot');}
+    else{add("Hmm, I don't have that one yet. For anything I can't answer, email Camden at <a href='mailto:"+EMAIL+"?subject=Question%20from%20anophelyze.com'>"+EMAIL+"</a> and he'll get back to you.","bot");}
+  },250);
+}
+document.getElementById('chatForm').onsubmit=e=>{e.preventDefault();const i=document.getElementById('chatInput');const v=i.value.trim();if(!v)return;i.value='';answer(v);};
+</script>
+</body>
+</html>
