@@ -557,7 +557,16 @@ const FACTS = [
 const EMAIL = "camden.m.towne@gmail.com";
 const KB = [
   {k:["visitor","visitors","count","how many","people","buzzing","buzzed","traffic","views","stats"], count:true, a:""},
-  {k:["what","do","product","device","how","work","anophelyze is","about"],
+  // Availability and evasion sit above the general "what is it" entry: that one
+  // matches on words as common as "how" and "do", and would otherwise win ties.
+  {k:["where can i get","how can i get","how do i get","get one","buy","purchase","order","for sale","sell","available","availability","in stock","ship","pre-order","preorder","price","cost","how much","when can i"],
+   a:"Anophelyze is still in progress &mdash; the device is in development and isn't available to buy yet. If you'd like to hear more about where it stands and what the process looks like, contact Camden at "+EMAIL+"."},
+  {k:["evade","evasion","avoid","escape","dodge","outrun","fly away","get away","swat","swatting","air current","miss it","too fast","outsmart"],
+   a:"Mosquitoes are famously good at escaping a swat &mdash; they ride the air current the swat pushes ahead of it and get carried clear. Anophelyze's device works differently, so that trick doesn't help: mosquitoes cannot evade its action."},
+  // Keep these phrases specific. Single words like "what", "do", "how" and
+  // "about" made this entry outscore every specific topic below it, so
+  // "how do I contact you" and "what does crepuscular mean" both landed here.
+  {k:["what is anophelyze","what does it do","what do you do","product","device","how does it work","work","tell me about anophelyze"],
    a:"Anophelyze is developing a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in an environmentally neutral way that's safe for humans — no toxic chemicals and no lasers."},
   {k:["safe","human","danger","harm","eye","laser","fire","burn","skin"],
    a:"Yes — it's designed to be safe for humans. Anophelyze's device uses eye-safe liquids and is designed to prevent fires, corneal and retinal damage, and burning of the skin."},
