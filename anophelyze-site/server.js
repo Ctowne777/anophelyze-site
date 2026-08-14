@@ -32,7 +32,30 @@ const TYPES = {
   ".woff2": "font/woff2",
   ".json": "application/json; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
 };
+
+const NOT_FOUND = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 &mdash; ANOPHELYZE</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  body{background:#9bbc0f;color:#0f380f;font-family:'VT323',monospace;font-size:24px;
+    display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;text-align:center;}
+  .box{background:#e8f0c8;border:4px solid #0f380f;box-shadow:0 0 0 4px #8bac0f,6px 6px 0 4px #0f380f;
+    padding:26px 30px;max-width:460px;}
+  h1{font-family:'Press Start 2P',monospace;font-size:18px;margin:0 0 18px;}
+  a{color:#c1121f;}
+</style></head>
+<body><div class="box">
+  <h1>404</h1>
+  <p>This page flew off. Nothing here but empty air.</p>
+  <p><a href="/">&#9658; BACK TO ANOPHELYZE</a></p>
+</div></body></html>`;
 
 const server = http.createServer((req, res) => {
   const urlPath = decodeURIComponent(req.url.split("?")[0]);
@@ -62,16 +85,11 @@ const server = http.createServer((req, res) => {
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // Fallback to index.html so it behaves like a single-page site
-      fs.readFile(path.join(ROOT, "index.html"), (e2, home) => {
-        if (e2) {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          return res.end("Not found");
-        }
-        res.writeHead(200, { "Content-Type": TYPES[".html"] });
-        res.end(home);
-      });
-      return;
+      // Return a real 404. Previously this served index.html with a 200 for
+      // every unknown path, which made robots.txt/sitemap.xml return HTML and
+      // gave search engines an unlimited supply of duplicate "pages".
+      res.writeHead(404, { "Content-Type": TYPES[".html"] });
+      return res.end(NOT_FOUND);
     }
     const ext = path.extname(filePath).toLowerCase();
     res.writeHead(200, { "Content-Type": TYPES[ext] || "application/octet-stream" });
