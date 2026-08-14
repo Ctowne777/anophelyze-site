@@ -3,9 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ANOPHELYZE</title>
+<title>Anophelyze &mdash; Environmentally Neutral Mosquito Control</title>
 <meta name="description" content="Anophelyze — a patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
+<link rel="canonical" href="https://anophelyze.com/" />
+<meta name="robots" content="index, follow" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%9F%3C/text%3E%3C/svg%3E" />
+
+<!-- Social link previews -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Anophelyze" />
+<meta property="og:title" content="Anophelyze &mdash; Environmentally Neutral Mosquito Control" />
+<meta property="og:description" content="A patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
+<meta property="og:url" content="https://anophelyze.com/" />
+<meta property="og:image" content="https://anophelyze.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="ANOPHELYZE — pixel-art mosquito on a Game Boy green background" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://anophelyze.com/og-image.png" />
+<meta name="twitter:title" content="Anophelyze &mdash; Environmentally Neutral Mosquito Control" />
+<meta name="twitter:description" content="A patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
+
+<!-- Structured data: tells search engines what this organization is -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Anophelyze",
+  "legalName": "Anophelyze LLC",
+  "url": "https://anophelyze.com/",
+  "foundingDate": "2026",
+  "email": "camden.m.towne@gmail.com",
+  "description": "Anophelyze builds a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in a way that is safe for humans and environmentally conscious.",
+  "knowsAbout": ["mosquito control", "disease vector mitigation", "malaria prevention"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -78,6 +110,28 @@
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-10px) rotate(3deg);}}
   .spriterow{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:8px 0 6px;}
 
+  /* ---- zap sequence (Asteroids-style volley) ---- */
+  .zapzone{position:relative;}
+  .shot{
+    position:absolute;width:6px;height:6px;background:var(--red);
+    pointer-events:none;z-index:5;will-change:transform;
+  }
+  .zaptarget.hit{animation:fall 1.15s ease-in forwards;}
+  .zaptarget.gone{visibility:hidden;}
+  .zaptarget.back{animation:respawn .55s steps(4) both;}
+  @keyframes fall{
+    0%{transform:translateY(0) rotate(0deg);opacity:1;}
+    10%{transform:translate(4px,-7px) rotate(-30deg);opacity:1;}
+    100%{transform:translateY(96px) rotate(210deg);opacity:0;}
+  }
+  @keyframes respawn{
+    from{opacity:0;transform:translateY(-16px);}
+    to{opacity:1;transform:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .float,.press-start{animation:none;}
+  }
+
   .stat{font-family:'Press Start 2P';font-size:14px;color:var(--red);}
   .team{display:flex;gap:18px;flex-wrap:wrap;}
   .team .card{flex:1 1 220px;border:3px dashed var(--gb1);padding:12px 14px;background:#f3f7de;}
@@ -143,10 +197,10 @@
     <p>No toxic chemicals. No lasers&hellip;well, maybe some. Just a smarter approach to one of the world's
     deadliest animals. Mosquitoes are <em>crepuscular</em>, most active at dawn and dusk &mdash;
     that's exactly when our device is on watch.</p>
-    <div class="spriterow">
-      <svg class="sprite sm float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
-      <svg class="sprite sm float b" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
-      <svg class="sprite sm float c" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+    <div class="spriterow zapzone" id="zapzone">
+      <svg class="sprite sm float zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+      <svg class="sprite sm float b zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+      <svg class="sprite sm float c zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
     </div>
   </div>
 
@@ -269,6 +323,75 @@ const FACTS = [
   const dayIndex = Math.floor(Date.now() / 86400000);
   const idx = Math.floor(dayIndex / period) % FACTS.length;
   document.getElementById('funfact').textContent = FACTS[idx];
+})();
+
+/* ---------- Zap sequence ----------
+   Every 45s a volley of dots crosses the mission panel and knocks one of the
+   three mosquitoes out of the air. It respawns 20s later. The target rotates
+   through all three in turn. */
+(function(){
+  const zone = document.getElementById('zapzone');
+  if(!zone) return;
+  const targets = Array.from(zone.querySelectorAll('.zaptarget'));
+  if(!targets.length) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const SHOTS      = 9;     // dots per volley
+  const SHOT_GAP   = 62;    // ms between dots leaving the muzzle
+  const FLIGHT     = 640;   // ms for a dot to cross to the target
+  const FALL       = 1150;  // ms of tumble before it disappears
+  const RESPAWN_IN = 20000; // ms on the ground
+  const FIRST      = 12000; // ms before the opening volley
+  const EVERY      = 45000; // ms between volleys
+
+  let next = 0;
+
+  function zap(){
+    if (document.hidden) return;              // don't fire into an unwatched tab
+    const t = targets[next % targets.length];
+    next++;
+    if (t.dataset.down) return;
+    t.dataset.down = '1';
+
+    const zr = zone.getBoundingClientRect();
+    const tr = t.getBoundingClientRect();
+    const tx = tr.left - zr.left + tr.width / 2;
+    const ty = tr.top - zr.top + tr.height / 2;
+    const ox = 4, oy = zr.height / 2;         // muzzle: left edge, mid-height
+
+    for (let i = 0; i < SHOTS; i++){
+      setTimeout(function(){
+        const dot = document.createElement('span');
+        dot.className = 'shot';
+        dot.style.left = ox + 'px';
+        dot.style.top  = oy + 'px';
+        zone.appendChild(dot);
+        void dot.offsetWidth;   // force layout so the transition actually runs
+        dot.style.transition = 'transform ' + FLIGHT + 'ms linear';
+        dot.style.transform  = 'translate(' + (tx - ox) + 'px,' + (ty - oy) + 'px)';
+        setTimeout(function(){ dot.remove(); }, FLIGHT + 30);
+      }, i * SHOT_GAP);
+    }
+
+    // impact lands with the last dot
+    setTimeout(function(){
+      t.classList.add('hit');
+      setTimeout(function(){
+        t.classList.remove('hit');
+        t.classList.add('gone');
+        setTimeout(function(){
+          t.classList.remove('gone');
+          t.classList.add('back');
+          setTimeout(function(){
+            t.classList.remove('back');
+            delete t.dataset.down;
+          }, 560);
+        }, RESPAWN_IN);
+      }, FALL);
+    }, (SHOTS - 1) * SHOT_GAP + FLIGHT);
+  }
+
+  setTimeout(function(){ zap(); setInterval(zap, EVERY); }, FIRST);
 })();
 
 /* ---------- Buzzing-in counter ---------- */
