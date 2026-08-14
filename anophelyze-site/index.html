@@ -345,11 +345,11 @@ const FACTS = [
 })();
 
 /* ---------- Zap sequence ----------
-   A wheeled device patrols the floor of the mission panel. Every 20s it drives
-   to a firing position, elevates its barrel to match the line of sight, and
-   puts a volley of dots through one of the three mosquitoes, which drops and
-   respawns 20s later. Targets rotate, and a firing lane is only used if it
-   misses every mosquito that isn't the target. */
+   A wheeled device patrols the floor of the mission panel. On an irregular
+   cadence it drives to a firing position, elevates its barrel to match the line
+   of sight, and puts a volley of dots through one of the three mosquitoes,
+   which drops and respawns 20s later. Targets rotate, and a firing lane is only
+   used if it misses every mosquito that isn't the target. */
 (function(){
   const zone = document.getElementById('zapzone');
   const dev  = document.getElementById('device');
@@ -367,11 +367,14 @@ const FACTS = [
   const SHOTS      = 8;
   const SHOT_GAP   = 48;
   const SPEED      = 0.40;   // dot speed, px per ms
-  const DRIVE      = 0.11;   // driving speed, px per ms
+  const DRIVE      = 0.22;   // driving speed, px per ms
   const FALL       = 1150;
   const RESPAWN_IN = 20000;
-  const FIRST      = 6000;
-  const EVERY      = 20000;
+  const FIRST      = 4000;
+  // Gaps between volleys, cycled in order. Ten entries against three targets
+  // means the pairing of "which mosquito" with "how long a wait" doesn't repeat
+  // for thirty volleys, so the rhythm reads as unpredictable rather than timed.
+  const GAPS       = [5000, 12000, 20000, 7000, 15000, 9000, 24000, 6000, 18000, 11000];
   const ROAM       = 6500;
   const CLEAR      = 5;      // px of margin demanded around a bystander
   const INSET      = 0.20;   // sprite art sits inside its box; trim the empty edge
@@ -380,7 +383,7 @@ const FACTS = [
   // (nothing to shoot past), the middle one only ever gets a steep approach.
   const PREF       = [15, 55, 20, 45, 66, 40];
 
-  let next = 0, pos = 30, flip = true, busy = false;
+  let next = 0, pos = 30, flip = true, busy = false, gapIdx = 0;
 
   const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -526,9 +529,18 @@ const FACTS = [
     setTimeout(function(){ dev.classList.remove('driving'); }, ms + 40);
   }
 
+  // Walk the gap list. If the moment arrives while a volley is still playing out
+  // or the tab is in the background, hold the slot and retry shortly rather than
+  // dropping it, so a short gap isn't silently swallowed by a long one.
+  function run(){
+    if (busy || document.hidden){ setTimeout(run, 500); return; }
+    zap();
+    setTimeout(run, GAPS[gapIdx++ % GAPS.length]);
+  }
+
   place(0);
   if (!still){
-    setTimeout(function(){ zap(); setInterval(zap, EVERY); }, FIRST);
+    setTimeout(run, FIRST);
     setInterval(roam, ROAM);
   }
 })();
