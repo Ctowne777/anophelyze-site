@@ -110,26 +110,32 @@
   @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-10px) rotate(3deg);}}
   .spriterow{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:8px 0 6px;}
 
-  /* ---- zap sequence (Asteroids-style volley) ---- */
-  .zapzone{position:relative;}
+  /* ---- zap arena ---- */
+  .zapzone{position:relative;padding-bottom:150px;}
   .shot{
     position:absolute;width:6px;height:6px;background:var(--red);
     pointer-events:none;z-index:5;will-change:transform;
   }
+  .device{
+    position:absolute;left:0;bottom:0;width:66px;height:66px;
+    image-rendering:pixelated;z-index:4;pointer-events:none;
+  }
+  .device.driving{animation:roll .18s steps(2) infinite;}
+  @keyframes roll{0%,100%{margin-bottom:0;}50%{margin-bottom:2px;}}
   .zaptarget.hit{animation:fall 1.15s ease-in forwards;}
   .zaptarget.gone{visibility:hidden;}
   .zaptarget.back{animation:respawn .55s steps(4) both;}
   @keyframes fall{
     0%{transform:translateY(0) rotate(0deg);opacity:1;}
     10%{transform:translate(4px,-7px) rotate(-30deg);opacity:1;}
-    100%{transform:translateY(96px) rotate(210deg);opacity:0;}
+    100%{transform:translateY(112px) rotate(210deg);opacity:0;}
   }
   @keyframes respawn{
     from{opacity:0;transform:translateY(-16px);}
     to{opacity:1;transform:none;}
   }
   @media (prefers-reduced-motion: reduce){
-    .float,.press-start{animation:none;}
+    .float,.press-start,.device{animation:none;}
   }
 
   .stat{font-family:'Press Start 2P';font-size:14px;color:var(--red);}
@@ -201,6 +207,7 @@
       <svg class="sprite sm float zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
       <svg class="sprite sm float b zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
       <svg class="sprite sm float c zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+      <svg class="device" id="device" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><use href="#devbody"/><use id="deviceUse" href="#bar2"/></svg>
     </div>
   </div>
 
@@ -301,6 +308,18 @@
       <rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
       <rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
     </g>
+    <!-- wheeled device: shared chassis -->
+    <g id="devbody"><rect x="15" y="3" width="6" height="1" fill="#0f380f"/><rect x="14" y="4" width="1" height="1" fill="#0f380f"/><rect x="15" y="4" width="1" height="1" fill="#f3f7de"/><rect x="16" y="4" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="4" width="1" height="1" fill="#8bac0f"/><rect x="21" y="4" width="1" height="1" fill="#0f380f"/><rect x="14" y="5" width="1" height="1" fill="#0f380f"/><rect x="15" y="5" width="1" height="1" fill="#f3f7de"/><rect x="16" y="5" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="5" width="1" height="1" fill="#8bac0f"/><rect x="21" y="5" width="1" height="1" fill="#0f380f"/><rect x="14" y="6" width="1" height="1" fill="#0f380f"/><rect x="15" y="6" width="1" height="1" fill="#f3f7de"/><rect x="16" y="6" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="6" width="1" height="1" fill="#8bac0f"/><rect x="21" y="6" width="1" height="1" fill="#0f380f"/><rect x="14" y="7" width="1" height="1" fill="#0f380f"/><rect x="15" y="7" width="1" height="1" fill="#f3f7de"/><rect x="16" y="7" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="7" width="1" height="1" fill="#8bac0f"/><rect x="21" y="7" width="1" height="1" fill="#0f380f"/><rect x="14" y="8" width="1" height="1" fill="#0f380f"/><rect x="15" y="8" width="1" height="1" fill="#f3f7de"/><rect x="16" y="8" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="8" width="1" height="1" fill="#8bac0f"/><rect x="21" y="8" width="1" height="1" fill="#0f380f"/><rect x="14" y="9" width="1" height="1" fill="#0f380f"/><rect x="15" y="9" width="1" height="1" fill="#f3f7de"/><rect x="16" y="9" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="9" width="1" height="1" fill="#8bac0f"/><rect x="21" y="9" width="1" height="1" fill="#0f380f"/><rect x="14" y="10" width="1" height="1" fill="#0f380f"/><rect x="15" y="10" width="1" height="1" fill="#f3f7de"/><rect x="16" y="10" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="10" width="1" height="1" fill="#8bac0f"/><rect x="21" y="10" width="1" height="1" fill="#0f380f"/><rect x="11" y="11" width="4" height="1" fill="#0f380f"/><rect x="15" y="11" width="1" height="1" fill="#f3f7de"/><rect x="16" y="11" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="11" width="1" height="1" fill="#8bac0f"/><rect x="21" y="11" width="1" height="1" fill="#0f380f"/><rect x="13" y="12" width="1" height="1" fill="#f3f7de"/><rect x="14" y="12" width="1" height="1" fill="#0f380f"/><rect x="15" y="12" width="1" height="1" fill="#f3f7de"/><rect x="16" y="12" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="12" width="1" height="1" fill="#8bac0f"/><rect x="21" y="12" width="1" height="1" fill="#0f380f"/><rect x="6" y="13" width="1" height="1" fill="#0f380f"/><rect x="12" y="13" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="13" width="1" height="1" fill="#0f380f"/><rect x="15" y="13" width="1" height="1" fill="#f3f7de"/><rect x="16" y="13" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="13" width="1" height="1" fill="#8bac0f"/><rect x="21" y="13" width="2" height="1" fill="#0f380f"/><rect x="6" y="14" width="1" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#f3f7de"/><rect x="12" y="14" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="14" width="9" height="1" fill="#0f380f"/><rect x="6" y="15" width="1" height="1" fill="#0f380f"/><rect x="7" y="15" width="2" height="1" fill="#f3f7de"/><rect x="11" y="15" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="15" width="4" height="1" fill="#8bac0f"/><rect x="22" y="15" width="1" height="1" fill="#0f380f"/><rect x="6" y="16" width="1" height="1" fill="#0f380f"/><rect x="7" y="16" width="3" height="1" fill="#f3f7de"/><rect x="10" y="16" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="16" width="4" height="1" fill="#8bac0f"/><rect x="22" y="16" width="1" height="1" fill="#0f380f"/><rect x="6" y="17" width="1" height="1" fill="#0f380f"/><rect x="7" y="17" width="2" height="1" fill="#f3f7de"/><rect x="9" y="17" width="2" height="1" fill="#c1121f"/><rect x="11" y="17" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="17" width="4" height="1" fill="#8bac0f"/><rect x="22" y="17" width="1" height="1" fill="#0f380f"/><rect x="6" y="18" width="1" height="1" fill="#0f380f"/><rect x="7" y="18" width="2" height="1" fill="#f3f7de"/><rect x="9" y="18" width="1" height="1" fill="#c1121f"/><rect x="10" y="18" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="18" width="4" height="1" fill="#8bac0f"/><rect x="22" y="18" width="1" height="1" fill="#0f380f"/><rect x="6" y="19" width="1" height="1" fill="#0f380f"/><rect x="7" y="19" width="2" height="1" fill="#f3f7de"/><rect x="9" y="19" width="1" height="1" fill="#c1121f"/><rect x="10" y="19" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="19" width="4" height="1" fill="#8bac0f"/><rect x="22" y="19" width="1" height="1" fill="#0f380f"/><rect x="6" y="20" width="1" height="1" fill="#0f380f"/><rect x="7" y="20" width="2" height="1" fill="#f3f7de"/><rect x="9" y="20" width="1" height="1" fill="#c1121f"/><rect x="10" y="20" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="20" width="4" height="1" fill="#8bac0f"/><rect x="22" y="20" width="1" height="1" fill="#0f380f"/><rect x="6" y="21" width="1" height="1" fill="#0f380f"/><rect x="7" y="21" width="2" height="1" fill="#f3f7de"/><rect x="9" y="21" width="1" height="1" fill="#c1121f"/><rect x="10" y="21" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="21" width="4" height="1" fill="#8bac0f"/><rect x="22" y="21" width="1" height="1" fill="#0f380f"/><rect x="6" y="22" width="1" height="1" fill="#0f380f"/><rect x="7" y="22" width="3" height="1" fill="#f3f7de"/><rect x="10" y="22" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="22" width="4" height="1" fill="#8bac0f"/><rect x="22" y="22" width="1" height="1" fill="#0f380f"/><rect x="6" y="23" width="1" height="1" fill="#0f380f"/><rect x="7" y="23" width="3" height="1" fill="#f3f7de"/><rect x="10" y="23" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="23" width="4" height="1" fill="#8bac0f"/><rect x="22" y="23" width="1" height="1" fill="#0f380f"/><rect x="5" y="24" width="19" height="1" fill="#0f380f"/><rect x="5" y="25" width="19" height="1" fill="#0f380f"/><rect x="7" y="26" width="4" height="1" fill="#0f380f"/><rect x="12" y="26" width="5" height="1" fill="#0f380f"/><rect x="18" y="26" width="4" height="1" fill="#0f380f"/><rect x="7" y="27" width="1" height="1" fill="#0f380f"/><rect x="8" y="27" width="2" height="1" fill="#8bac0f"/><rect x="10" y="27" width="4" height="1" fill="#0f380f"/><rect x="14" y="27" width="1" height="1" fill="#8bac0f"/><rect x="15" y="27" width="4" height="1" fill="#0f380f"/><rect x="19" y="27" width="2" height="1" fill="#8bac0f"/><rect x="21" y="27" width="1" height="1" fill="#0f380f"/><rect x="7" y="28" width="1" height="1" fill="#0f380f"/><rect x="8" y="28" width="2" height="1" fill="#8bac0f"/><rect x="10" y="28" width="4" height="1" fill="#0f380f"/><rect x="14" y="28" width="1" height="1" fill="#8bac0f"/><rect x="15" y="28" width="4" height="1" fill="#0f380f"/><rect x="19" y="28" width="2" height="1" fill="#8bac0f"/><rect x="21" y="28" width="1" height="1" fill="#0f380f"/><rect x="7" y="29" width="4" height="1" fill="#0f380f"/><rect x="12" y="29" width="5" height="1" fill="#0f380f"/><rect x="18" y="29" width="4" height="1" fill="#0f380f"/><rect x="8" y="30" width="2" height="1" fill="#0f380f"/><rect x="14" y="30" width="1" height="1" fill="#0f380f"/><rect x="19" y="30" width="2" height="1" fill="#0f380f"/></g>
+    <!-- barrel, 0 degrees -->
+    <g id="bar0"><rect x="0" y="11" width="2" height="1" fill="#0f380f"/><rect x="0" y="12" width="1" height="1" fill="#0f380f"/><rect x="1" y="12" width="1" height="1" fill="#306230"/><rect x="2" y="12" width="10" height="1" fill="#0f380f"/><rect x="0" y="13" width="1" height="1" fill="#0f380f"/><rect x="1" y="13" width="1" height="1" fill="#306230"/><rect x="2" y="13" width="5" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#4a7a3a"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="0" y="14" width="2" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="3" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="15" width="3" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
+    <!-- barrel, 18 degrees -->
+    <g id="bar1"><rect x="0" y="8" width="2" height="1" fill="#0f380f"/><rect x="0" y="9" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="1" height="1" fill="#306230"/><rect x="2" y="9" width="1" height="1" fill="#0f380f"/><rect x="0" y="10" width="1" height="1" fill="#0f380f"/><rect x="1" y="10" width="2" height="1" fill="#306230"/><rect x="3" y="10" width="3" height="1" fill="#0f380f"/><rect x="0" y="11" width="5" height="1" fill="#0f380f"/><rect x="5" y="11" width="1" height="1" fill="#306230"/><rect x="6" y="11" width="4" height="1" fill="#0f380f"/><rect x="5" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="3" height="1" fill="#306230"/><rect x="10" y="12" width="3" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
+    <!-- barrel, 34 degrees -->
+    <g id="bar2"><rect x="1" y="6" width="3" height="1" fill="#0f380f"/><rect x="0" y="7" width="1" height="1" fill="#0f380f"/><rect x="1" y="7" width="1" height="1" fill="#4a7a3a"/><rect x="2" y="7" width="1" height="1" fill="#306230"/><rect x="3" y="7" width="1" height="1" fill="#0f380f"/><rect x="0" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="8" width="3" height="1" fill="#306230"/><rect x="4" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="6" height="1" fill="#0f380f"/><rect x="5" y="10" width="1" height="1" fill="#0f380f"/><rect x="6" y="10" width="1" height="1" fill="#306230"/><rect x="7" y="10" width="2" height="1" fill="#0f380f"/><rect x="6" y="11" width="1" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#306230"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="3" height="1" fill="#306230"/><rect x="11" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
+    <!-- barrel, 50 degrees -->
+    <g id="bar3"><rect x="2" y="4" width="3" height="1" fill="#0f380f"/><rect x="2" y="5" width="1" height="1" fill="#0f380f"/><rect x="3" y="5" width="2" height="1" fill="#306230"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="2" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="6" width="2" height="1" fill="#306230"/><rect x="5" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="7" width="2" height="1" fill="#0f380f"/><rect x="5" y="7" width="1" height="1" fill="#306230"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="5" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="8" width="1" height="1" fill="#306230"/><rect x="7" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="9" width="2" height="1" fill="#0f380f"/><rect x="7" y="10" width="3" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="1" height="1" fill="#306230"/><rect x="10" y="11" width="2" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="1" height="1" fill="#0f380f"/><rect x="10" y="14" width="1" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
+    <!-- barrel, 66 degrees -->
+    <g id="bar4"><rect x="5" y="2" width="2" height="1" fill="#0f380f"/><rect x="4" y="3" width="1" height="1" fill="#0f380f"/><rect x="5" y="3" width="2" height="1" fill="#306230"/><rect x="7" y="3" width="1" height="1" fill="#0f380f"/><rect x="4" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="4" width="2" height="1" fill="#306230"/><rect x="7" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="5" width="1" height="1" fill="#306230"/><rect x="7" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="6" width="2" height="1" fill="#0f380f"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="7" width="1" height="1" fill="#306230"/><rect x="8" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="8" width="2" height="1" fill="#0f380f"/><rect x="7" y="9" width="2" height="1" fill="#0f380f"/><rect x="8" y="10" width="3" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#0f380f"/><rect x="9" y="11" width="2" height="1" fill="#306230"/><rect x="11" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="3" height="1" fill="#0f380f"/><rect x="9" y="15" width="1" height="1" fill="#0f380f"/></g>
   </defs>
 </svg>
 
@@ -326,59 +345,138 @@ const FACTS = [
 })();
 
 /* ---------- Zap sequence ----------
-   Every 45s a volley of dots crosses the mission panel and knocks one of the
-   three mosquitoes out of the air. It respawns 20s later. The target rotates
-   through all three in turn. */
+   A wheeled device patrols the floor of the mission panel. Every 20s it drives
+   to a firing position, elevates its barrel to match the line of sight, and
+   puts a volley of dots through one of the three mosquitoes, which drops and
+   respawns 20s later. Targets rotate, and a firing lane is only used if it
+   misses every mosquito that isn't the target. */
 (function(){
   const zone = document.getElementById('zapzone');
-  if(!zone) return;
+  const dev  = document.getElementById('device');
+  const use  = document.getElementById('deviceUse');
+  if(!zone || !dev || !use) return;
   const targets = Array.from(zone.querySelectorAll('.zaptarget'));
   if(!targets.length) return;
-  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const SHOTS      = 9;     // dots per volley
-  const SHOT_GAP   = 62;    // ms between dots leaving the muzzle
-  const FLIGHT     = 640;   // ms for a dot to cross to the target
-  const FALL       = 1150;  // ms of tumble before it disappears
-  const RESPAWN_IN = 20000; // ms on the ground
-  const FIRST      = 12000; // ms before the opening volley
-  const EVERY      = 45000; // ms between volleys
+  const TIPS  = [[0.5,13.0],[0.96,10.06],[2.12,7.69],[3.89,5.72],[6.14,4.32]];  // barrel-tip coords per elevation, in sprite units
+  const ELEV  = [0,18,34,50,66];
+  const GRID  = 32;    // sprite viewBox
+  const DEV   = 66;    // rendered device size, px
+  const SC    = DEV / GRID;
 
-  let next = 0;
+  const SHOTS      = 8;
+  const SHOT_GAP   = 48;
+  const SPEED      = 0.40;   // dot speed, px per ms
+  const DRIVE      = 0.11;   // driving speed, px per ms
+  const FALL       = 1150;
+  const RESPAWN_IN = 20000;
+  const FIRST      = 6000;
+  const EVERY      = 20000;
+  const ROAM       = 6500;
+  const CLEAR      = 5;      // px of margin demanded around a bystander
+  const INSET      = 0.20;   // sprite art sits inside its box; trim the empty edge
+  // Preferred elevation per volley. The cycle is 6 long against 3 targets, so
+  // each slot lines up with a fixed mosquito: the outer two can take flat lanes
+  // (nothing to shoot past), the middle one only ever gets a steep approach.
+  const PREF       = [15, 55, 20, 45, 66, 40];
 
-  function zap(){
-    if (document.hidden) return;              // don't fire into an unwatched tab
-    const t = targets[next % targets.length];
-    next++;
-    if (t.dataset.down) return;
-    t.dataset.down = '1';
+  let next = 0, pos = 30, flip = true, busy = false;
 
+  const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function place(ms){
+    dev.style.transition = ms ? 'transform ' + ms + 'ms linear' : 'none';
+    dev.style.transform  = 'translateX(' + pos + 'px)' + (flip ? ' scaleX(-1)' : '');
+  }
+  function setElev(i){ use.setAttribute('href', '#bar' + i); }
+
+  function muzzle(p, f, vi){
+    const t = TIPS[vi];
+    return [ p + (f ? DEV - t[0] * SC : t[0] * SC),
+             zone.clientHeight - DEV + t[1] * SC ];
+  }
+
+  // Does this lane pass through a mosquito that isn't the target?
+  function blocked(ox, oy, tx, ty, target, zr){
+    for (const other of targets){
+      // A downed mosquito still counts as an obstacle: it can respawn into the
+      // lane between the shot being chosen and the dots arriving.
+      if (other === target) continue;
+      const r  = other.getBoundingClientRect();
+      const iw = r.width * INSET, ih = r.height * INSET;
+      const l = r.left  + iw - zr.left - CLEAR, rt = r.right  - iw - zr.left + CLEAR;
+      const tp = r.top   + ih - zr.top  - CLEAR, bt = r.bottom - ih - zr.top  + CLEAR;
+      const steps = Math.max(14, Math.round(Math.hypot(tx - ox, ty - oy) / 4));
+      for (let i = 0; i < steps; i++){
+        const f = i / steps;
+        const px = ox + (tx - ox) * f, py = oy + (ty - oy) * f;
+        if (px > l && px < rt && py > tp && py < bt) return true;
+      }
+    }
+    return false;
+  }
+
+  // Walk every parking spot and barrel elevation; keep the clear lane whose
+  // angle sits closest to this volley's preferred elevation.
+  function chooseShot(t, tx, ty, zr){
+    const maxP = Math.max(0, zone.clientWidth - DEV);
+    const want = PREF[next % PREF.length];
+    let best = null;
+    for (let strict = 1; strict >= 0; strict--){
+      for (let p = 0; p <= maxP; p += 10){
+        for (let vi = 0; vi < TIPS.length; vi++){
+          const f = tx > p + DEV / 2;
+          const m = muzzle(p, f, vi);
+          const dx = tx - m[0], dy = m[1] - ty;
+          if (dy < 24 || Math.abs(dx) < 26) continue;
+          const ang = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
+          if (strict && Math.abs(ang - ELEV[vi]) > 11) continue;
+          if (!strict){
+            let near = 0;
+            for (let k = 1; k < ELEV.length; k++){
+              if (Math.abs(ang - ELEV[k]) < Math.abs(ang - ELEV[near])) near = k;
+            }
+            if (near !== vi) continue;
+          }
+          if (blocked(m[0], m[1], tx, ty, t, zr)) continue;
+          const score = Math.abs(ang - want);
+          if (!best || score < best.score)
+            best = { p: p, flip: f, vi: vi, mx: m[0], my: m[1], score: score };
+        }
+      }
+      if (best) return best;
+    }
+    return null;
+  }
+
+  function fire(t, shot){
     const zr = zone.getBoundingClientRect();
     const tr = t.getBoundingClientRect();
     const tx = tr.left - zr.left + tr.width / 2;
-    const ty = tr.top - zr.top + tr.height / 2;
-    const ox = 4, oy = zr.height / 2;         // muzzle: left edge, mid-height
+    const ty = tr.top  - zr.top  + tr.height / 2;
+    const m  = muzzle(pos, flip, shot.vi);
+    const FLIGHT = Math.max(180, Math.round(Math.hypot(tx - m[0], ty - m[1]) / SPEED));
 
     for (let i = 0; i < SHOTS; i++){
       setTimeout(function(){
         const dot = document.createElement('span');
         dot.className = 'shot';
-        dot.style.left = ox + 'px';
-        dot.style.top  = oy + 'px';
+        dot.style.left = m[0] + 'px';
+        dot.style.top  = m[1] + 'px';
         zone.appendChild(dot);
         void dot.offsetWidth;   // force layout so the transition actually runs
         dot.style.transition = 'transform ' + FLIGHT + 'ms linear';
-        dot.style.transform  = 'translate(' + (tx - ox) + 'px,' + (ty - oy) + 'px)';
+        dot.style.transform  = 'translate(' + (tx - m[0]) + 'px,' + (ty - m[1]) + 'px)';
         setTimeout(function(){ dot.remove(); }, FLIGHT + 30);
       }, i * SHOT_GAP);
     }
 
-    // impact lands with the last dot
     setTimeout(function(){
       t.classList.add('hit');
       setTimeout(function(){
         t.classList.remove('hit');
         t.classList.add('gone');
+        busy = false;
         setTimeout(function(){
           t.classList.remove('gone');
           t.classList.add('back');
@@ -391,7 +489,48 @@ const FACTS = [
     }, (SHOTS - 1) * SHOT_GAP + FLIGHT);
   }
 
-  setTimeout(function(){ zap(); setInterval(zap, EVERY); }, FIRST);
+  function zap(){
+    if (document.hidden || busy || still) return;
+    const t = targets[next % targets.length];
+    if (t.dataset.down){ next++; return; }
+    const zr = zone.getBoundingClientRect();
+    const tr = t.getBoundingClientRect();
+    const tx = tr.left - zr.left + tr.width / 2;
+    const ty = tr.top  - zr.top  + tr.height / 2;
+    const shot = chooseShot(t, tx, ty, zr);
+    next++;
+    if (!shot) return;
+
+    busy = true;
+    t.dataset.down = '1';
+    const ms = Math.max(350, Math.round(Math.abs(shot.p - pos) / DRIVE));
+    pos = shot.p; flip = shot.flip;
+    setElev(shot.vi);
+    dev.classList.add('driving');
+    place(ms);
+    setTimeout(function(){
+      dev.classList.remove('driving');
+      fire(t, shot);
+    }, ms + 280);
+  }
+
+  function roam(){
+    if (document.hidden || busy || still) return;
+    const maxP = Math.max(0, zone.clientWidth - DEV);
+    const p = Math.round(Math.random() * maxP);
+    if (Math.abs(p - pos) < 40) return;
+    const ms = Math.max(400, Math.round(Math.abs(p - pos) / DRIVE));
+    flip = p > pos; pos = p;
+    dev.classList.add('driving');
+    place(ms);
+    setTimeout(function(){ dev.classList.remove('driving'); }, ms + 40);
+  }
+
+  place(0);
+  if (!still){
+    setTimeout(function(){ zap(); setInterval(zap, EVERY); }, FIRST);
+    setInterval(roam, ROAM);
+  }
 })();
 
 /* ---------- Buzzing-in counter ---------- */
