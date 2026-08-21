@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Anophelyze &mdash; A Smarter Way to Control Mosquitoes</title>
-<meta name="description" content="Anophelyze — a patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
+<title>Anophelyze &mdash; Vector control hardware, in development</title>
+<meta name="description" content="Anophelyze is building a patent-pending device that detects and incapacitates mosquitoes without toxic chemicals, for deployment in malaria- and dengue-endemic regions." />
 <link rel="canonical" href="https://anophelyze.com/" />
 <meta name="robots" content="index, follow" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%9F%3C/text%3E%3C/svg%3E" />
@@ -12,7 +12,7 @@
 <!-- Social link previews -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Anophelyze" />
-<meta property="og:title" content="Anophelyze &mdash; A Smarter Way to Control Mosquitoes" />
+<meta property="og:title" content="Anophelyze &mdash; Vector control hardware, in development" />
 <meta property="og:description" content="A patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
 <meta property="og:url" content="https://anophelyze.com/" />
 <meta property="og:image" content="https://anophelyze.com/og-image.png" />
@@ -21,7 +21,7 @@
 <meta property="og:image:alt" content="ANOPHELYZE — pixel-art mosquito on a Game Boy green background" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://anophelyze.com/og-image.png" />
-<meta name="twitter:title" content="Anophelyze &mdash; A Smarter Way to Control Mosquitoes" />
+<meta name="twitter:title" content="Anophelyze &mdash; Vector control hardware, in development" />
 <meta name="twitter:description" content="A patent-pending device that detects and incapacitates mosquitoes in a way that's safe for humans and environmentally conscious." />
 
 <!-- Structured data: tells search engines what this organization is -->
@@ -33,309 +33,460 @@
   "legalName": "Anophelyze LLC",
   "url": "https://anophelyze.com/",
   "foundingDate": "2026",
-  "email": "camden.m.towne@gmail.com",
+  "email": "camden@anophelyze.com",
   "description": "Anophelyze builds a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in a way that is safe for humans and environmentally conscious.",
   "knowsAbout": ["mosquito control", "disease vector mitigation", "malaria prevention"]
 }
 </script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    /* Game Boy DMG palette + Pokemon Red accent */
-    --gb0:#0f380f;  /* darkest */
-    --gb1:#306230;  /* dark */
-    --gb2:#8bac0f;  /* light */
-    --gb3:#9bbc0f;  /* lightest */
-    --red:#c1121f;
-    --red2:#e63946;
-    --paper:#e8f0c8;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--gb3);
-    color:var(--gb0);
-    font-family:'VT323', monospace;
-    font-size:22px;
-    line-height:1.35;
-    image-rendering:pixelated;
-    -webkit-font-smoothing:none;
-    overflow-x:hidden;
-  }
-  /* faint scanline overlay for CRT feel */
-  body::after{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
-    background:repeating-linear-gradient(0deg, rgba(15,56,15,.06) 0 2px, transparent 2px 4px);
-  }
-  h1,h2,h3,.press{font-family:'Press Start 2P', monospace;}
-  a{color:var(--red);}
-  .wrap{max-width:880px;margin:0 auto;padding:20px 16px 80px;}
+:root{
+  --ink:#0E1A17;        /* near-black, green-shifted */
+  --ink-2:#3A4B45;      /* secondary text */
+  --rule:#C9D2CB;       /* hairlines */
+  --paper:#F4F6F2;      /* page */
+  --surface:#FFFFFF;
+  --field:#DCE6D5;      /* observation window ground */
+  --moss:#4A6B52;       /* structural accent */
+  --signal:#B3202B;     /* engagement events only */
+  --measure:72ch;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-0.02em;line-height:1.15;}
+p{margin:0 0 1em;}
+p:last-child{margin-bottom:0;}
+a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;text-decoration-color:var(--moss);}
+a:hover{text-decoration-color:var(--ink);}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
 
-  /* Pixel dialogue box (Pokemon textbox style) */
-  .box{
-    background:var(--paper);
-    border:4px solid var(--gb0);
-    box-shadow:0 0 0 4px var(--gb2), 6px 6px 0 4px var(--gb0);
-    padding:18px 20px;
-    margin:22px 0;
-    position:relative;
-  }
-  .box h2{
-    font-size:15px;color:var(--gb0);margin:0 0 14px;line-height:1.4;
-  }
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+.eyebrow{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--moss);margin:0 0 14px;
+}
 
-  /* ---- hero ---- */
-  .hero{text-align:center;padding:34px 0 8px;}
-  .hero h1{
-    font-size:clamp(28px,9vw,60px);color:var(--gb0);
-    text-shadow:4px 4px 0 var(--gb2), 8px 8px 0 var(--red);
-    margin:0;letter-spacing:2px;
-  }
-  .hero .tag{font-size:26px;margin-top:16px;color:var(--gb1);}
-  .press-start{
-    font-family:'Press Start 2P';font-size:12px;margin-top:26px;color:var(--red);
-    animation:blink 1s steps(1) infinite;
-  }
-  @keyframes blink{50%{opacity:0;}}
+.shell{max-width:1080px;margin:0 auto;padding:0 24px;}
 
-  /* ---- sprites ---- */
-  .sprite{width:64px;height:64px;image-rendering:pixelated;vertical-align:middle;}
-  .sprite.sm{width:44px;height:44px;}
-  .sprite.lg{width:110px;height:110px;}
-  .float{animation:bob 2.2s ease-in-out infinite;}
-  .float.b{animation-delay:.5s;}
-  .float.c{animation-delay:1s;}
-  @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-10px) rotate(3deg);}}
-  .spriterow{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:8px 0 6px;}
+/* ---------- nameplate ---------- */
+.plate{border-bottom:1px solid var(--rule);padding:22px 0 18px;}
+.plate .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 22px;}
+.wordmark{
+  font-family:'IBM Plex Mono',monospace;font-weight:500;
+  font-size:15px;letter-spacing:.34em;text-transform:uppercase;
+}
+.plate .meta{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  letter-spacing:.08em;color:var(--ink-2);margin-left:auto;
+}
+.plate .meta span{white-space:nowrap;}
+.plate .meta span + span::before{content:"·";margin:0 10px;color:var(--rule);}
 
-  /* ---- zap arena ---- */
-  .zapzone{position:relative;padding-bottom:150px;}
-  .shot{
-    position:absolute;width:6px;height:6px;background:var(--red);
-    pointer-events:none;z-index:5;will-change:transform;
-  }
-  .device{
-    position:absolute;left:0;bottom:0;width:66px;height:66px;
-    image-rendering:pixelated;z-index:4;pointer-events:none;
-  }
-  .device.driving{animation:roll .18s steps(2) infinite;}
-  @keyframes roll{0%,100%{margin-bottom:0;}50%{margin-bottom:2px;}}
-  .zaptarget.hit{animation:fall 1.15s ease-in forwards;}
-  .zaptarget.gone{visibility:hidden;}
-  .zaptarget.back{animation:respawn .55s steps(4) both;}
-  @keyframes fall{
-    0%{transform:translateY(0) rotate(0deg);opacity:1;}
-    10%{transform:translate(4px,-7px) rotate(-30deg);opacity:1;}
-    100%{transform:translateY(112px) rotate(210deg);opacity:0;}
-  }
-  @keyframes respawn{
-    from{opacity:0;transform:translateY(-16px);}
-    to{opacity:1;transform:none;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .float,.press-start,.device{animation:none;}
-  }
+/* ---------- hero ---------- */
+.hero{padding:78px 0 54px;max-width:var(--measure);}
+.hero h1{font-size:clamp(31px,5.2vw,52px);}
+.hero .lede{font-size:clamp(18px,2.1vw,21px);color:var(--ink-2);margin-top:22px;max-width:60ch;}
 
-  .stat{font-family:'Press Start 2P';font-size:14px;color:var(--red);}
-  .team{display:flex;gap:18px;flex-wrap:wrap;}
-  .team .card{flex:1 1 220px;border:3px dashed var(--gb1);padding:12px 14px;background:#f3f7de;}
-  .team .role{font-family:'Press Start 2P';font-size:9px;color:var(--gb1);display:block;margin-bottom:8px;}
-  .team .name{font-size:26px;}
+/* ---------- observation window (signature) ---------- */
+.window{border:1px solid var(--ink);background:var(--surface);margin:0 0 78px;}
+.window .bar{
+  display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;
+  background:var(--ink);color:var(--field);
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;
+}
+.window .bar .sep{margin-left:auto;opacity:.62;}
+.window .glass{background:var(--field);padding:26px 20px 0;}
+.window .cap{
+  border-top:1px solid var(--rule);padding:11px 14px;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-2);
+}
 
-  .funfact{min-height:40px;}
-  .badge{display:inline-block;background:var(--red);color:#fff;font-family:'Press Start 2P';
-    font-size:8px;padding:5px 8px;margin-bottom:10px;}
+/* sprite geometry — values below are load-bearing for the simulation script */
+.sprite{width:64px;height:64px;image-rendering:pixelated;vertical-align:middle;}
+.sprite.sm{width:44px;height:44px;}
+.spriterow{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;}
+.zapzone{position:relative;padding-bottom:150px;flex-wrap:nowrap;}
+.shot{position:absolute;width:6px;height:6px;background:var(--signal);pointer-events:none;z-index:5;will-change:transform;}
+.device{position:absolute;left:0;bottom:0;width:66px;height:66px;image-rendering:pixelated;z-index:4;pointer-events:none;}
+.device.driving{animation:roll .18s steps(2) infinite;}
+@keyframes roll{0%,100%{margin-bottom:0;}50%{margin-bottom:2px;}}
+.float{animation:bob 2.2s ease-in-out infinite;}
+.float.b{animation-delay:.5s;}
+.float.c{animation-delay:1s;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-10px) rotate(3deg);}}
+.zaptarget.hit{animation:fall 1.15s ease-in forwards;}
+.zaptarget.gone{visibility:hidden;}
+.zaptarget.back{animation:respawn .55s steps(4) both;}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1;}
+  10%{transform:translate(4px,-7px) rotate(-30deg);opacity:1;}
+  100%{transform:translateY(112px) rotate(210deg);opacity:0;}
+}
+@keyframes respawn{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: reduce){
+  .float,.device{animation:none;}
+}
 
-  footer{text-align:center;font-size:18px;color:var(--gb1);margin-top:30px;line-height:1.6;}
-  footer .press{font-size:9px;}
+/* ---------- sections ---------- */
+section{padding:0 0 74px;}
+.head{max-width:var(--measure);margin-bottom:34px;}
+.head h2{font-size:clamp(23px,3vw,31px);}
+.head p{color:var(--ink-2);margin-top:14px;max-width:62ch;}
 
-  /* ---- chatbot ---- */
-  #chatBtn{
-    position:fixed;right:16px;bottom:16px;z-index:10000;
-    font-family:'Press Start 2P';font-size:10px;
-    background:var(--red);color:#fff;border:4px solid var(--gb0);
-    box-shadow:4px 4px 0 var(--gb0);padding:12px 14px;cursor:pointer;
-  }
-  #chatBtn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--gb0);}
-  #chat{
-    position:fixed;right:16px;bottom:70px;z-index:10000;width:min(360px,92vw);
-    background:var(--paper);border:4px solid var(--gb0);
-    box-shadow:0 0 0 4px var(--gb2),6px 6px 0 4px var(--gb0);
-    display:none;flex-direction:column;max-height:70vh;
-  }
-  #chat.open{display:flex;}
-  #chat .head{background:var(--gb0);color:var(--gb3);font-family:'Press Start 2P';
-    font-size:10px;padding:10px;display:flex;justify-content:space-between;align-items:center;}
-  #chat .head button{background:none;border:none;color:var(--gb3);font-family:'Press Start 2P';cursor:pointer;font-size:12px;}
-  #log{padding:12px;overflow-y:auto;flex:1;font-size:19px;}
-  .msg{margin:8px 0;padding:8px 10px;border:2px solid var(--gb1);}
-  .msg.bot{background:#f3f7de;}
-  .msg.me{background:#dfeeae;text-align:right;}
-  #chat form{display:flex;border-top:4px solid var(--gb0);}
-  #chat input{flex:1;border:none;padding:12px;font-family:'VT323';font-size:20px;background:#fff;}
-  #chat button.send{border:none;background:var(--red);color:#fff;font-family:'Press Start 2P';font-size:9px;padding:0 14px;cursor:pointer;}
-  .quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px;}
-  .quick button{font-family:'VT323';font-size:16px;background:#fff;border:2px solid var(--gb1);cursor:pointer;padding:4px 8px;}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.cols > div{background:var(--paper);padding:26px 22px;}
+.cols h3{font-size:17px;margin-bottom:10px;}
+.cols p{font-size:15.5px;color:var(--ink-2);}
+
+/* spec list */
+.spec{border-top:1px solid var(--rule);}
+.spec .line{
+  display:grid;grid-template-columns:190px 1fr;gap:4px 28px;
+  border-bottom:1px solid var(--rule);padding:15px 0;align-items:baseline;
+}
+.spec dt{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--moss);
+}
+.spec dd{margin:0;font-size:16px;}
+
+/* contact */
+.contact{border:1px solid var(--ink);padding:34px 30px;background:var(--surface);}
+.contact h2{font-size:clamp(21px,2.6vw,27px);margin-bottom:12px;}
+.contact p{color:var(--ink-2);max-width:56ch;}
+.mailto{
+  display:inline-block;margin-top:20px;
+  font-family:'IBM Plex Mono',monospace;font-size:16px;
+  border-bottom:2px solid var(--signal);text-decoration:none;padding-bottom:2px;
+}
+.mailto:hover{background:var(--field);}
+
+/* burden map */
+.map{margin:0 0 30px;padding:0;}
+.mapframe{border:1px solid var(--rule);background:var(--surface);padding:10px;}
+.mapframe svg{display:block;width:100%;height:auto;}
+.map .key{
+  display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-2);
+}
+.map .key span{display:flex;align-items:center;gap:7px;}
+.map .key i{width:11px;height:11px;display:inline-block;border:1px solid var(--rule);}
+.map figcaption{
+  margin-top:12px;font-size:14px;line-height:1.55;color:var(--ink-2);max-width:62ch;
+}
+.map .src{
+  margin:8px 0 0;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;line-height:1.7;color:var(--ink-2);max-width:78ch;
+}
+.map .src a{text-decoration-color:var(--rule);}
+
+/* field note */
+.note{
+  border-left:2px solid var(--moss);padding:4px 0 4px 16px;
+  font-size:15px;color:var(--ink-2);max-width:64ch;
+}
+.note .lab{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--moss);display:block;margin-bottom:5px;
+}
+
+footer{border-top:1px solid var(--rule);padding:30px 0 60px;}
+footer .fine{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.9;
+  color:var(--ink-2);
+}
+
+@media (max-width:760px){
+  .cols{grid-template-columns:1fr;}
+  .spec .line{grid-template-columns:1fr;}
+  .plate .meta{margin-left:0;width:100%;}
+  .hero{padding:52px 0 40px;}
+  /* The simulation needs horizontal room to find a clear firing lane. On a
+     phone there isn't any, so shrink the whole scene rather than letting the
+     device sit there unable to take a shot. */
+  .window .glass{padding:20px 12px 0;}
+  .sprite.sm{width:34px;height:34px;}
+  .device{width:50px;height:50px;}
+  .zapzone{padding-bottom:104px;gap:16px;}
+}
+
+/* ---------- ask panel ---------- */
+#chatBtn{
+  position:fixed;right:18px;bottom:18px;z-index:10000;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.02em;
+  background:var(--ink);color:var(--field);
+  border:1px solid var(--ink);padding:12px 16px;cursor:pointer;
+}
+#chatBtn i{font-style:italic;}
+#chatBtn:hover{background:var(--moss);}
+#chat{
+  position:fixed;right:18px;bottom:64px;z-index:10000;width:min(370px,92vw);
+  background:var(--surface);border:1px solid var(--ink);
+  display:none;flex-direction:column;max-height:70vh;
+  box-shadow:0 18px 40px rgba(14,26,23,.16);
+}
+#chat.open{display:flex;}
+#chat .head-bar{
+  background:var(--ink);color:var(--field);
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.02em;
+  padding:11px 13px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+#chat .head-bar i{font-style:italic;}
+#chat .head-bar button{background:none;border:none;color:var(--field);cursor:pointer;font-size:15px;line-height:1;}
+#log{padding:14px;overflow-y:auto;flex:1;font-size:15px;}
+.msg{margin:9px 0;padding:10px 12px;border:1px solid var(--rule);}
+.msg.bot{background:var(--paper);}
+.msg.me{background:var(--field);border-color:var(--field);}
+#chat form{display:flex;border-top:1px solid var(--rule);}
+#chat input{flex:1;border:none;padding:12px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;background:var(--surface);color:var(--ink);}
+#chat button.send{
+  border:none;background:var(--ink);color:var(--field);cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;padding:0 16px;
+}
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<div class="shell">
+
+  <!-- NAMEPLATE -->
+  <header class="plate">
+    <div class="row">
+      <span class="wordmark">Anophelyze</span>
+      <span class="meta">
+        <span>Anophelyze LLC</span><span>Founded 2026</span><span>Patent pending</span>
+      </span>
+    </div>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="spriterow">
-      <svg class="sprite lg float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
-    </div>
-    <h1>ANOPHELYZE</h1>
-    <div class="tag">A smarter way to control mosquitoes.</div>
-    <div class="press-start">&#9658; MORE COMING SOON</div>
+    <p class="eyebrow">Vector control hardware &middot; in development</p>
+    <h1>A device that finds mosquitoes and takes them out of the air.</h1>
+    <p class="lede">Built for the places where mosquito-borne disease actually kills people
+    &mdash; not for suburban patios. Anophelyze is an early-stage hardware company developing
+    a patent-pending system for vector mitigation in malaria- and dengue-endemic regions.</p>
   </section>
 
-  <!-- MISSION -->
-  <div class="box">
-    <h2>&#9658; WHAT IS ANOPHELYZE?</h2>
-    <p>Anophelyze is building a <strong>patent-pending device</strong> that detects and
-    incapacitates mosquitoes &mdash; and other disease-carrying vectors &mdash; in a way
-    that is <strong>safe for humans and environmentally conscious</strong>.</p>
-    <p>No toxic chemicals. No lasers&hellip;well, maybe some. Just a smarter approach to one of the world's
-    deadliest animals. Mosquitoes are <em>crepuscular</em>, most active at dawn and dusk &mdash;
-    that's exactly when our device is on watch.</p>
-    <div class="spriterow zapzone" id="zapzone">
-      <svg class="sprite sm float zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
-      <svg class="sprite sm float b zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
-      <svg class="sprite sm float c zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
-      <svg class="device" id="device" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><use href="#devbody"/><use id="deviceUse" href="#bar2"/></svg>
+  <!-- OBSERVATION WINDOW (signature element) -->
+  <div class="window">
+    <div class="bar">
+      <span>Engagement sequence</span>
+      <span class="sep">Simulation &middot; not to scale</span>
+    </div>
+    <div class="glass">
+      <div class="spriterow zapzone" id="zapzone">
+        <svg class="sprite sm float zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+        <svg class="sprite sm float b zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+        <svg class="sprite sm float c zaptarget" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
+        <svg class="device" id="device" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="crispEdges"><use href="#devbody"/><use id="deviceUse" href="#bar2"/></svg>
+      </div>
     </div>
   </div>
+
+  <!-- WHAT WE'RE BUILDING -->
+  <section>
+    <div class="head">
+      <p class="eyebrow">The system</p>
+      <h2>Three problems, one machine.</h2>
+      <p>Each is hard on its own. Solving them together &mdash; in something that has to run
+      unattended, survive heat and dust, tolerate unreliable power, and cost little enough to
+      deploy at scale &mdash; is the work.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <h3>Detection</h3>
+        <p>Picking a mosquito out of everything else moving through a field at dusk, when
+        the mosquitoes are most active and the light is worst.</p>
+      </div>
+      <div>
+        <h3>Engagement</h3>
+        <p>Acting on a target fast enough that it can't escape, without the air-current
+        warning that lets a mosquito ride out a swat.</p>
+      </div>
+      <div>
+        <h3>Safety</h3>
+        <p>Eye-safe by design, around people and livestock. No fire risk, no corneal or
+        retinal damage, no burns &mdash; the constraint every other decision is built around.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE IT STANDS -->
+  <section>
+    <div class="head">
+      <p class="eyebrow">Status</p>
+      <h2>Where it stands today.</h2>
+    </div>
+    <dl class="spec">
+      <div class="line"><dt>Stage</dt><dd>Prototype development</dd></div>
+      <div class="line"><dt>Target deployment</dt><dd>Malaria- and dengue-endemic regions, prioritizing settings where bed nets and spraying have fallen short</dd></div>
+      <div class="line"><dt>Intellectual property</dt><dd>U.S. Non-Provisional Patent Application Serial No. 19/751,195, filed July 23, 2026 &mdash; &ldquo;A Device for Detecting and Incapacitating Hazardous Disease Vectors&rdquo;<br>Claiming priority to U.S. Provisional Application No. 63/849,611, filed July 23, 2025</dd></div>
+      <div class="line"><dt>Entity</dt><dd>Anophelyze LLC</dd></div>
+      <div class="line"><dt>Team</dt><dd>Camden Towne, owner and president &mdash; family physician with training in HIV and addiction care, and a Master of Public Health</dd></div>
+      <div class="line"><dt>Disciplines</dt><dd>Computer vision, embedded control, mechanical design, field entomology</dd></div>
+      <div class="line"><dt>Approach</dt><dd>Environmentally neutral &mdash; no DDT-class chemistry, no broadcast spraying<br>Featuring the specificity of computer vision with the power of an environmentally safe formula to incapacitate mosquitoes</dd></div>
+    </dl>
+  </section>
 
   <!-- WHY -->
-  <div class="box">
-    <h2>&#9658; WHY WE EXIST</h2>
-    <p>Mosquito-borne diseases &mdash; malaria, dengue, yellow fever, Zika, and more &mdash;
-    cause preventable death and life-disrupting illness across much of the world, hitting
-    young children hardest. Historic control efforts leaned on toxic chemicals like DDT or
-    had limited success.</p>
-    <p>Anophelyze was <strong>founded in 2026</strong> by Camden Towne, after several years
-    of preparation, out of a need for environmentally neutral approaches to disease-vector
-    mitigation.</p>
-  </div>
-
-  <!-- FUN FACT -->
-  <div class="box">
-    <span class="badge">MOSQUITO FACT</span>
-    <h2 style="margin-bottom:8px">&#9658; DID YOU KNOW?</h2>
-    <p class="funfact" id="funfact">&hellip;</p>
-    <div class="spriterow">
-      <svg class="sprite float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
+  <section>
+    <div class="head">
+      <p class="eyebrow">Why this matters</p>
+      <h2>The deadliest animal on earth is an insect.</h2>
+      <p>Malaria, dengue, yellow fever, and Zika cause preventable death and life-disrupting
+      illness across sub-Saharan Africa, South and Southeast Asia, and Latin America, and hit
+      young children hardest. Insecticide-treated nets and indoor spraying have saved millions
+      of lives, but their gains have stalled against insecticide resistance and vectors that
+      bite outdoors and early in the evening. Anophelyze was founded in 2026, after several
+      years of preparation, out of a need for environmentally neutral approaches that work
+      where those tools don't.</p>
     </div>
-  </div>
+    <figure class="map">
+      <div class="mapframe"><svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="World map shading countries by how many of malaria, dengue and yellow fever are transmitted there"><g stroke="#FFFFFF" stroke-width="0.5" stroke-linejoin="round"><g fill="#E3E8E0"><path d="M415 162L415 167L406 167L406 175L404 175L404 181L394 181L399 181L401 178L401 174L405 171L406 167L408 164L411 164L415 163Z"/><path d="M121 96L116 93L109 90L108 87L105 84L105 82L102 79L103 76L98 72L96 69L94 67L92 65L89 62L86 63L84 65L81 63L77 61L75 61L75 43L75 32L79 33L83 34L86 34L88 33L92 32L95 32L99 31L103 30L107 31L109 30L114 32L117 30L118 33L121 32L125 32L129 33L135 34L138 34L141 34L144 36L141 37L145 38L152 38L157 39L160 37L157 36L162 35L166 35L169 37L172 37L176 38L180 38L184 38L186 35L190 36L190 39L192 37L195 34L192 32L189 31L189 27L192 25L196 25L198 27L202 30L200 32L204 32L204 36L208 33L211 35L210 37L213 40L215 37L217 35L217 31L221 31L225 32L228 33L226 37L228 40L223 42L219 42L217 42L213 46L210 49L206 49L204 53L201 53L198 56L195 59L194 61L194 65L197 66L199 68L200 71L203 70L208 71L211 73L216 75L219 76L223 76L226 77L225 79L226 83L228 86L232 89L235 85L234 80L236 77L239 75L240 70L238 68L235 65L238 62L237 59L236 55L242 55L245 55L250 55L253 57L258 58L258 61L259 65L261 65L267 66L269 62L273 63L276 67L279 71L282 75L284 77L288 77L291 81L294 83L294 86L290 88L286 89L283 92L278 92L273 92L269 92L266 92L264 94L261 96L257 100L254 102L261 98L266 95L270 95L272 97L270 99L271 102L271 104L275 106L279 105L282 102L282 104L280 107L274 109L272 110L269 113L267 110L271 107L267 107L265 108L263 102L260 101L257 103L256 105L254 107L249 108L245 108L241 111L237 112L235 112L234 115L231 116L228 117L225 118L224 116L226 113L225 110L225 107L222 106L220 104L217 101L212 99L210 98L208 99L204 98L199 97L196 97L194 96L187 96L178 96L170 96L162 96L154 96L147 96L139 96L136 96L129 96L121 96ZM221 54L227 53L224 55L221 54ZM232 22L229 21L236 20L241 21L238 22L236 22L233 22ZM196 16L191 16L188 16L193 13L195 15ZM188 4L191 5L187 7L184 5L187 4ZM210 17L206 17L199 16L198 13L196 11L190 11L187 10L194 9L197 10L202 10L204 11L206 13L211 14L215 14L219 13L224 13L229 13L231 14L226 17L223 17L216 17L210 17ZM151 6L155 6L149 8L145 7L151 6ZM152 4L155 4L152 5L148 5L150 4ZM294 89L291 93L295 93L297 94L300 95L299 97L302 100L301 103L298 103L298 100L295 102L292 100L290 100L285 100L285 97L290 90L293 88ZM221 46L224 47L227 48L231 50L229 51L225 50L221 51L217 52L213 51L215 49L215 47L216 44L219 46L221 46ZM235 24L237 22L243 24L246 25L251 26L254 28L260 29L263 31L265 33L260 35L266 37L270 38L274 40L278 41L273 46L270 45L266 42L262 42L265 46L268 47L271 51L270 54L267 53L260 50L264 53L267 55L260 55L255 53L251 51L248 49L245 47L237 49L237 45L242 45L247 45L247 42L250 39L249 37L245 35L239 34L238 32L236 31L233 31L228 32L219 31L213 30L209 30L210 27L206 27L205 24L207 21L210 20L216 19L217 23L219 21L225 19L230 22L235 24ZM194 18L199 18L204 19L201 22L197 22L195 25L192 25L190 22L192 19L194 18ZM121 12L126 10L131 8L135 8L138 7L138 10L134 11L129 12L125 13L121 12ZM96 80L98 80L98 83L100 86L97 84L95 82L95 80ZM166 2L171 3L178 4L181 6L177 6L172 5L167 5L169 4L166 3ZM120 97L114 96L111 94L108 93L107 90L110 91L114 92L116 94L118 96ZM125 17L128 18L135 18L137 19L140 20L137 21L131 23L127 25L121 28L113 25L116 22L118 20L116 18L125 17ZM160 13L162 12L165 12L164 15L155 16L149 17L145 17L150 15L138 15L134 15L138 12L140 11L148 12L152 14L157 14L153 11L155 10L158 10L160 13ZM163 21L166 23L168 26L173 29L177 31L173 32L174 35L169 34L165 33L162 34L157 35L150 35L146 35L141 33L139 33L135 31L141 30L145 30L148 30L143 29L138 29L134 29L139 27L135 27L130 26L132 24L141 21L144 21L148 22L152 23L154 22L157 23L159 26L158 21L161 21L163 21ZM179 23L176 21L179 19L182 20L187 19L185 22L189 23L188 26L184 27L182 27L174 23L179 23ZM163 20L166 20L166 22L162 20ZM184 10L186 13L185 15L180 16L178 15L174 14L173 11L176 11L180 10L184 11ZM190 -2L195 -3L200 -4L203 -2L207 -2L211 -1L216 2L213 3L208 5L204 6L198 5L196 4L193 2L190 1L190 -2ZM202 -6L205 -6L208 -7L214 -7L217 -8L220 -8L223 -7L229 -9L233 -10L241 -10L250 -10L255 -10L261 -10L268 -9L273 -9L278 -8L272 -6L265 -5L263 -5L269 -5L263 -3L259 -2L254 1L249 1L239 2L243 2L241 6L237 6L232 9L237 9L230 12L223 11L216 11L212 11L207 11L211 9L210 6L219 8L215 6L211 5L218 3L215 1L221 -1L227 -1L221 -2L212 -2L207 -3L202 -5ZM244 39L239 40L240 37L242 36L244 39ZM190 32L190 35L186 34L181 33L183 32L187 31L190 32ZM271 93L276 94L278 95L274 94L271 93ZM273 102L275 104L278 104L275 105L272 104Z"/><path d="M121 96L129 96L136 96L139 96L147 96L154 96L162 96L170 96L178 96L187 96L192 96L196 97L199 97L201 98L207 99L210 98L212 99L215 100L219 102L221 105L225 107L225 110L226 113L224 116L225 118L228 117L231 116L234 115L235 112L237 112L240 112L243 109L249 108L253 108L256 105L257 103L259 101L262 101L263 106L265 109L262 110L260 111L257 112L255 115L256 118L252 119L250 120L252 121L249 122L246 122L246 124L245 127L243 130L242 132L242 130L241 126L241 129L241 133L242 137L241 140L238 140L235 142L231 147L228 150L228 154L229 157L230 160L231 164L231 167L230 170L227 167L226 165L224 162L225 159L222 155L218 156L215 153L212 154L210 153L207 154L208 157L205 157L202 155L199 156L196 155L191 158L189 160L187 163L187 166L185 167L182 164L180 160L178 156L174 155L172 158L169 156L167 152L164 150L159 149L152 150L146 148L142 147L139 146L136 147L134 143L131 142L128 141L124 135L122 131L119 127L119 124L118 120L118 117L117 115L118 112L118 109L119 106L118 102L117 100L121 99L122 102L122 98L121 96ZM43 68L46 69L44 71L41 72L39 70L42 69ZM75 32L75 43L75 61L77 61L80 62L84 65L86 63L89 62L92 65L94 67L96 69L98 72L103 74L101 78L98 76L97 73L94 70L92 68L90 67L86 67L83 66L77 63L75 63L71 62L67 62L62 60L59 59L56 60L55 62L52 63L50 64L47 64L48 60L51 59L47 60L41 64L41 67L38 69L35 70L31 73L27 75L23 76L20 77L13 79L16 77L18 76L21 74L24 74L29 71L32 69L32 67L30 66L26 65L22 66L21 63L16 62L12 60L10 57L13 54L16 52L20 51L24 50L24 47L19 48L17 48L13 48L9 47L5 44L8 43L14 41L21 43L16 40L12 37L8 36L14 34L18 33L21 30L23 29L28 28L31 28L35 27L38 27L41 28L46 28L50 30L52 29L58 30L63 31L68 30L72 31L75 32ZM-4 50L-1 50L3 52L-1 52L-4 52Z"/><path d="M662 95L658 97L658 101L651 101L649 106L643 108L645 114L644 116L641 115L637 114L633 114L628 113L626 116L622 115L620 117L615 119L614 121L609 120L608 117L607 114L604 112L600 112L597 113L594 110L588 107L581 108L581 119L578 117L573 117L569 114L568 111L569 107L574 107L574 104L571 103L566 103L563 104L561 100L557 98L558 95L559 91L562 93L562 91L568 87L572 87L577 89L580 91L583 89L587 89L591 91L595 90L591 87L594 85L594 81L605 79L612 77L615 76L619 77L620 80L623 79L626 80L628 82L635 79L637 82L643 90L648 90L652 89L654 92L657 94L660 93Z"/><path d="M581 119L581 108L588 106L592 109L597 113L600 112L604 112L607 114L607 117L609 120L612 120L615 119L618 117L620 117L620 120L625 121L622 123L619 123L619 121L615 121L613 125L611 126L613 129L612 132L608 132L605 128L602 127L598 123L596 120L593 120L591 117L588 115L584 118L581 119Z"/><path d="M261 410L261 417L263 417L262 419L259 418L255 417L251 415L249 414L245 410L251 413L254 414L256 411L259 409ZM258 301L260 306L260 310L262 313L263 318L264 321L261 323L261 328L262 330L258 335L257 338L257 341L256 344L257 349L258 353L256 356L256 358L254 363L255 366L253 370L252 373L253 377L252 381L253 384L253 386L252 392L251 394L250 398L249 403L251 404L251 406L258 408L261 409L259 409L255 410L255 413L251 412L248 410L244 408L244 405L243 397L244 394L247 392L243 391L245 388L246 383L249 384L250 378L248 381L247 376L248 370L248 365L248 362L251 357L252 352L253 347L253 343L254 340L253 336L255 332L255 326L256 320L257 313L257 308L256 304L258 301Z"/><path d="M563 104L560 106L557 109L560 112L562 118L559 120L556 118L554 116L552 115L546 114L542 113L540 113L537 110L534 109L531 107L535 104L538 102L535 102L537 99L539 99L539 96L540 94L536 93L533 91L528 91L525 89L524 85L521 86L519 86L518 83L520 83L519 80L516 78L517 76L514 75L510 74L509 70L508 66L509 63L512 62L509 60L515 56L517 54L514 51L513 46L515 44L512 40L514 38L510 36L513 33L517 32L520 31L524 33L531 34L541 37L543 41L540 42L536 43L524 41L527 44L527 48L530 49L533 48L533 46L539 48L539 45L545 42L548 42L550 43L550 39L549 35L556 36L554 40L560 41L566 37L575 34L578 37L585 36L588 34L591 36L594 34L592 32L600 32L604 33L613 37L612 34L609 33L609 29L613 25L615 22L624 22L622 27L624 30L624 34L627 36L620 42L623 43L627 41L630 38L630 34L627 34L628 29L625 26L630 24L630 22L631 27L633 27L632 25L637 24L642 24L647 25L644 23L644 20L649 19L655 19L660 19L661 15L664 15L669 13L676 13L684 12L692 11L696 11L699 8L705 7L710 8L706 9L712 9L715 10L723 10L729 12L730 14L727 15L720 17L725 19L728 19L730 20L734 19L743 20L754 22L754 19L760 20L764 20L768 21L767 25L771 27L775 28L777 25L781 27L786 26L791 27L797 26L795 23L798 22L822 24L830 28L841 28L846 28L848 32L851 33L854 32L859 32L864 33L869 32L873 35L876 34L875 31L884 31L889 31L896 33L900 34L900 46L897 48L893 48L896 49L897 52L898 55L893 54L886 56L884 57L880 59L876 61L871 60L865 62L861 63L858 62L854 67L857 69L856 74L854 74L853 76L850 79L849 83L845 84L844 87L840 90L838 83L837 76L838 72L840 68L844 68L849 64L853 61L858 58L860 54L857 54L855 57L849 60L847 56L840 57L834 63L830 65L826 66L826 63L822 63L819 64L811 64L803 65L794 71L785 78L789 78L792 81L797 80L801 83L801 86L799 89L798 93L797 97L793 102L789 108L786 111L781 115L777 113L774 116L775 111L774 108L776 107L779 108L781 105L782 101L784 97L780 98L778 99L774 99L773 97L770 94L765 93L764 90L763 87L761 84L759 83L755 82L751 82L748 83L748 85L746 88L744 91L740 94L737 93L734 93L731 92L727 94L724 95L722 95L718 95L716 95L712 92L709 91L706 92L704 92L700 91L700 89L697 88L694 88L691 86L689 90L687 93L684 93L681 93L677 91L674 90L670 92L666 94L663 95L660 93L657 94L654 92L652 89L648 90L644 88L637 82L634 80L628 82L626 82L623 79L620 80L619 77L615 76L612 77L606 78L595 80L596 83L593 84L591 87L596 89L591 90L587 89L583 89L580 91L577 89L572 87L568 87L562 91L562 93L559 91L557 95L557 98L561 100L562 103ZM678 -3L684 -4L689 -2L695 1L694 3L689 4L681 3L677 2L675 -0L672 -1L678 -3ZM702 2L708 4L693 6L698 2L702 2ZM794 12L801 12L810 14L808 16L799 16L794 17L789 15L794 12ZM818 14L825 15L822 16L818 16L813 15L818 14ZM797 20L799 19L802 19L806 20L803 21L797 21ZM552 -2L557 -2L561 -2L566 -3L570 -2L565 -1L563 -1L560 -0L557 -1L552 -2ZM496 79L491 79L488 79L492 77L495 77ZM575 19L581 17L586 14L594 12L603 11L607 10L612 9L603 13L596 15L588 18L584 21L580 24L580 26L585 29L575 29L570 26L572 24L577 20L575 19ZM805 81L806 84L805 87L807 90L809 96L805 95L804 99L806 102L803 105L802 103L802 100L802 96L803 94L803 90L801 87L801 82L804 81ZM-13 40L-11 42L-12 40L-5 40L0 43L-2 45L-7 45L-7 48L-10 49L-15 47L-19 45L-21 45L-22 43L-25 44L-26 46L-26 34L-19 36L-13 40ZM-22 28L-26 28L-25 26L-19 27L-22 28ZM523 105L526 105L528 107L531 107L528 108L524 110L521 107L524 105Z"/><path d="M280 407L283 405L287 405L288 407L284 408L281 409Z"/><path d="M476 1L481 -0L484 1L493 3L486 4L485 7L482 7L481 10L478 10L473 8L475 7L471 6L466 3L464 1L471 -0L476 1ZM517 32L513 33L508 30L504 31L503 34L501 35L498 34L495 34L492 33L489 34L483 35L480 37L476 43L472 47L472 49L469 49L468 52L468 56L469 61L465 65L459 67L455 68L452 66L451 63L450 56L452 54L459 51L464 48L469 44L475 38L479 35L486 31L492 30L496 30L500 28L505 28L510 27L518 29L514 30L517 32ZM508 -0L504 1L496 2L489 1L485 0L482 -1L490 -2L493 -1L496 -2L503 -1L508 -0ZM501 7L495 8L490 7L496 5L501 7Z"/><path d="M317 -8L326 -10L335 -10L338 -11L347 -11L367 -11L384 -8L379 -7L369 -7L355 -7L366 -7L373 -6L378 -6L378 -4L384 -5L397 -6L404 -5L395 -2L386 -1L392 -0L389 2L387 7L390 9L386 9L381 10L386 12L387 15L384 15L387 18L382 18L385 19L380 21L377 21L380 23L375 23L380 26L381 29L377 29L371 26L369 30L376 30L380 30L373 33L366 36L358 37L355 37L353 38L349 41L344 43L338 44L335 45L333 47L331 51L327 53L328 56L327 58L326 61L322 62L318 59L313 59L311 57L309 54L304 51L303 46L299 43L300 41L301 36L305 35L306 31L303 32L300 33L297 32L297 28L300 28L305 29L301 27L298 26L296 27L296 23L293 20L290 16L286 15L280 12L274 12L267 12L261 12L258 11L254 9L260 8L265 8L254 7L249 6L259 3L268 2L262 -0L264 -2L273 -4L277 -4L282 -6L290 -7L298 -7L301 -6L308 -8L314 -6L317 -6L323 -5L317 -7Z"/><path d="M614 397L618 399L614 401L614 398Z"/><path d="M512 336L512 339L509 341L507 339L509 336L512 336Z"/><path d="M289 340L293 342L297 344L300 348L300 351L296 355L293 355L290 353L287 352L288 349L288 346L288 343L289 340Z"/><path d="M304 234L303 237L302 239L300 241L297 240L298 237L297 234L298 229L301 230L304 233ZM453 94L458 96L456 100L453 103L455 105L454 108L455 110L454 114L449 113L445 114L442 116L439 115L433 114L434 111L434 105L431 102L426 99L425 97L429 96L433 97L432 93L435 95L441 92L441 90L444 89L446 91L449 93L452 94Z"/><path d="M529 146L527 149L528 151L527 156L525 151L527 148L527 146L529 144Z"/><path d="M462 153L460 148L457 144L456 142L459 137L458 135L462 132L466 133L464 136L465 139L464 143L467 145L467 147L463 150L463 153Z"/><path d="M415 162L415 158L419 156L422 155L425 153L428 152L428 149L430 148L434 147L433 142L432 138L434 137L437 136L441 134L445 133L450 133L453 132L456 132L459 133L459 137L458 140L457 144L459 147L462 153L462 156L462 160L462 163L461 166L463 169L464 172L467 173L459 180L452 187L448 188L445 188L444 186L442 183L433 177L424 170L415 162Z"/><path d="M529 147L532 147L537 144L538 148L532 150L535 153L532 155L527 156L528 151L529 147Z"/><path d="M570 172L572 172L576 173L580 168L582 170L581 173L579 176L571 176L570 173Z"/><path d="M561 154L562 159L559 157L557 157L559 154Z"/><path d="M538 148L537 144L543 141L544 137L543 135L546 132L550 132L554 136L556 139L554 142L556 145L559 147L560 149L560 151L562 155L559 154L557 157L552 157L545 151L541 149L538 148Z"/><path d="M773 116L771 119L771 121L768 123L765 124L767 128L764 129L762 130L759 131L759 128L760 125L757 124L762 120L765 119L767 119L770 116L773 116Z"/><path d="M762 130L764 129L767 129L769 131L770 137L767 139L762 141L763 137L761 134L762 130Z"/><path d="M663 95L666 94L670 92L674 90L677 91L679 91L684 93L687 93L690 91L691 86L694 88L697 88L700 89L700 91L704 92L706 92L709 91L712 92L715 93L718 95L722 95L724 95L727 94L731 92L734 93L737 93L736 95L734 98L739 100L743 100L745 102L743 103L739 103L735 106L731 107L729 109L726 108L723 110L725 112L721 115L718 116L714 116L710 117L707 119L703 118L699 116L696 115L693 116L688 115L685 115L682 110L678 108L674 108L671 107L671 102L669 100L666 99L663 95Z"/><path d="M612 132L613 129L612 127L615 123L619 121L619 123L616 123L619 125L622 126L627 125L627 128L630 129L630 131L627 131L624 133L621 133L621 130L618 129L616 131L612 133Z"/><path d="M620 117L622 115L626 116L628 113L632 115L637 114L641 115L644 116L639 119L635 120L631 122L627 124L622 126L619 125L616 125L619 124L622 123L625 121L622 119L618 119L620 117Z"/><path d="M572 118L576 116L580 120L584 119L586 117L591 117L592 119L595 120L598 123L600 125L605 128L608 130L606 132L603 135L600 136L597 138L595 137L594 134L589 132L585 130L582 130L578 132L576 132L576 127L574 124L573 121L576 122L578 121L575 117L573 120Z"/><path d="M562 155L561 151L560 149L559 147L556 145L554 142L555 140L556 137L552 132L551 130L551 125L554 127L557 127L560 125L561 127L563 129L564 131L566 132L572 134L576 133L578 132L582 130L585 130L587 131L592 134L595 137L593 141L593 143L594 148L596 150L594 155L596 158L598 160L599 163L596 166L595 170L590 169L588 168L585 168L584 164L580 164L578 165L575 164L572 162L570 161L568 158L566 154L563 153Z"/><path d="M529 146L530 143L531 140L529 138L531 135L535 133L539 134L542 133L546 132L543 135L544 137L543 141L537 144L532 147L529 146Z"/><path d="M557 127L554 125L551 124L550 121L553 120L555 123L557 125Z"/><path d="M465 65L469 61L470 58L468 52L469 49L472 49L472 47L476 43L479 39L483 37L488 36L494 35L498 37L498 42L494 44L492 46L488 51L483 53L481 58L485 62L483 65L480 66L479 71L478 74L475 73L473 76L470 76L470 73L467 70L465 65Z"/><path d="M510 74L512 74L517 76L516 78L519 80L521 82L518 83L519 86L517 86L516 89L512 88L510 88L505 87L502 87L499 88L497 85L498 82L500 81L503 79L506 77L510 74Z"/><path d="M519 86L521 86L524 85L525 88L527 89L531 92L535 93L540 94L539 96L539 99L537 99L535 102L532 103L529 103L527 104L524 104L519 104L516 103L513 107L511 107L512 104L514 104L513 101L511 98L508 97L506 98L502 99L498 99L496 99L494 96L497 92L498 88L500 87L505 87L508 88L511 88L515 88L519 86Z"/><path d="M498 81L498 83L498 86L499 90L495 94L493 94L490 94L487 94L484 93L481 91L477 90L475 87L474 85L473 81L479 79L482 78L485 78L488 79L491 79L496 79Z"/><path d="M481 98L479 102L476 103L473 103L469 103L466 102L463 102L467 100L470 100L471 98L474 97L476 96L480 96Z"/><path d="M494 98L494 100L491 104L488 104L485 106L481 104L480 100L482 99L485 99L488 98L491 97L493 98Z"/><path d="M506 98L508 97L511 98L513 101L514 103L511 104L510 106L510 104L508 101L506 98Z"/><path d="M510 107L512 107L511 112L507 111L504 111L499 112L496 112L496 109L493 109L491 106L493 102L496 99L498 99L501 100L504 99L506 98L508 101L510 104L510 107Z"/><path d="M505 75L503 78L500 81L498 81L496 78L492 77L491 74L494 73L499 73L501 73L505 75Z"/><path d="M507 70L509 72L507 75L503 74L499 73L494 73L491 74L491 72L495 69L497 71L500 69L503 68L505 70Z"/><path d="M509 63L508 66L508 69L505 70L503 68L500 69L497 66L500 63L504 63L506 63L509 63Z"/><path d="M473 81L473 83L475 86L476 89L473 90L470 91L469 94L472 96L471 100L468 100L464 100L462 100L459 99L456 100L457 98L454 95L453 92L453 87L455 83L458 82L459 79L463 77L465 79L468 80L472 80Z"/><path d="M495 110L499 112L503 112L507 111L511 112L508 116L504 118L502 120L498 119L495 116L496 114L495 111Z"/><path d="M505 138L501 139L498 138L501 138L505 138ZM496 119L500 119L504 119L501 121L498 121L499 124L496 122L496 125L498 128L499 131L497 130L497 135L493 133L492 131L490 127L489 125L490 122L493 121L495 120Z"/><path d="M552 132L547 132L543 133L539 134L535 133L532 134L530 136L530 134L526 133L521 136L516 134L514 135L511 134L508 134L507 131L506 127L507 122L511 122L512 120L517 120L520 118L523 117L528 117L532 119L536 121L539 120L541 120L544 119L547 119L549 120L549 123L552 124L551 129L552 132ZM504 118L507 117L509 117L512 120L508 120L505 123L505 121L504 118Z"/><path d="M491 121L490 123L487 123L487 119L487 117L489 116L490 119Z"/><path d="M480 103L482 105L486 105L486 109L483 108L481 107L478 107L479 110L482 113L485 115L482 115L478 113L476 110L475 108L473 109L475 106L477 106L480 103Z"/><path d="M462 100L464 104L461 104L459 104L456 106L453 104L455 101L459 100L462 100Z"/><path d="M453 90L452 92L449 93L446 91L444 90L448 89L450 88L453 90Z"/><path d="M455 82L455 86L453 90L450 88L448 89L449 83L453 82Z"/><path d="M414 118L417 118L420 118L420 120L419 123L419 127L419 129L418 132L416 133L414 129L413 125L414 123L415 120Z"/><path d="M418 132L419 129L419 127L419 123L420 120L420 118L417 118L414 118L413 114L417 112L420 113L423 112L426 113L432 113L438 116L442 116L445 116L443 120L439 120L437 123L436 126L436 129L433 131L432 134L428 134L426 134L423 136L421 135L418 132Z"/><path d="M421 81L422 83L420 86L415 87L411 87L414 84L412 81L416 78L418 78L421 81Z"/><path d="M863 312L867 315L864 315L861 312L859 309L861 310Z"/><path d="M892 371L890 375L887 375L888 372L884 369L886 364L885 360L882 356L882 353L885 356L886 359L888 362L892 364L895 363L896 366L893 368L892 370ZM873 382L876 380L878 376L880 374L882 373L884 373L885 376L883 380L882 382L878 384L876 389L873 391L870 391L866 390L867 386L870 383L873 382Z"/><path d="M817 373L819 377L817 381L815 382L811 379L809 374L814 374L817 373ZM762 347L759 348L757 349L755 352L751 352L749 352L745 352L743 353L741 355L737 355L734 353L733 351L735 349L735 345L733 342L733 338L732 335L730 331L729 329L729 326L729 323L729 321L730 318L731 314L731 317L734 313L737 311L741 310L744 309L748 308L750 305L752 302L753 298L755 300L756 297L758 294L760 291L763 290L766 291L769 293L771 289L773 286L776 285L776 282L779 282L783 284L785 285L788 284L789 287L787 289L785 293L788 295L791 297L794 299L798 302L800 299L801 296L802 294L801 291L801 287L802 284L803 281L805 283L806 287L806 290L807 292L810 292L811 295L811 297L813 302L814 306L816 307L820 310L821 313L822 316L825 316L825 320L828 323L830 325L831 328L831 331L832 334L832 337L831 341L830 345L829 348L826 351L825 356L823 360L823 363L818 364L816 365L813 368L810 366L806 367L804 366L801 365L799 364L797 360L795 357L792 357L793 353L789 356L791 352L792 349L789 351L787 355L785 352L783 350L779 346L775 344L770 345L767 346L764 347L762 347Z"/><path d="M464 102L468 102L473 103L473 106L469 107L469 109L472 112L473 115L476 117L479 118L482 121L484 122L481 122L481 125L479 130L478 127L478 125L475 122L472 120L468 118L466 116L463 111L460 110L457 112L454 108L455 105L457 106L460 105L463 104ZM475 129L477 132L474 133L469 131L472 130L475 129ZM460 121L462 122L462 126L460 127L459 122Z"/><path d="M463 77L459 77L458 72L461 70L464 69L464 71L465 74L462 76ZM469 74L468 78L466 76L469 74Z"/><path d="M421 81L418 80L418 77L423 79ZM429 82L428 78L425 78L425 76L423 76L423 73L422 69L424 66L429 66L427 69L429 69L432 69L431 71L429 74L432 74L434 78L438 82L441 84L440 87L439 90L435 90L431 91L428 92L425 92L422 92L426 89L428 88L424 88L425 84L429 82Z"/><path d="M400 42L402 46L399 48L391 50L389 51L386 51L379 50L381 48L376 47L380 46L375 44L380 42L384 44L388 42L391 43L396 42L400 42Z"/><path d="M556 118L559 120L562 118L565 122L564 125L563 129L561 127L561 125L557 127L556 125L554 122L553 119L557 120L556 118Z"/><path d="M540 113L542 113L546 114L550 115L554 116L556 118L557 120L553 119L549 120L547 119L544 119L544 115L541 114Z"/><path d="M734 230L734 234L731 233L734 230Z"/><path d="M473 103L476 103L478 103L477 106L475 106L472 107L473 103Z"/><path d="M511 34L514 38L512 40L515 44L513 46L515 49L518 53L515 56L509 60L505 60L500 62L496 62L492 60L493 56L491 54L495 50L501 47L499 43L498 37L494 35L490 34L495 34L498 34L501 35L503 34L504 31L508 30L512 32Z"/><path d="M495 95L493 98L491 97L488 98L485 99L483 100L481 98L483 96L486 94L488 95L491 95L495 95Z"/><path d="M476 89L479 90L482 92L486 94L483 96L481 97L478 97L475 96L472 96L469 94L469 92L471 90L474 89Z"/><path d="M802 126L800 129L800 132L799 135L798 139L795 140L790 140L786 144L784 140L780 141L777 142L774 142L777 145L775 150L772 150L773 147L770 144L772 143L776 140L783 137L786 137L789 132L794 130L797 125L797 122L801 119L802 124L802 126ZM809 111L811 113L808 114L805 117L801 115L800 119L797 119L797 116L798 113L801 113L801 109L802 106L805 110L809 111ZM778 144L780 142L783 142L782 145L780 144L778 145Z"/><path d="M521 139L524 138L526 137L524 139L521 139Z"/><path d="M432 138L433 142L434 146L430 148L428 149L428 152L425 153L422 155L419 156L415 158L415 162L412 164L408 164L407 166L405 171L401 174L401 178L399 181L393 181L394 179L395 176L397 172L399 170L400 166L403 162L407 160L410 157L413 155L412 151L413 148L415 144L417 143L421 139L424 137L428 138L430 138Z"/><path d="M532 179L522 179L512 179L501 179L501 168L501 157L501 154L501 151L505 150L508 150L510 151L513 151L517 150L519 152L522 151L525 151L527 155L526 160L522 159L521 155L521 158L523 162L525 166L527 170L529 173L528 176L531 178Z"/><path d="M501 179L501 185L498 185L488 181L478 175L475 176L472 176L468 175L465 171L463 169L461 166L462 163L462 160L462 158L462 153L463 150L465 148L467 145L470 146L473 146L476 147L478 150L480 151L483 152L486 154L489 151L488 149L491 146L496 146L499 148L501 149L501 151L501 154L501 157L501 168L501 179Z"/><path d="M563 212L563 216L562 220L560 222L549 219L548 216L547 213L549 214L552 215L554 214L557 214L559 213L563 212Z"/><path d="M485 115L483 114L479 111L478 109L481 107L483 108L486 109L488 111L485 114Z"/><path d="M495 116L496 119L494 120L491 121L490 118L493 117Z"/><path d="M486 105L489 105L492 108L495 109L495 112L495 115L493 117L492 114L489 115L487 113L486 110L487 107Z"/><path d="M489 116L486 117L485 114L488 114Z"/><path d="M490 118L489 116L491 114L493 116L490 118Z"/><path d="M516 236L514 234L511 233L508 231L505 229L503 226L502 223L499 220L501 217L503 215L505 218L509 217L512 218L514 215L518 217L519 215L520 211L523 209L522 212L523 214L524 216L525 220L522 223L525 225L528 230L525 234L521 235L517 235Z"/></g><g fill="#B7C9B2"><path d="M479 335L481 335L485 337L488 335L488 324L491 327L491 330L494 328L496 326L498 325L501 326L504 323L507 320L509 318L513 315L515 316L517 316L519 320L519 326L516 329L518 331L522 330L521 332L521 334L518 337L516 341L514 343L512 346L508 350L505 351L502 351L498 351L495 352L493 353L489 355L486 353L484 352L483 348L484 345L482 342L481 339L479 335Z"/><path d="M207 203L211 204L211 206L209 206L206 205L207 203Z"/><path d="M226 175L228 176L232 177L236 178L239 180L241 182L244 183L244 186L241 185L237 186L238 183L235 182L231 180L227 179L224 177L221 179L219 179L222 177L225 176Z"/><path d="M520 330L516 330L517 327L519 327L520 330Z"/><path d="M579 177L580 174L581 172L583 172L587 174L589 176L590 180L588 184L586 188L583 190L580 192L578 195L575 195L571 188L579 185L580 179Z"/><path d="M608 132L612 132L614 132L617 131L619 128L621 133L624 133L627 131L630 131L628 133L625 134L622 134L621 137L620 140L619 142L617 142L616 145L615 149L611 150L608 152L608 155L604 156L602 156L598 157L594 155L596 152L594 150L593 145L593 141L595 137L597 138L600 136L603 135L604 132L606 131Z"/><path d="M647 224L647 227L644 229L643 226L642 222L643 217L646 221L647 224Z"/><path d="M719 191L716 187L721 185L721 188L719 191ZM644 116L645 114L643 108L648 107L651 101L656 102L658 97L662 95L666 99L669 100L671 102L670 106L674 108L678 108L681 110L683 113L688 115L693 116L696 115L699 116L703 118L706 118L710 117L714 116L718 116L721 115L725 112L723 110L726 108L729 109L731 107L735 106L739 103L743 103L745 102L743 100L739 100L736 99L736 95L737 93L740 94L744 92L746 88L748 85L748 83L751 82L755 82L759 83L761 84L763 87L764 90L765 93L770 94L773 97L774 99L778 99L780 98L784 97L783 100L781 105L779 108L776 107L774 108L775 111L774 114L771 114L766 117L763 118L759 122L753 125L748 127L749 124L750 121L748 122L745 124L741 126L741 130L745 132L748 130L750 131L749 134L745 137L746 141L747 144L749 147L751 149L751 151L750 154L751 157L750 160L747 164L745 168L742 171L739 174L735 177L732 177L730 177L725 181L722 181L721 184L720 181L716 180L712 180L712 177L709 176L706 177L703 177L700 178L699 182L695 180L692 179L693 176L691 173L688 173L688 170L691 167L691 164L691 162L689 160L685 159L684 156L680 157L677 159L675 161L672 160L669 160L666 163L665 160L661 161L658 160L654 158L651 156L649 154L646 154L642 152L640 150L639 146L640 144L640 141L637 137L633 136L632 134L630 131L630 129L627 128L627 125L629 122L634 122L638 120L643 117Z"/><path d="M750 172L749 177L748 179L746 177L746 174L748 171L750 169L750 172Z"/><path d="M695 227L697 228L700 228L703 232L703 236L703 238L705 242L701 241L698 239L696 235L696 232L695 228ZM740 234L738 234L735 234L734 237L732 243L727 242L725 244L721 245L719 241L723 241L724 239L728 237L730 235L732 235L734 232L736 228L737 226L740 227L741 229L742 232L740 234Z"/></g><g fill="#7C9C79"><path d="M524 250L534 257L538 262L537 265L539 268L538 271L538 273L540 278L539 281L536 282L533 283L531 283L528 282L525 278L524 276L521 276L518 274L515 269L513 265L513 261L516 258L516 256L516 252L519 250L524 250Z"/><path d="M800 255L804 257L809 259L812 262L817 266L816 270L818 272L820 275L823 277L825 280L822 279L820 279L817 278L814 275L813 272L809 271L806 273L806 275L802 275L800 275L800 265L800 255ZM830 258L831 261L828 258L825 256L828 256ZM826 265L823 267L820 266L822 264L825 264L827 260L828 264ZM835 264L837 266L837 268L835 265L834 263Z"/><path d="M800 255L800 265L800 275L798 273L795 272L791 273L792 271L793 266L792 264L787 261L781 258L779 259L777 256L779 255L776 252L774 251L776 249L782 249L783 256L785 257L788 254L791 252L793 252L797 254L800 255ZM758 275L757 278L755 279L756 276L758 275ZM740 234L739 237L741 240L743 244L740 245L739 250L737 252L737 255L736 259L733 260L730 258L725 258L723 256L720 252L718 248L717 246L718 243L721 245L725 244L727 242L730 243L733 238L735 234L738 234L740 234ZM770 256L773 257L774 259L769 257L766 258L770 256ZM766 240L768 244L768 246L767 249L765 244L765 241ZM753 244L756 244L759 242L757 246L753 246L748 246L746 246L746 249L748 251L754 249L752 252L750 253L752 257L754 262L752 264L753 261L750 262L748 258L748 255L747 260L747 264L744 264L745 261L744 258L744 254L744 251L745 247L748 243L753 244ZM746 279L743 277L745 276L748 278ZM749 273L753 272L749 275L746 274L749 273ZM741 273L743 274L740 275L737 275L740 273ZM716 267L721 268L727 269L732 271L735 273L732 274L729 273L727 273L724 273L722 272L719 271L716 271L711 270L708 268L710 265L713 265L716 267ZM706 250L707 254L710 257L709 260L709 265L706 265L704 263L701 260L698 256L697 253L695 249L692 246L692 244L691 241L688 239L687 237L682 232L688 231L690 234L693 237L696 241L699 241L702 245L703 249L706 250Z"/><path d="M261 410L263 413L266 415L270 416L266 418L263 417L261 417L261 410ZM289 340L288 343L288 346L288 349L287 352L290 356L291 360L289 365L285 367L280 367L277 367L277 371L276 374L273 374L271 373L270 377L273 377L272 379L269 384L266 386L263 390L266 392L268 393L267 396L264 397L263 401L260 402L260 407L252 408L251 404L249 403L248 399L251 396L252 392L253 388L254 385L253 382L252 378L252 373L253 370L254 367L254 363L254 360L256 356L258 353L258 350L256 344L257 341L257 338L258 335L260 332L261 329L261 323L264 321L265 318L267 314L270 315L272 317L273 315L276 315L281 321L286 324L289 325L286 331L289 332L292 332L296 329L297 327L299 328L299 330L295 333L292 336L289 340Z"/><path d="M544 252L543 250L543 238L545 235L547 234L549 232L553 232L560 222L562 220L563 216L563 213L566 211L569 211L568 214L567 219L566 222L564 226L562 231L560 234L557 238L554 241L550 244L548 246L545 250L544 252Z"/><path d="M253 186L253 189L253 191L250 191L247 191L250 190L250 187L253 186Z"/><path d="M253 191L253 189L253 186L255 186L257 186L260 188L261 191L258 190L256 191L254 193Z"/><path d="M758 275L761 273L764 273L761 275L759 275Z"/><path d="M136 147L139 146L142 146L146 148L152 150L157 150L163 149L166 151L168 154L170 157L174 155L178 156L180 160L182 164L185 167L187 167L186 170L186 172L186 176L186 179L187 183L189 186L191 189L193 190L197 190L200 189L204 188L205 183L209 181L212 181L212 185L212 187L211 191L209 192L206 192L203 192L203 195L205 197L201 197L200 200L200 202L197 199L194 197L190 198L187 198L183 196L178 194L175 192L171 191L167 187L165 184L166 181L165 178L162 174L160 171L156 168L156 165L153 163L151 161L149 158L147 154L146 152L144 150L142 149L142 152L142 154L145 157L147 161L150 165L151 168L152 170L155 174L155 177L152 173L149 171L149 168L147 166L144 164L141 161L143 160L142 157L139 154L137 149L136 147Z"/><path d="M225 218L224 220L221 218L219 216L216 213L219 213L221 214L224 216Z"/><path d="M222 213L219 213L217 212L215 211L212 207L214 206L216 204L218 203L221 202L223 201L223 204L222 207L222 209L222 212Z"/><path d="M223 201L221 202L218 202L217 204L214 205L213 207L212 204L209 203L208 201L210 198L212 198L215 198L217 198L220 198L223 200Z"/><path d="M200 202L200 200L201 197L205 197L203 195L203 192L206 192L208 192L208 195L208 198L210 198L208 201L207 203L204 204L201 203Z"/><path d="M208 192L211 190L210 193L210 196L208 198L208 195L208 192Z"/><path d="M517 316L515 316L513 315L509 313L508 310L504 307L503 304L502 302L505 302L508 300L510 298L513 295L517 296L520 298L522 303L521 307L521 310L520 312L517 316Z"/><path d="M513 315L509 318L507 320L505 323L503 326L499 326L497 325L494 328L491 330L491 327L489 324L488 315L491 314L491 303L497 302L499 302L502 302L503 304L504 307L507 310L509 313L513 315Z"/><path d="M488 324L488 335L486 337L483 336L480 334L477 333L476 331L476 328L475 325L474 321L474 317L473 314L471 312L470 308L467 303L467 300L470 299L473 301L484 301L492 302L497 301L501 301L498 304L493 303L491 314L488 315L488 324Z"/><path d="M521 276L524 276L525 278L526 283L525 285L526 289L529 292L529 296L527 299L525 295L526 292L523 290L522 287L522 283L523 280L523 277Z"/><path d="M526 283L531 283L533 283L536 282L539 281L541 280L541 283L541 286L542 291L541 295L539 299L536 300L533 301L530 305L528 307L526 310L528 313L528 315L529 318L528 322L525 324L522 325L521 328L519 326L519 322L517 316L520 312L521 310L521 307L521 305L522 299L519 297L515 296L515 293L523 290L526 292L525 295L527 299L529 296L529 292L528 290L525 285L526 283Z"/><path d="M565 286L566 289L566 293L567 296L565 298L564 303L563 306L562 310L560 316L559 321L558 324L554 326L550 324L550 320L549 317L548 315L549 313L551 309L551 306L550 301L551 297L554 296L558 294L561 291L563 287L564 284Z"/><path d="M701 209L700 206L702 203L705 203L708 203L711 202L713 203L714 209L709 211L705 215L702 213L701 209Z"/><path d="M708 203L705 203L702 203L700 206L701 209L699 208L697 206L695 206L694 209L693 214L692 216L692 219L695 221L695 224L698 226L699 229L695 227L692 223L690 219L691 216L692 213L693 210L692 208L692 204L690 202L691 197L689 193L688 190L690 186L693 185L696 185L697 190L697 193L700 191L702 192L704 191L706 193L707 196L709 199L709 202Z"/><path d="M713 203L711 202L708 203L709 199L707 196L706 193L704 191L702 192L700 191L697 193L697 190L698 187L695 184L697 181L699 178L701 180L703 183L706 183L707 186L704 188L707 189L710 193L711 196L714 200L713 203Z"/><path d="M695 184L692 186L689 190L689 193L690 195L691 200L692 204L692 208L693 210L692 213L691 216L690 214L691 212L690 207L689 201L688 197L687 195L682 199L679 198L680 194L680 191L678 187L675 183L674 181L677 178L677 176L677 173L680 171L682 167L685 163L688 161L691 162L691 164L691 167L688 170L688 173L691 173L691 176L692 179L695 180L695 183Z"/><path d="M705 215L708 213L710 213L714 209L714 205L714 200L711 196L710 193L707 189L704 188L707 186L706 183L703 183L701 180L700 178L703 177L706 177L709 176L712 177L712 180L715 181L712 183L709 186L711 191L713 195L716 197L717 200L718 206L718 211L713 215L711 218L708 221L707 216Z"/><path d="M687 160L687 163L682 165L680 169L679 173L677 176L677 178L674 174L672 174L675 170L671 169L668 169L667 167L664 167L664 170L665 174L666 176L666 179L661 181L661 183L656 187L653 191L648 195L645 198L643 200L643 204L644 207L643 210L642 215L640 218L638 222L634 220L633 215L632 212L630 208L629 204L626 198L625 192L624 188L624 184L624 181L620 183L615 179L615 177L612 174L620 172L619 169L618 165L619 161L622 161L624 158L626 154L629 151L628 149L629 146L627 141L632 140L635 140L637 137L640 141L640 144L641 147L640 150L642 152L646 154L643 158L646 159L648 161L651 163L655 163L658 165L661 166L664 164L664 161L666 163L668 165L672 164L674 162L677 159L680 157L684 156L685 159L687 160Z"/><path d="M675 179L675 181L673 179L670 177L669 180L666 179L666 176L665 174L664 171L666 169L665 165L668 167L671 169L673 169L673 173L673 176L675 179Z"/><path d="M673 161L674 164L670 164L666 163L667 160L670 160L673 161Z"/><path d="M664 161L664 164L661 166L658 165L655 163L651 163L648 161L646 159L643 158L644 155L647 153L651 156L654 158L658 160L661 161L664 161Z"/><path d="M637 137L635 140L632 140L628 140L628 144L631 147L629 151L626 154L624 158L622 161L619 161L616 164L618 168L620 172L614 172L611 173L610 171L608 169L603 169L599 169L595 170L596 166L600 164L598 160L596 158L594 155L598 157L601 156L604 156L608 155L608 152L611 150L613 149L615 147L618 144L620 141L621 138L620 136L625 134L628 133L630 132L633 136L637 137Z"/><path d="M748 208L747 205L749 206L749 209ZM752 216L753 213L756 212L756 215L754 218L752 217ZM762 221L763 225L762 228L761 225L760 228L757 228L756 226L755 223L751 226L752 222L755 220L758 221L760 219L760 217L762 220ZM742 218L738 221L742 217L744 212L745 214L742 218ZM752 191L752 194L752 197L750 200L750 203L753 203L756 204L756 207L754 207L751 204L749 205L748 202L746 201L745 197L747 193L748 190L751 191ZM760 209L761 213L758 216L757 213L758 211L757 208L759 208Z"/><path d="M531 203L532 197L533 194L536 191L537 195L538 198L543 202L546 206L547 209L544 206L540 202L538 202L535 201L534 203L531 203Z"/><path d="M288 309L288 315L291 316L294 316L294 320L297 321L298 323L297 327L296 329L294 332L289 332L286 331L289 326L286 324L283 321L276 316L277 312L278 308L283 307L285 307L288 308Z"/><path d="M571 188L573 193L572 196L571 199L569 200L565 202L562 204L559 205L555 206L553 208L549 208L548 205L547 201L547 199L548 196L549 193L553 193L556 194L559 194L561 191L563 190L571 188Z"/><path d="M527 156L530 157L534 154L532 150L537 148L541 149L545 151L552 157L557 157L559 157L562 159L563 162L566 165L566 167L567 170L570 172L571 176L579 178L579 185L571 188L563 190L561 191L559 194L556 194L554 194L550 193L548 194L547 197L546 194L545 192L543 189L542 187L539 184L538 181L538 177L536 174L534 172L533 170L531 167L530 165L529 163L526 160L527 158Z"/><path d="M546 208L549 209L548 212L545 213L545 210Z"/><path d="M515 251L516 254L513 256L512 252L515 251Z"/></g><g fill="#2F5A3F"><path d="M513 261L513 264L513 267L516 273L512 273L510 275L510 280L510 283L513 285L514 288L510 286L508 285L503 283L501 282L499 281L496 281L494 278L493 275L493 272L490 270L487 269L486 272L484 272L481 270L480 268L479 265L472 265L469 266L469 263L472 261L475 262L478 259L478 255L479 252L482 249L483 246L483 242L484 238L485 234L487 232L491 234L495 235L497 233L500 231L502 231L505 231L508 231L509 233L512 234L516 236L516 240L515 242L514 245L514 248L513 251L512 254L512 257L513 261Z"/><path d="M538 262L534 258L525 250L524 247L526 243L527 241L526 238L525 234L528 230L529 232L532 233L535 236L539 236L542 234L545 235L543 238L543 250L544 252L542 255L540 257L539 260Z"/><path d="M500 222L497 219L498 217L496 214L495 211L494 208L494 206L495 204L495 201L496 199L499 199L498 187L501 185L501 179L512 179L522 179L532 179L533 182L533 186L534 190L536 191L533 194L532 197L531 201L530 205L529 208L527 212L524 217L525 220L524 218L524 215L522 212L523 209L520 210L520 213L518 217L514 215L512 217L509 218L507 217L504 216L502 215L500 220Z"/><path d="M498 187L499 199L496 199L495 201L495 204L494 206L494 208L495 211L493 214L491 218L489 219L486 219L484 221L480 224L476 224L476 221L473 218L475 216L476 213L475 209L475 206L472 203L473 199L476 196L476 192L477 185L477 183L475 176L478 175L488 181L498 187Z"/><path d="M300 351L300 348L297 344L294 342L291 340L292 336L295 333L299 330L299 328L297 327L298 323L297 321L294 320L294 317L292 315L288 315L288 311L288 309L289 306L289 303L287 300L287 297L282 297L281 294L282 291L280 289L277 288L275 286L272 286L269 283L269 280L269 277L266 278L262 280L258 281L256 281L256 276L252 278L249 276L248 273L247 270L249 268L250 265L253 261L255 260L257 260L259 252L258 249L257 245L258 242L263 242L265 243L269 245L271 243L274 240L272 239L272 235L275 235L277 234L280 233L283 232L284 235L283 239L284 242L287 243L289 242L291 241L293 241L297 240L299 240L302 239L303 237L304 234L307 241L309 244L307 246L312 248L312 251L317 250L322 252L323 255L325 254L330 256L334 256L338 258L341 262L346 263L347 268L347 275L342 281L340 285L338 287L337 290L337 295L336 300L335 303L335 308L332 312L332 315L329 318L326 318L322 319L318 321L315 324L312 327L312 329L312 334L310 337L307 343L305 345L302 350Z"/><path d="M258 281L262 281L264 279L269 277L269 280L269 283L272 286L275 286L277 288L280 289L282 291L282 294L282 297L287 297L287 300L289 303L289 306L288 309L285 307L283 307L278 308L277 310L276 316L273 315L272 317L270 315L267 314L265 317L262 313L260 310L261 307L259 303L260 298L259 295L260 292L260 289L261 286L258 281Z"/><path d="M257 260L255 260L253 261L250 263L249 266L248 268L248 273L249 276L252 278L254 278L256 281L258 281L261 286L260 289L260 292L259 294L260 298L258 301L256 304L254 302L248 298L244 294L241 290L239 285L236 279L234 273L232 269L228 266L228 262L231 258L230 261L233 262L235 259L237 256L240 255L243 252L243 248L246 249L248 251L249 254L253 254L255 254L255 259Z"/><path d="M265 243L263 241L258 242L259 244L257 248L259 251L257 260L257 255L254 254L251 255L248 251L246 249L243 248L241 246L238 246L234 243L235 240L238 237L238 234L238 230L238 226L237 223L238 221L241 218L243 214L246 213L248 212L251 210L254 210L251 213L249 217L250 220L251 223L255 225L259 228L262 228L264 228L263 231L263 233L264 236L263 238L265 243Z"/><path d="M238 220L239 223L236 224L236 221L234 219L231 221L231 224L229 225L227 222L224 221L224 219L227 219L229 220L232 218L234 218L236 218Z"/><path d="M281 231L277 234L275 235L271 234L272 237L274 240L272 242L269 244L267 245L264 240L264 237L263 233L263 231L264 228L262 228L259 228L257 226L252 225L251 222L250 219L250 215L252 211L253 215L253 219L254 217L254 213L257 212L257 209L260 212L262 214L264 214L267 214L270 216L275 214L278 214L277 216L281 218L281 221L283 221L281 224L280 226L279 229L281 231Z"/><path d="M292 241L289 242L287 243L284 242L283 239L283 236L283 233L282 231L279 229L280 226L282 225L281 223L285 222L287 226L289 228L290 231L288 235L289 237L292 241Z"/><path d="M297 240L294 240L292 241L290 239L288 235L288 232L290 229L293 229L296 228L298 229L297 232L298 236L298 239Z"/><path d="M243 248L244 250L240 255L237 256L235 259L233 262L230 261L231 258L232 255L229 254L229 250L230 248L231 245L234 243L237 245L240 246L243 248Z"/><path d="M394 205L393 203L394 199L396 196L398 196L401 197L404 200L406 204L407 206L407 209L403 208L397 208L394 209L394 206L396 207L399 206L402 205L398 204L394 205Z"/><path d="M408 209L406 206L406 202L407 200L410 200L412 200L423 199L423 197L422 183L421 170L424 170L433 177L442 183L444 186L445 188L448 188L448 195L446 199L444 199L441 200L438 201L436 200L432 202L430 204L427 205L426 208L424 211L423 213L422 215L420 216L417 215L415 213L414 210L412 210L409 209Z"/><path d="M393 182L404 181L403 177L406 175L406 167L415 167L415 162L424 170L421 170L422 183L423 197L423 199L413 199L410 200L407 200L406 202L403 198L400 196L397 197L395 196L396 191L395 188L395 185L393 182Z"/><path d="M444 228L441 226L441 219L440 216L439 213L442 211L444 209L446 212L446 215L445 218L444 221L444 228Z"/><path d="M475 176L476 181L478 184L476 192L476 196L473 199L472 203L473 206L474 209L471 205L469 207L465 206L463 206L460 207L457 206L455 207L451 204L448 205L447 207L446 211L444 209L440 207L438 204L438 201L441 200L444 199L446 199L448 195L448 188L452 187L459 180L468 175L472 176L475 176Z"/><path d="M444 228L444 223L445 219L447 216L446 212L447 208L448 205L451 204L454 205L456 207L460 207L463 206L465 206L469 207L471 205L473 209L474 211L472 214L471 217L470 220L468 223L467 225L464 225L462 227L460 230L456 233L452 234L450 230L446 228L444 228Z"/><path d="M474 207L476 211L477 216L474 216L475 219L477 223L475 227L474 230L474 232L476 235L478 238L478 240L476 241L471 240L467 240L462 240L462 238L460 235L459 232L461 227L463 225L466 227L468 224L469 221L470 218L471 216L474 211L474 209Z"/><path d="M439 213L440 216L441 218L441 226L440 229L439 226L439 221L438 218L438 216L437 213L439 213Z"/><path d="M437 213L438 216L438 218L438 220L438 224L439 228L436 231L432 233L430 232L429 228L429 224L431 222L430 217L430 215L434 213L437 213Z"/><path d="M416 216L420 216L422 215L424 216L427 217L430 217L431 222L429 224L429 228L430 230L427 231L422 232L418 234L418 231L417 228L416 226L415 223L416 221L416 218L416 216Z"/><path d="M402 208L405 209L408 209L410 210L413 209L416 212L416 215L416 218L417 221L416 223L413 224L412 221L410 219L409 216L406 217L403 220L401 217L399 214L399 211L402 211L402 208Z"/><path d="M394 209L396 208L402 208L402 211L399 211L397 212L394 209Z"/><path d="M415 223L416 226L416 228L418 231L417 234L414 232L412 230L408 226L410 223L412 221L413 224L415 223Z"/><path d="M403 220L405 217L409 216L410 218L410 221L408 224L405 225L403 222L403 220Z"/><path d="M423 215L424 212L426 208L427 205L429 205L432 203L434 201L438 201L438 204L440 207L443 208L442 211L439 213L437 213L434 213L430 213L430 217L427 217L424 216Z"/><path d="M508 231L505 231L502 231L500 231L497 233L495 235L491 234L487 232L485 234L481 236L478 240L478 238L476 235L474 232L474 230L475 228L476 224L479 223L483 223L486 220L489 219L491 218L493 214L496 213L498 216L497 218L500 222L502 224L505 227L507 230Z"/><path d="M485 236L484 240L483 244L483 247L481 251L478 255L478 258L476 260L474 262L471 262L469 261L466 259L467 256L469 254L473 255L474 251L474 249L474 243L471 243L471 240L474 240L478 242L480 237L483 236Z"/><path d="M466 240L469 240L471 243L474 243L473 247L474 251L473 255L471 255L468 255L468 258L463 256L461 254L460 250L461 246L462 244L466 244L466 240Z"/><path d="M462 240L466 240L466 244L462 244L462 240Z"/><path d="M516 273L520 275L523 277L523 280L522 283L523 285L521 289L515 293L513 295L511 298L508 300L506 303L502 302L499 300L495 299L493 297L494 287L499 287L499 285L499 282L503 282L505 284L510 285L512 288L513 285L511 284L510 280L511 277L511 273L515 273Z"/><path d="M469 266L472 265L479 265L480 268L481 270L484 272L486 272L487 269L490 268L493 270L494 273L493 276L494 281L497 281L499 283L499 286L494 287L493 297L495 299L492 302L486 302L474 301L470 299L467 300L467 296L468 293L469 289L471 286L472 282L472 279L470 275L470 271L469 266Z"/><path d="M515 255L516 257L515 260L512 257L514 254Z"/><path d="M394 205L397 205L399 205L397 206L394 206Z"/><path d="M560 222L553 232L549 232L547 234L545 235L542 234L540 235L537 236L532 233L529 232L528 230L526 227L523 223L525 220L524 217L525 214L528 210L530 205L531 203L534 203L535 201L538 202L540 202L542 203L545 207L545 210L544 212L547 213L548 216L549 219L558 222Z"/><path d="M524 250L519 250L516 250L514 252L513 249L514 245L515 242L516 240L516 236L519 236L523 235L526 236L527 241L526 243L524 247L524 250Z"/></g></g></svg></div>
+      <div class="key">
+        <span><i style="background:#2F5A3F"></i>All three</span>
+        <span><i style="background:#7C9C79"></i>Two</span>
+        <span><i style="background:#B7C9B2"></i>One</span>
+        <span><i style="background:#E3E8E0"></i>None</span>
+      </div>
+      <figcaption>Malaria, dengue, and yellow fever risk, shaded by how many of the three
+      occur. Shown at country level.</figcaption>
+      <p class="src">Sources: WHO <a href="https://www.who.int/teams/global-malaria-programme/reports/world-malaria-report-2024" rel="noopener">World Malaria Report</a>
+      &middot; WHO and CDC <a href="https://wwwnc.cdc.gov/travel/yellowbook/2026/preparing/yellow-fever-vaccine-malaria-prevention-by-country" rel="noopener">yellow fever endemic country lists</a>
+      &middot; CDC <a href="https://www.cdc.gov/dengue/areas-with-risk/index.html" rel="noopener">areas with risk of dengue</a>
+      &middot; Boundaries: Natural Earth</p>
+    </figure>
+
+    <div class="note">
+      <span class="lab">Field note</span>
+      <span id="funfact">&hellip;</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="contact">
+      <p class="eyebrow">Contact</p>
+      <h2>Camden Towne</h2>
+      <p>Owner and president. Questions about the device, the patent, or where the work
+      stands reach him directly.</p>
+      <a class="mailto" href="mailto:camden@anophelyze.com?subject=Anophelyze">camden@anophelyze.com</a>
+    </div>
+  </section>
 
   <footer>
-    <div class="spriterow">
-      <svg class="sprite sm float" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter"/></svg>
-      <svg class="sprite sm float b" viewBox="0 0 16 16" aria-hidden="true"><use href="#skeeter2"/></svg>
-    </div>
-    <p class="press">ANOPHELYZE LLC</p>
-    <p>Patent pending &middot; U.S. Provisional Application No. 63/849,611<br>
-    Questions? Ask the chatbot &#8600; or email
-    <a href="mailto:camden.m.towne@gmail.com">camden.m.towne@gmail.com</a></p>
+    <p class="fine">
+      Anophelyze LLC &middot; Patent pending, U.S. Application Serial No. 19/751,195<br>
+      &copy; 2026 Anophelyze LLC
+    </p>
   </footer>
 
 </div>
 
-<!-- CHATBOT -->
-<button id="chatBtn">&#128172; ASK THE SKEETER</button>
-<div id="chat" role="dialog" aria-label="Anophelyze chatbot">
-  <div class="head"><span>SKEETER BOT</span><button id="chatClose" aria-label="Close">&times;</button></div>
+<!-- ASK PANEL -->
+<button id="chatBtn">Ask about the project</button>
+<div id="chat" role="dialog" aria-label="Anophelyze project assistant">
+  <div class="head-bar"><span id="chatName">Project assistant</span><button id="chatClose" aria-label="Close">&times;</button></div>
   <div id="log"></div>
   <form id="chatForm" autocomplete="off">
-    <input id="chatInput" placeholder="Type a question..." aria-label="Ask a question" />
-    <button class="send" type="submit">SEND</button>
+    <input id="chatInput" placeholder="Ask a question..." aria-label="Ask a question" />
+    <button class="send" type="submit">Send</button>
   </form>
 </div>
 
 <!-- SVG SPRITE DEFINITIONS (original pixel mosquitoes) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <!-- mosquito sprite 1 -->
-    <g id="skeeter">
-      <rect width="16" height="16" fill="none"/>
-      <!-- wings -->
-      <rect x="2" y="3" width="3" height="1" fill="#306230"/>
-      <rect x="1" y="4" width="4" height="1" fill="#306230"/>
-      <rect x="11" y="3" width="3" height="1" fill="#306230"/>
-      <rect x="11" y="4" width="4" height="1" fill="#306230"/>
-      <!-- head/eyes -->
-      <rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
-      <rect x="6" y="5" width="1" height="1" fill="#c1121f"/>
-      <rect x="9" y="5" width="1" height="1" fill="#c1121f"/>
-      <!-- proboscis -->
-      <rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
-      <!-- thorax/body -->
-      <rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
-      <rect x="7" y="9" width="2" height="4" fill="#306230"/>
-      <rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
-      <rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
-      <!-- legs -->
-      <rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
-      <rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
-      <rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
-      <rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
-      <rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
-      <rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
-    </g>
-    <!-- mosquito sprite 2 (red morph) -->
-    <g id="skeeter2">
-      <rect x="2" y="4" width="4" height="1" fill="#c1121f"/>
-      <rect x="1" y="5" width="5" height="1" fill="#e63946"/>
-      <rect x="10" y="4" width="4" height="1" fill="#c1121f"/>
-      <rect x="10" y="5" width="5" height="1" fill="#e63946"/>
-      <rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
-      <rect x="6" y="5" width="1" height="1" fill="#9bbc0f"/>
-      <rect x="9" y="5" width="1" height="1" fill="#9bbc0f"/>
-      <rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
-      <rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
-      <rect x="7" y="9" width="2" height="4" fill="#c1121f"/>
-      <rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
-      <rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
-      <rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
-      <rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
-      <rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
-      <rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
-      <rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
-      <rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
-    </g>
-    <!-- wheeled device: shared chassis -->
-    <g id="devbody"><rect x="15" y="3" width="6" height="1" fill="#0f380f"/><rect x="14" y="4" width="1" height="1" fill="#0f380f"/><rect x="15" y="4" width="1" height="1" fill="#f3f7de"/><rect x="16" y="4" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="4" width="1" height="1" fill="#8bac0f"/><rect x="21" y="4" width="1" height="1" fill="#0f380f"/><rect x="14" y="5" width="1" height="1" fill="#0f380f"/><rect x="15" y="5" width="1" height="1" fill="#f3f7de"/><rect x="16" y="5" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="5" width="1" height="1" fill="#8bac0f"/><rect x="21" y="5" width="1" height="1" fill="#0f380f"/><rect x="14" y="6" width="1" height="1" fill="#0f380f"/><rect x="15" y="6" width="1" height="1" fill="#f3f7de"/><rect x="16" y="6" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="6" width="1" height="1" fill="#8bac0f"/><rect x="21" y="6" width="1" height="1" fill="#0f380f"/><rect x="14" y="7" width="1" height="1" fill="#0f380f"/><rect x="15" y="7" width="1" height="1" fill="#f3f7de"/><rect x="16" y="7" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="7" width="1" height="1" fill="#8bac0f"/><rect x="21" y="7" width="1" height="1" fill="#0f380f"/><rect x="14" y="8" width="1" height="1" fill="#0f380f"/><rect x="15" y="8" width="1" height="1" fill="#f3f7de"/><rect x="16" y="8" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="8" width="1" height="1" fill="#8bac0f"/><rect x="21" y="8" width="1" height="1" fill="#0f380f"/><rect x="14" y="9" width="1" height="1" fill="#0f380f"/><rect x="15" y="9" width="1" height="1" fill="#f3f7de"/><rect x="16" y="9" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="9" width="1" height="1" fill="#8bac0f"/><rect x="21" y="9" width="1" height="1" fill="#0f380f"/><rect x="14" y="10" width="1" height="1" fill="#0f380f"/><rect x="15" y="10" width="1" height="1" fill="#f3f7de"/><rect x="16" y="10" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="10" width="1" height="1" fill="#8bac0f"/><rect x="21" y="10" width="1" height="1" fill="#0f380f"/><rect x="11" y="11" width="4" height="1" fill="#0f380f"/><rect x="15" y="11" width="1" height="1" fill="#f3f7de"/><rect x="16" y="11" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="11" width="1" height="1" fill="#8bac0f"/><rect x="21" y="11" width="1" height="1" fill="#0f380f"/><rect x="13" y="12" width="1" height="1" fill="#f3f7de"/><rect x="14" y="12" width="1" height="1" fill="#0f380f"/><rect x="15" y="12" width="1" height="1" fill="#f3f7de"/><rect x="16" y="12" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="12" width="1" height="1" fill="#8bac0f"/><rect x="21" y="12" width="1" height="1" fill="#0f380f"/><rect x="6" y="13" width="1" height="1" fill="#0f380f"/><rect x="12" y="13" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="13" width="1" height="1" fill="#0f380f"/><rect x="15" y="13" width="1" height="1" fill="#f3f7de"/><rect x="16" y="13" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="13" width="1" height="1" fill="#8bac0f"/><rect x="21" y="13" width="2" height="1" fill="#0f380f"/><rect x="6" y="14" width="1" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#f3f7de"/><rect x="12" y="14" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="14" width="9" height="1" fill="#0f380f"/><rect x="6" y="15" width="1" height="1" fill="#0f380f"/><rect x="7" y="15" width="2" height="1" fill="#f3f7de"/><rect x="11" y="15" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="15" width="4" height="1" fill="#8bac0f"/><rect x="22" y="15" width="1" height="1" fill="#0f380f"/><rect x="6" y="16" width="1" height="1" fill="#0f380f"/><rect x="7" y="16" width="3" height="1" fill="#f3f7de"/><rect x="10" y="16" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="16" width="4" height="1" fill="#8bac0f"/><rect x="22" y="16" width="1" height="1" fill="#0f380f"/><rect x="6" y="17" width="1" height="1" fill="#0f380f"/><rect x="7" y="17" width="2" height="1" fill="#f3f7de"/><rect x="9" y="17" width="2" height="1" fill="#c1121f"/><rect x="11" y="17" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="17" width="4" height="1" fill="#8bac0f"/><rect x="22" y="17" width="1" height="1" fill="#0f380f"/><rect x="6" y="18" width="1" height="1" fill="#0f380f"/><rect x="7" y="18" width="2" height="1" fill="#f3f7de"/><rect x="9" y="18" width="1" height="1" fill="#c1121f"/><rect x="10" y="18" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="18" width="4" height="1" fill="#8bac0f"/><rect x="22" y="18" width="1" height="1" fill="#0f380f"/><rect x="6" y="19" width="1" height="1" fill="#0f380f"/><rect x="7" y="19" width="2" height="1" fill="#f3f7de"/><rect x="9" y="19" width="1" height="1" fill="#c1121f"/><rect x="10" y="19" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="19" width="4" height="1" fill="#8bac0f"/><rect x="22" y="19" width="1" height="1" fill="#0f380f"/><rect x="6" y="20" width="1" height="1" fill="#0f380f"/><rect x="7" y="20" width="2" height="1" fill="#f3f7de"/><rect x="9" y="20" width="1" height="1" fill="#c1121f"/><rect x="10" y="20" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="20" width="4" height="1" fill="#8bac0f"/><rect x="22" y="20" width="1" height="1" fill="#0f380f"/><rect x="6" y="21" width="1" height="1" fill="#0f380f"/><rect x="7" y="21" width="2" height="1" fill="#f3f7de"/><rect x="9" y="21" width="1" height="1" fill="#c1121f"/><rect x="10" y="21" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="21" width="4" height="1" fill="#8bac0f"/><rect x="22" y="21" width="1" height="1" fill="#0f380f"/><rect x="6" y="22" width="1" height="1" fill="#0f380f"/><rect x="7" y="22" width="3" height="1" fill="#f3f7de"/><rect x="10" y="22" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="22" width="4" height="1" fill="#8bac0f"/><rect x="22" y="22" width="1" height="1" fill="#0f380f"/><rect x="6" y="23" width="1" height="1" fill="#0f380f"/><rect x="7" y="23" width="3" height="1" fill="#f3f7de"/><rect x="10" y="23" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="23" width="4" height="1" fill="#8bac0f"/><rect x="22" y="23" width="1" height="1" fill="#0f380f"/><rect x="5" y="24" width="19" height="1" fill="#0f380f"/><rect x="5" y="25" width="19" height="1" fill="#0f380f"/><rect x="7" y="26" width="4" height="1" fill="#0f380f"/><rect x="12" y="26" width="5" height="1" fill="#0f380f"/><rect x="18" y="26" width="4" height="1" fill="#0f380f"/><rect x="7" y="27" width="1" height="1" fill="#0f380f"/><rect x="8" y="27" width="2" height="1" fill="#8bac0f"/><rect x="10" y="27" width="4" height="1" fill="#0f380f"/><rect x="14" y="27" width="1" height="1" fill="#8bac0f"/><rect x="15" y="27" width="4" height="1" fill="#0f380f"/><rect x="19" y="27" width="2" height="1" fill="#8bac0f"/><rect x="21" y="27" width="1" height="1" fill="#0f380f"/><rect x="7" y="28" width="1" height="1" fill="#0f380f"/><rect x="8" y="28" width="2" height="1" fill="#8bac0f"/><rect x="10" y="28" width="4" height="1" fill="#0f380f"/><rect x="14" y="28" width="1" height="1" fill="#8bac0f"/><rect x="15" y="28" width="4" height="1" fill="#0f380f"/><rect x="19" y="28" width="2" height="1" fill="#8bac0f"/><rect x="21" y="28" width="1" height="1" fill="#0f380f"/><rect x="7" y="29" width="4" height="1" fill="#0f380f"/><rect x="12" y="29" width="5" height="1" fill="#0f380f"/><rect x="18" y="29" width="4" height="1" fill="#0f380f"/><rect x="8" y="30" width="2" height="1" fill="#0f380f"/><rect x="14" y="30" width="1" height="1" fill="#0f380f"/><rect x="19" y="30" width="2" height="1" fill="#0f380f"/></g>
-    <!-- barrel, 0 degrees -->
-    <g id="bar0"><rect x="0" y="11" width="2" height="1" fill="#0f380f"/><rect x="0" y="12" width="1" height="1" fill="#0f380f"/><rect x="1" y="12" width="1" height="1" fill="#306230"/><rect x="2" y="12" width="10" height="1" fill="#0f380f"/><rect x="0" y="13" width="1" height="1" fill="#0f380f"/><rect x="1" y="13" width="1" height="1" fill="#306230"/><rect x="2" y="13" width="5" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#4a7a3a"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="0" y="14" width="2" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="3" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="15" width="3" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
-    <!-- barrel, 18 degrees -->
-    <g id="bar1"><rect x="0" y="8" width="2" height="1" fill="#0f380f"/><rect x="0" y="9" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="1" height="1" fill="#306230"/><rect x="2" y="9" width="1" height="1" fill="#0f380f"/><rect x="0" y="10" width="1" height="1" fill="#0f380f"/><rect x="1" y="10" width="2" height="1" fill="#306230"/><rect x="3" y="10" width="3" height="1" fill="#0f380f"/><rect x="0" y="11" width="5" height="1" fill="#0f380f"/><rect x="5" y="11" width="1" height="1" fill="#306230"/><rect x="6" y="11" width="4" height="1" fill="#0f380f"/><rect x="5" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="3" height="1" fill="#306230"/><rect x="10" y="12" width="3" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
-    <!-- barrel, 34 degrees -->
-    <g id="bar2"><rect x="1" y="6" width="3" height="1" fill="#0f380f"/><rect x="0" y="7" width="1" height="1" fill="#0f380f"/><rect x="1" y="7" width="1" height="1" fill="#4a7a3a"/><rect x="2" y="7" width="1" height="1" fill="#306230"/><rect x="3" y="7" width="1" height="1" fill="#0f380f"/><rect x="0" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="8" width="3" height="1" fill="#306230"/><rect x="4" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="6" height="1" fill="#0f380f"/><rect x="5" y="10" width="1" height="1" fill="#0f380f"/><rect x="6" y="10" width="1" height="1" fill="#306230"/><rect x="7" y="10" width="2" height="1" fill="#0f380f"/><rect x="6" y="11" width="1" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#306230"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="3" height="1" fill="#306230"/><rect x="11" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
-    <!-- barrel, 50 degrees -->
-    <g id="bar3"><rect x="2" y="4" width="3" height="1" fill="#0f380f"/><rect x="2" y="5" width="1" height="1" fill="#0f380f"/><rect x="3" y="5" width="2" height="1" fill="#306230"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="2" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="6" width="2" height="1" fill="#306230"/><rect x="5" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="7" width="2" height="1" fill="#0f380f"/><rect x="5" y="7" width="1" height="1" fill="#306230"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="5" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="8" width="1" height="1" fill="#306230"/><rect x="7" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="9" width="2" height="1" fill="#0f380f"/><rect x="7" y="10" width="3" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="1" height="1" fill="#306230"/><rect x="10" y="11" width="2" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="1" height="1" fill="#0f380f"/><rect x="10" y="14" width="1" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
-    <!-- barrel, 66 degrees -->
-    <g id="bar4"><rect x="5" y="2" width="2" height="1" fill="#0f380f"/><rect x="4" y="3" width="1" height="1" fill="#0f380f"/><rect x="5" y="3" width="2" height="1" fill="#306230"/><rect x="7" y="3" width="1" height="1" fill="#0f380f"/><rect x="4" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="4" width="2" height="1" fill="#306230"/><rect x="7" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="5" width="1" height="1" fill="#306230"/><rect x="7" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="6" width="2" height="1" fill="#0f380f"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="7" width="1" height="1" fill="#306230"/><rect x="8" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="8" width="2" height="1" fill="#0f380f"/><rect x="7" y="9" width="2" height="1" fill="#0f380f"/><rect x="8" y="10" width="3" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#0f380f"/><rect x="9" y="11" width="2" height="1" fill="#306230"/><rect x="11" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="3" height="1" fill="#0f380f"/><rect x="9" y="15" width="1" height="1" fill="#0f380f"/></g>
-  </defs>
+<defs>
+<!-- mosquito sprite 1 -->
+<g id="skeeter">
+<rect width="16" height="16" fill="none"/>
+<rect x="2" y="3" width="3" height="1" fill="#306230"/>
+<rect x="1" y="4" width="4" height="1" fill="#306230"/>
+<rect x="11" y="3" width="3" height="1" fill="#306230"/>
+<rect x="11" y="4" width="4" height="1" fill="#306230"/>
+<rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
+<rect x="6" y="5" width="1" height="1" fill="#c1121f"/>
+<rect x="9" y="5" width="1" height="1" fill="#c1121f"/>
+<rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
+<rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
+<rect x="7" y="9" width="2" height="4" fill="#306230"/>
+<rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
+<rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
+<rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
+<rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
+<rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
+<rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
+<rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
+<rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
+</g>
+<!-- mosquito sprite 2 (red morph) -->
+<g id="skeeter2">
+<rect x="2" y="4" width="4" height="1" fill="#c1121f"/>
+<rect x="1" y="5" width="5" height="1" fill="#e63946"/>
+<rect x="10" y="4" width="4" height="1" fill="#c1121f"/>
+<rect x="10" y="5" width="5" height="1" fill="#e63946"/>
+<rect x="7" y="4" width="2" height="2" fill="#0f380f"/>
+<rect x="6" y="5" width="1" height="1" fill="#9bbc0f"/>
+<rect x="9" y="5" width="1" height="1" fill="#9bbc0f"/>
+<rect x="7" y="6" width="1" height="4" fill="#0f380f"/>
+<rect x="6" y="6" width="4" height="3" fill="#0f380f"/>
+<rect x="7" y="9" width="2" height="4" fill="#c1121f"/>
+<rect x="7" y="10" width="2" height="1" fill="#0f380f"/>
+<rect x="7" y="12" width="2" height="1" fill="#0f380f"/>
+<rect x="3" y="9" width="3" height="1" fill="#0f380f"/>
+<rect x="2" y="10" width="1" height="2" fill="#0f380f"/>
+<rect x="10" y="9" width="3" height="1" fill="#0f380f"/>
+<rect x="13" y="10" width="1" height="2" fill="#0f380f"/>
+<rect x="4" y="12" width="2" height="1" fill="#0f380f"/>
+<rect x="10" y="12" width="2" height="1" fill="#0f380f"/>
+</g>
+<!-- wheeled device: shared chassis -->
+<g id="devbody"><rect x="15" y="3" width="6" height="1" fill="#0f380f"/><rect x="14" y="4" width="1" height="1" fill="#0f380f"/><rect x="15" y="4" width="1" height="1" fill="#f3f7de"/><rect x="16" y="4" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="4" width="1" height="1" fill="#8bac0f"/><rect x="21" y="4" width="1" height="1" fill="#0f380f"/><rect x="14" y="5" width="1" height="1" fill="#0f380f"/><rect x="15" y="5" width="1" height="1" fill="#f3f7de"/><rect x="16" y="5" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="5" width="1" height="1" fill="#8bac0f"/><rect x="21" y="5" width="1" height="1" fill="#0f380f"/><rect x="14" y="6" width="1" height="1" fill="#0f380f"/><rect x="15" y="6" width="1" height="1" fill="#f3f7de"/><rect x="16" y="6" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="6" width="1" height="1" fill="#8bac0f"/><rect x="21" y="6" width="1" height="1" fill="#0f380f"/><rect x="14" y="7" width="1" height="1" fill="#0f380f"/><rect x="15" y="7" width="1" height="1" fill="#f3f7de"/><rect x="16" y="7" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="7" width="1" height="1" fill="#8bac0f"/><rect x="21" y="7" width="1" height="1" fill="#0f380f"/><rect x="14" y="8" width="1" height="1" fill="#0f380f"/><rect x="15" y="8" width="1" height="1" fill="#f3f7de"/><rect x="16" y="8" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="8" width="1" height="1" fill="#8bac0f"/><rect x="21" y="8" width="1" height="1" fill="#0f380f"/><rect x="14" y="9" width="1" height="1" fill="#0f380f"/><rect x="15" y="9" width="1" height="1" fill="#f3f7de"/><rect x="16" y="9" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="9" width="1" height="1" fill="#8bac0f"/><rect x="21" y="9" width="1" height="1" fill="#0f380f"/><rect x="14" y="10" width="1" height="1" fill="#0f380f"/><rect x="15" y="10" width="1" height="1" fill="#f3f7de"/><rect x="16" y="10" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="10" width="1" height="1" fill="#8bac0f"/><rect x="21" y="10" width="1" height="1" fill="#0f380f"/><rect x="11" y="11" width="4" height="1" fill="#0f380f"/><rect x="15" y="11" width="1" height="1" fill="#f3f7de"/><rect x="16" y="11" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="11" width="1" height="1" fill="#8bac0f"/><rect x="21" y="11" width="1" height="1" fill="#0f380f"/><rect x="13" y="12" width="1" height="1" fill="#f3f7de"/><rect x="14" y="12" width="1" height="1" fill="#0f380f"/><rect x="15" y="12" width="1" height="1" fill="#f3f7de"/><rect x="16" y="12" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="12" width="1" height="1" fill="#8bac0f"/><rect x="21" y="12" width="1" height="1" fill="#0f380f"/><rect x="6" y="13" width="1" height="1" fill="#0f380f"/><rect x="12" y="13" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="13" width="1" height="1" fill="#0f380f"/><rect x="15" y="13" width="1" height="1" fill="#f3f7de"/><rect x="16" y="13" width="4" height="1" fill="#e8f0c8"/><rect x="20" y="13" width="1" height="1" fill="#8bac0f"/><rect x="21" y="13" width="2" height="1" fill="#0f380f"/><rect x="6" y="14" width="1" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#f3f7de"/><rect x="12" y="14" width="2" height="1" fill="#e8f0c8"/><rect x="14" y="14" width="9" height="1" fill="#0f380f"/><rect x="6" y="15" width="1" height="1" fill="#0f380f"/><rect x="7" y="15" width="2" height="1" fill="#f3f7de"/><rect x="11" y="15" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="15" width="4" height="1" fill="#8bac0f"/><rect x="22" y="15" width="1" height="1" fill="#0f380f"/><rect x="6" y="16" width="1" height="1" fill="#0f380f"/><rect x="7" y="16" width="3" height="1" fill="#f3f7de"/><rect x="10" y="16" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="16" width="4" height="1" fill="#8bac0f"/><rect x="22" y="16" width="1" height="1" fill="#0f380f"/><rect x="6" y="17" width="1" height="1" fill="#0f380f"/><rect x="7" y="17" width="2" height="1" fill="#f3f7de"/><rect x="9" y="17" width="2" height="1" fill="#c1121f"/><rect x="11" y="17" width="7" height="1" fill="#e8f0c8"/><rect x="18" y="17" width="4" height="1" fill="#8bac0f"/><rect x="22" y="17" width="1" height="1" fill="#0f380f"/><rect x="6" y="18" width="1" height="1" fill="#0f380f"/><rect x="7" y="18" width="2" height="1" fill="#f3f7de"/><rect x="9" y="18" width="1" height="1" fill="#c1121f"/><rect x="10" y="18" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="18" width="4" height="1" fill="#8bac0f"/><rect x="22" y="18" width="1" height="1" fill="#0f380f"/><rect x="6" y="19" width="1" height="1" fill="#0f380f"/><rect x="7" y="19" width="2" height="1" fill="#f3f7de"/><rect x="9" y="19" width="1" height="1" fill="#c1121f"/><rect x="10" y="19" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="19" width="4" height="1" fill="#8bac0f"/><rect x="22" y="19" width="1" height="1" fill="#0f380f"/><rect x="6" y="20" width="1" height="1" fill="#0f380f"/><rect x="7" y="20" width="2" height="1" fill="#f3f7de"/><rect x="9" y="20" width="1" height="1" fill="#c1121f"/><rect x="10" y="20" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="20" width="4" height="1" fill="#8bac0f"/><rect x="22" y="20" width="1" height="1" fill="#0f380f"/><rect x="6" y="21" width="1" height="1" fill="#0f380f"/><rect x="7" y="21" width="2" height="1" fill="#f3f7de"/><rect x="9" y="21" width="1" height="1" fill="#c1121f"/><rect x="10" y="21" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="21" width="4" height="1" fill="#8bac0f"/><rect x="22" y="21" width="1" height="1" fill="#0f380f"/><rect x="6" y="22" width="1" height="1" fill="#0f380f"/><rect x="7" y="22" width="3" height="1" fill="#f3f7de"/><rect x="10" y="22" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="22" width="4" height="1" fill="#8bac0f"/><rect x="22" y="22" width="1" height="1" fill="#0f380f"/><rect x="6" y="23" width="1" height="1" fill="#0f380f"/><rect x="7" y="23" width="3" height="1" fill="#f3f7de"/><rect x="10" y="23" width="8" height="1" fill="#e8f0c8"/><rect x="18" y="23" width="4" height="1" fill="#8bac0f"/><rect x="22" y="23" width="1" height="1" fill="#0f380f"/><rect x="5" y="24" width="19" height="1" fill="#0f380f"/><rect x="5" y="25" width="19" height="1" fill="#0f380f"/><rect x="7" y="26" width="4" height="1" fill="#0f380f"/><rect x="12" y="26" width="5" height="1" fill="#0f380f"/><rect x="18" y="26" width="4" height="1" fill="#0f380f"/><rect x="7" y="27" width="1" height="1" fill="#0f380f"/><rect x="8" y="27" width="2" height="1" fill="#8bac0f"/><rect x="10" y="27" width="4" height="1" fill="#0f380f"/><rect x="14" y="27" width="1" height="1" fill="#8bac0f"/><rect x="15" y="27" width="4" height="1" fill="#0f380f"/><rect x="19" y="27" width="2" height="1" fill="#8bac0f"/><rect x="21" y="27" width="1" height="1" fill="#0f380f"/><rect x="7" y="28" width="1" height="1" fill="#0f380f"/><rect x="8" y="28" width="2" height="1" fill="#8bac0f"/><rect x="10" y="28" width="4" height="1" fill="#0f380f"/><rect x="14" y="28" width="1" height="1" fill="#8bac0f"/><rect x="15" y="28" width="4" height="1" fill="#0f380f"/><rect x="19" y="28" width="2" height="1" fill="#8bac0f"/><rect x="21" y="28" width="1" height="1" fill="#0f380f"/><rect x="7" y="29" width="4" height="1" fill="#0f380f"/><rect x="12" y="29" width="5" height="1" fill="#0f380f"/><rect x="18" y="29" width="4" height="1" fill="#0f380f"/><rect x="8" y="30" width="2" height="1" fill="#0f380f"/><rect x="14" y="30" width="1" height="1" fill="#0f380f"/><rect x="19" y="30" width="2" height="1" fill="#0f380f"/></g>
+<!-- barrel, 0 degrees -->
+<g id="bar0"><rect x="0" y="11" width="2" height="1" fill="#0f380f"/><rect x="0" y="12" width="1" height="1" fill="#0f380f"/><rect x="1" y="12" width="1" height="1" fill="#306230"/><rect x="2" y="12" width="10" height="1" fill="#0f380f"/><rect x="0" y="13" width="1" height="1" fill="#0f380f"/><rect x="1" y="13" width="1" height="1" fill="#306230"/><rect x="2" y="13" width="5" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#4a7a3a"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="0" y="14" width="2" height="1" fill="#0f380f"/><rect x="7" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="3" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="8" y="15" width="3" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
+<!-- barrel, 18 degrees -->
+<g id="bar1"><rect x="0" y="8" width="2" height="1" fill="#0f380f"/><rect x="0" y="9" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="1" height="1" fill="#306230"/><rect x="2" y="9" width="1" height="1" fill="#0f380f"/><rect x="0" y="10" width="1" height="1" fill="#0f380f"/><rect x="1" y="10" width="2" height="1" fill="#306230"/><rect x="3" y="10" width="3" height="1" fill="#0f380f"/><rect x="0" y="11" width="5" height="1" fill="#0f380f"/><rect x="5" y="11" width="1" height="1" fill="#306230"/><rect x="6" y="11" width="4" height="1" fill="#0f380f"/><rect x="5" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="3" height="1" fill="#306230"/><rect x="10" y="12" width="3" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/><rect x="10" y="16" width="1" height="1" fill="#0f380f"/></g>
+<!-- barrel, 34 degrees -->
+<g id="bar2"><rect x="1" y="6" width="3" height="1" fill="#0f380f"/><rect x="0" y="7" width="1" height="1" fill="#0f380f"/><rect x="1" y="7" width="1" height="1" fill="#4a7a3a"/><rect x="2" y="7" width="1" height="1" fill="#306230"/><rect x="3" y="7" width="1" height="1" fill="#0f380f"/><rect x="0" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="8" width="3" height="1" fill="#306230"/><rect x="4" y="8" width="1" height="1" fill="#0f380f"/><rect x="1" y="9" width="6" height="1" fill="#0f380f"/><rect x="5" y="10" width="1" height="1" fill="#0f380f"/><rect x="6" y="10" width="1" height="1" fill="#306230"/><rect x="7" y="10" width="2" height="1" fill="#0f380f"/><rect x="6" y="11" width="1" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#306230"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="2" height="1" fill="#0f380f"/><rect x="7" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="3" height="1" fill="#306230"/><rect x="11" y="12" width="2" height="1" fill="#0f380f"/><rect x="7" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="3" height="1" fill="#306230"/><rect x="11" y="13" width="1" height="1" fill="#0f380f"/><rect x="8" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="2" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
+<!-- barrel, 50 degrees -->
+<g id="bar3"><rect x="2" y="4" width="3" height="1" fill="#0f380f"/><rect x="2" y="5" width="1" height="1" fill="#0f380f"/><rect x="3" y="5" width="2" height="1" fill="#306230"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="2" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="6" width="2" height="1" fill="#306230"/><rect x="5" y="6" width="1" height="1" fill="#0f380f"/><rect x="3" y="7" width="2" height="1" fill="#0f380f"/><rect x="5" y="7" width="1" height="1" fill="#306230"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="5" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="8" width="1" height="1" fill="#306230"/><rect x="7" y="8" width="1" height="1" fill="#0f380f"/><rect x="6" y="9" width="2" height="1" fill="#0f380f"/><rect x="7" y="10" width="3" height="1" fill="#0f380f"/><rect x="7" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#4a7a3a"/><rect x="9" y="11" width="1" height="1" fill="#306230"/><rect x="10" y="11" width="2" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="1" height="1" fill="#0f380f"/><rect x="10" y="14" width="1" height="1" fill="#306230"/><rect x="11" y="14" width="1" height="1" fill="#0f380f"/><rect x="9" y="15" width="2" height="1" fill="#0f380f"/></g>
+<!-- barrel, 66 degrees -->
+<g id="bar4"><rect x="5" y="2" width="2" height="1" fill="#0f380f"/><rect x="4" y="3" width="1" height="1" fill="#0f380f"/><rect x="5" y="3" width="2" height="1" fill="#306230"/><rect x="7" y="3" width="1" height="1" fill="#0f380f"/><rect x="4" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="4" width="2" height="1" fill="#306230"/><rect x="7" y="4" width="1" height="1" fill="#0f380f"/><rect x="5" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="5" width="1" height="1" fill="#306230"/><rect x="7" y="5" width="1" height="1" fill="#0f380f"/><rect x="6" y="6" width="2" height="1" fill="#0f380f"/><rect x="6" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="7" width="1" height="1" fill="#306230"/><rect x="8" y="7" width="1" height="1" fill="#0f380f"/><rect x="7" y="8" width="2" height="1" fill="#0f380f"/><rect x="7" y="9" width="2" height="1" fill="#0f380f"/><rect x="8" y="10" width="3" height="1" fill="#0f380f"/><rect x="8" y="11" width="1" height="1" fill="#0f380f"/><rect x="9" y="11" width="2" height="1" fill="#306230"/><rect x="11" y="11" width="1" height="1" fill="#0f380f"/><rect x="8" y="12" width="1" height="1" fill="#0f380f"/><rect x="9" y="12" width="3" height="1" fill="#306230"/><rect x="12" y="12" width="1" height="1" fill="#0f380f"/><rect x="8" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="13" width="3" height="1" fill="#306230"/><rect x="12" y="13" width="1" height="1" fill="#0f380f"/><rect x="9" y="14" width="3" height="1" fill="#0f380f"/><rect x="9" y="15" width="1" height="1" fill="#0f380f"/></g>
+</defs>
 </svg>
 
 <script>
-/* ---------- Fun fact ---------- */
+/* ---------- Field note ---------- */
 const FACTS = [
-  "Mosquitoes are the deadliest animal on Earth to humans, spreading diseases that kill hundreds of thousands of people every year.",
-  "Only female mosquitoes bite — they need the protein in blood to develop their eggs.",
-  "Mosquitoes are crepuscular: many species are most active at dawn and dusk, avoiding the midday heat.",
-  "A mosquito can detect the carbon dioxide you exhale from over 30 meters away.",
-  "Mosquitoes beat their wings 300–600 times per second — that's the source of their signature whine.",
-  "The genus name 'Anopheles' was coined in 1818 and carries the mosquito that transmits malaria.",
-  "Mosquitoes can ride the air current from an approaching swat to escape — which is exactly what smarter detection aims to beat.",
-  "Some mosquitoes overwinter as adults, hiding in sheltered spots until temperatures rise again.",
-  "Mosquito larvae live in water and breathe air through a snorkel-like tube called a siphon.",
-  "Warmer climates may expand the range of disease-carrying mosquitoes in the years ahead."
+"Mosquitoes are the deadliest animal on Earth to humans, spreading diseases that kill hundreds of thousands of people every year.",
+"Only female mosquitoes bite — they need the protein in blood to develop their eggs.",
+"Mosquitoes are crepuscular: many species are most active at dawn and dusk, avoiding the midday heat.",
+"A mosquito can detect the carbon dioxide you exhale from over 30 meters away.",
+"Mosquitoes beat their wings 300–600 times per second — that's the source of their signature whine.",
+"The genus name 'Anopheles' was coined in 1818 and carries the mosquito that transmits malaria.",
+"Mosquitoes can ride the air current from an approaching swat to escape — which is exactly what smarter detection aims to beat.",
+"Some mosquitoes overwinter as adults, hiding in sheltered spots until temperatures rise again.",
+"Mosquito larvae live in water and breathe air through a snorkel-like tube called a siphon.",
+"Warmer climates may expand the range of disease-carrying mosquitoes in the years ahead."
 ];
 (function(){
   const period = 3; // days
@@ -344,208 +495,233 @@ const FACTS = [
   document.getElementById('funfact').textContent = FACTS[idx];
 })();
 
-/* ---------- Zap sequence ----------
-   A wheeled device patrols the floor of the mission panel. On an irregular
-   cadence it drives to a firing position, elevates its barrel to match the line
-   of sight, and puts a volley of dots through one of the three mosquitoes,
-   which drops and respawns 20s later. Targets rotate, and a firing lane is only
-   used if it misses every mosquito that isn't the target. */
+/* ---------- Engagement sequence ----------
+A wheeled device patrols the floor of the observation window. On an irregular
+cadence it drives to a firing position, elevates its barrel to match the line
+of sight, and puts a volley of dots through one of the three mosquitoes,
+which drops and respawns 20s later. Targets rotate, and a firing lane is only
+used if it misses every mosquito that isn't the target. */
 (function(){
-  const zone = document.getElementById('zapzone');
-  const dev  = document.getElementById('device');
-  const use  = document.getElementById('deviceUse');
-  if(!zone || !dev || !use) return;
-  const targets = Array.from(zone.querySelectorAll('.zaptarget'));
-  if(!targets.length) return;
+const zone = document.getElementById('zapzone');
+const dev  = document.getElementById('device');
+const use  = document.getElementById('deviceUse');
+if(!zone || !dev || !use) return;
+const targets = Array.from(zone.querySelectorAll('.zaptarget'));
+if(!targets.length) return;
 
-  const TIPS  = [[0.5,13.0],[0.96,10.06],[2.12,7.69],[3.89,5.72],[6.14,4.32]];  // barrel-tip coords per elevation, in sprite units
-  const ELEV  = [0,18,34,50,66];
-  const GRID  = 32;    // sprite viewBox
-  const DEV   = 66;    // rendered device size, px
-  const SC    = DEV / GRID;
+const TIPS = [[0.5,13.0],[0.96,10.06],[2.12,7.69],[3.89,5.72],[6.14,4.32]]; // barrel-tip coords per elevation, in sprite units
+const ELEV = [0,18,34,50,66];
+const GRID = 32;  // sprite viewBox
+// The device is sized in CSS and shrinks on narrow screens, so measure it
+// rather than assuming a fixed 66px — every muzzle coordinate scales off this.
+let DEV = dev.getBoundingClientRect().width || 66;
+let SC  = DEV / GRID;
 
-  const SHOTS      = 8;
-  const SHOT_GAP   = 48;
-  const SPEED      = 0.40;   // dot speed, px per ms
-  const DRIVE      = 0.22;   // driving speed, px per ms
-  const FALL       = 1150;
-  const RESPAWN_IN = 20000;
-  const FIRST      = 4000;
-  // Gaps between volleys, cycled in order. Ten entries against three targets
-  // means the pairing of "which mosquito" with "how long a wait" doesn't repeat
-  // for thirty volleys, so the rhythm reads as unpredictable rather than timed.
-  const GAPS       = [5000, 12000, 20000, 7000, 15000, 9000, 24000, 6000, 18000, 11000];
-  const ROAM       = 6500;
-  const CLEAR      = 5;      // px of margin demanded around a bystander
-  const INSET      = 0.20;   // sprite art sits inside its box; trim the empty edge
-  // Preferred elevation per volley. The cycle is 6 long against 3 targets, so
-  // each slot lines up with a fixed mosquito: the outer two can take flat lanes
-  // (nothing to shoot past), the middle one only ever gets a steep approach.
-  const PREF       = [15, 55, 20, 45, 66, 40];
+const SHOTS = 8;
+const SHOT_GAP = 48;
+const SPEED = 0.40;  // dot speed, px per ms
+const DRIVE = 0.22;  // driving speed, px per ms
+const FALL = 1150;
+const RESPAWN_IN = 20000;
+const FIRST = 4000;
+// Gaps between volleys, cycled in order. Ten entries against three targets
+// means the pairing of "which mosquito" with "how long a wait" doesn't repeat
+// for thirty volleys, so the rhythm reads as unpredictable rather than timed.
+const GAPS = [5000, 12000, 20000, 7000, 15000, 9000, 24000, 6000, 18000, 11000];
+const ROAM = 6500;
+const CLEAR = 5;     // px of margin demanded around a bystander
+const INSET = 0.20;  // sprite art sits inside its box; trim the empty edge
+// Preferred elevation per volley. The cycle is 6 long against 3 targets, so
+// each slot lines up with a fixed mosquito: the outer two can take flat lanes
+// (nothing to shoot past), the middle one only ever gets a steep approach.
+const PREF = [15, 55, 20, 45, 66, 40];
 
-  let next = 0, pos = 30, flip = true, busy = false, gapIdx = 0;
+let next = 0, pos = 30, flip = true, busy = false, gapIdx = 0;
 
-  const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function place(ms){
-    dev.style.transition = ms ? 'transform ' + ms + 'ms linear' : 'none';
-    dev.style.transform  = 'translateX(' + pos + 'px)' + (flip ? ' scaleX(-1)' : '');
-  }
-  function setElev(i){ use.setAttribute('href', '#bar' + i); }
+function place(ms){
+  dev.style.transition = ms ? 'transform ' + ms + 'ms linear' : 'none';
+  dev.style.transform = 'translateX(' + pos + 'px)' + (flip ? ' scaleX(-1)' : '');
+}
+function setElev(i){ use.setAttribute('href', '#bar' + i); }
 
-  function muzzle(p, f, vi){
-    const t = TIPS[vi];
-    return [ p + (f ? DEV - t[0] * SC : t[0] * SC),
-             zone.clientHeight - DEV + t[1] * SC ];
-  }
+function muzzle(p, f, vi){
+  const t = TIPS[vi];
+  return [ p + (f ? DEV - t[0] * SC : t[0] * SC),
+           zone.clientHeight - DEV + t[1] * SC ];
+}
 
-  // Does this lane pass through a mosquito that isn't the target?
-  function blocked(ox, oy, tx, ty, target, zr){
-    for (const other of targets){
-      // A downed mosquito still counts as an obstacle: it can respawn into the
-      // lane between the shot being chosen and the dots arriving.
-      if (other === target) continue;
-      const r  = other.getBoundingClientRect();
-      const iw = r.width * INSET, ih = r.height * INSET;
-      const l = r.left  + iw - zr.left - CLEAR, rt = r.right  - iw - zr.left + CLEAR;
-      const tp = r.top   + ih - zr.top  - CLEAR, bt = r.bottom - ih - zr.top  + CLEAR;
-      const steps = Math.max(14, Math.round(Math.hypot(tx - ox, ty - oy) / 4));
-      for (let i = 0; i < steps; i++){
-        const f = i / steps;
-        const px = ox + (tx - ox) * f, py = oy + (ty - oy) * f;
-        if (px > l && px < rt && py > tp && py < bt) return true;
-      }
+// Does this lane pass through a mosquito that isn't the target?
+function blocked(ox, oy, tx, ty, target, zr){
+  for (const other of targets){
+    // A downed mosquito still counts as an obstacle: it can respawn into the
+    // lane between the shot being chosen and the dots arriving.
+    if (other === target) continue;
+    const r = other.getBoundingClientRect();
+    const iw = r.width * INSET, ih = r.height * INSET;
+    const l = r.left + iw - zr.left - CLEAR, rt = r.right - iw - zr.left + CLEAR;
+    const tp = r.top + ih - zr.top - CLEAR, bt = r.bottom - ih - zr.top + CLEAR;
+    const steps = Math.max(14, Math.round(Math.hypot(tx - ox, ty - oy) / 4));
+    for (let i = 0; i < steps; i++){
+      const f = i / steps;
+      const px = ox + (tx - ox) * f, py = oy + (ty - oy) * f;
+      if (px > l && px < rt && py > tp && py < bt) return true;
     }
-    return false;
   }
+  return false;
+}
 
-  // Walk every parking spot and barrel elevation; keep the clear lane whose
-  // angle sits closest to this volley's preferred elevation.
-  function chooseShot(t, tx, ty, zr){
-    const maxP = Math.max(0, zone.clientWidth - DEV);
-    const want = PREF[next % PREF.length];
-    let best = null;
-    for (let strict = 1; strict >= 0; strict--){
-      for (let p = 0; p <= maxP; p += 10){
-        for (let vi = 0; vi < TIPS.length; vi++){
-          const f = tx > p + DEV / 2;
-          const m = muzzle(p, f, vi);
-          const dx = tx - m[0], dy = m[1] - ty;
-          if (dy < 24 || Math.abs(dx) < 26) continue;
-          const ang = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
-          if (strict && Math.abs(ang - ELEV[vi]) > 11) continue;
-          if (!strict){
-            let near = 0;
-            for (let k = 1; k < ELEV.length; k++){
-              if (Math.abs(ang - ELEV[k]) < Math.abs(ang - ELEV[near])) near = k;
-            }
-            if (near !== vi) continue;
+// Walk every parking spot and barrel elevation; keep the clear lane whose
+// angle sits closest to this volley's preferred elevation.
+function chooseShot(t, tx, ty, zr){
+  const maxP = Math.max(0, zone.clientWidth - DEV);
+  const want = PREF[next % PREF.length];
+  let best = null;
+  // Three passes, each looser than the last. On a narrow screen the first two
+  // can come up empty — the lateral room needed for a shallow lane just isn't
+  // there — so the last pass drops the elevation match and takes any clear lane
+  // rather than skipping the volley entirely.
+  for (let strict = 1; strict >= -1; strict--){
+    for (let p = 0; p <= maxP; p += 10){
+      for (let vi = 0; vi < TIPS.length; vi++){
+        const f = tx > p + DEV / 2;
+        const m = muzzle(p, f, vi);
+        const dx = tx - m[0], dy = m[1] - ty;
+        const minDx = Math.min(26, maxP * 0.18);
+        if (dy < 24 || Math.abs(dx) < minDx) continue;
+        const ang = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
+        if (strict === 1 && Math.abs(ang - ELEV[vi]) > 11) continue;
+        if (strict === 0){
+          let near = 0;
+          for (let k = 1; k < ELEV.length; k++){
+            if (Math.abs(ang - ELEV[k]) < Math.abs(ang - ELEV[near])) near = k;
           }
-          if (blocked(m[0], m[1], tx, ty, t, zr)) continue;
-          const score = Math.abs(ang - want);
-          if (!best || score < best.score)
-            best = { p: p, flip: f, vi: vi, mx: m[0], my: m[1], score: score };
+          if (near !== vi) continue;
         }
+        if (blocked(m[0], m[1], tx, ty, t, zr)) continue;
+        const score = Math.abs(ang - want);
+        if (!best || score < best.score)
+          best = { p: p, flip: f, vi: vi, mx: m[0], my: m[1], score: score };
       }
-      if (best) return best;
     }
-    return null;
+    if (best) return best;
+  }
+  return null;
+}
+
+function fire(t, shot){
+  const zr = zone.getBoundingClientRect();
+  const tr = t.getBoundingClientRect();
+  const tx = tr.left - zr.left + tr.width / 2;
+  const ty = tr.top - zr.top + tr.height / 2;
+  const m = muzzle(pos, flip, shot.vi);
+  const FLIGHT = Math.max(180, Math.round(Math.hypot(tx - m[0], ty - m[1]) / SPEED));
+
+  for (let i = 0; i < SHOTS; i++){
+    setTimeout(function(){
+      const dot = document.createElement('span');
+      dot.className = 'shot';
+      dot.style.left = m[0] + 'px';
+      dot.style.top  = m[1] + 'px';
+      zone.appendChild(dot);
+      void dot.offsetWidth; // force layout so the transition actually runs
+      dot.style.transition = 'transform ' + FLIGHT + 'ms linear';
+      dot.style.transform = 'translate(' + (tx - m[0]) + 'px,' + (ty - m[1]) + 'px)';
+      setTimeout(function(){ dot.remove(); }, FLIGHT + 30);
+    }, i * SHOT_GAP);
   }
 
-  function fire(t, shot){
-    const zr = zone.getBoundingClientRect();
-    const tr = t.getBoundingClientRect();
-    const tx = tr.left - zr.left + tr.width / 2;
-    const ty = tr.top  - zr.top  + tr.height / 2;
-    const m  = muzzle(pos, flip, shot.vi);
-    const FLIGHT = Math.max(180, Math.round(Math.hypot(tx - m[0], ty - m[1]) / SPEED));
-
-    for (let i = 0; i < SHOTS; i++){
-      setTimeout(function(){
-        const dot = document.createElement('span');
-        dot.className = 'shot';
-        dot.style.left = m[0] + 'px';
-        dot.style.top  = m[1] + 'px';
-        zone.appendChild(dot);
-        void dot.offsetWidth;   // force layout so the transition actually runs
-        dot.style.transition = 'transform ' + FLIGHT + 'ms linear';
-        dot.style.transform  = 'translate(' + (tx - m[0]) + 'px,' + (ty - m[1]) + 'px)';
-        setTimeout(function(){ dot.remove(); }, FLIGHT + 30);
-      }, i * SHOT_GAP);
-    }
-
+  setTimeout(function(){
+    t.classList.add('hit');
     setTimeout(function(){
-      t.classList.add('hit');
+      t.classList.remove('hit');
+      t.classList.add('gone');
+      busy = false;
       setTimeout(function(){
-        t.classList.remove('hit');
-        t.classList.add('gone');
-        busy = false;
+        t.classList.remove('gone');
+        t.classList.add('back');
         setTimeout(function(){
-          t.classList.remove('gone');
-          t.classList.add('back');
-          setTimeout(function(){
-            t.classList.remove('back');
-            delete t.dataset.down;
-          }, 560);
-        }, RESPAWN_IN);
-      }, FALL);
-    }, (SHOTS - 1) * SHOT_GAP + FLIGHT);
-  }
+          t.classList.remove('back');
+          delete t.dataset.down;
+        }, 560);
+      }, RESPAWN_IN);
+    }, FALL);
+  }, (SHOTS - 1) * SHOT_GAP + FLIGHT);
+}
 
-  function zap(){
-    if (document.hidden || busy || still) return;
-    const t = targets[next % targets.length];
-    if (t.dataset.down){ next++; return; }
-    const zr = zone.getBoundingClientRect();
-    const tr = t.getBoundingClientRect();
-    const tx = tr.left - zr.left + tr.width / 2;
-    const ty = tr.top  - zr.top  + tr.height / 2;
-    const shot = chooseShot(t, tx, ty, zr);
-    next++;
-    if (!shot) return;
+function zap(){
+  if (document.hidden || busy || still) return;
+  const t = targets[next % targets.length];
+  if (t.dataset.down){ next++; return; }
+  const zr = zone.getBoundingClientRect();
+  const tr = t.getBoundingClientRect();
+  const tx = tr.left - zr.left + tr.width / 2;
+  const ty = tr.top - zr.top + tr.height / 2;
+  const shot = chooseShot(t, tx, ty, zr);
+  next++;
+  if (!shot) return;
 
-    busy = true;
-    t.dataset.down = '1';
-    const ms = Math.max(350, Math.round(Math.abs(shot.p - pos) / DRIVE));
-    pos = shot.p; flip = shot.flip;
-    setElev(shot.vi);
-    dev.classList.add('driving');
-    place(ms);
-    setTimeout(function(){
-      dev.classList.remove('driving');
-      fire(t, shot);
-    }, ms + 280);
-  }
+  busy = true;
+  t.dataset.down = '1';
+  const ms = Math.max(350, Math.round(Math.abs(shot.p - pos) / DRIVE));
+  pos = shot.p; flip = shot.flip;
+  setElev(shot.vi);
+  dev.classList.add('driving');
+  place(ms);
+  setTimeout(function(){
+    dev.classList.remove('driving');
+    fire(t, shot);
+  }, ms + 280);
+}
 
-  function roam(){
-    if (document.hidden || busy || still) return;
-    const maxP = Math.max(0, zone.clientWidth - DEV);
-    const p = Math.round(Math.random() * maxP);
-    if (Math.abs(p - pos) < 40) return;
-    const ms = Math.max(400, Math.round(Math.abs(p - pos) / DRIVE));
-    flip = p > pos; pos = p;
-    dev.classList.add('driving');
-    place(ms);
-    setTimeout(function(){ dev.classList.remove('driving'); }, ms + 40);
-  }
+function roam(){
+  if (document.hidden || busy || still) return;
+  const maxP = Math.max(0, zone.clientWidth - DEV);
+  const p = Math.round(Math.random() * maxP);
+  if (Math.abs(p - pos) < 40) return;
+  const ms = Math.max(400, Math.round(Math.abs(p - pos) / DRIVE));
+  flip = p > pos; pos = p;
+  dev.classList.add('driving');
+  place(ms);
+  setTimeout(function(){ dev.classList.remove('driving'); }, ms + 40);
+}
 
-  // Walk the gap list. If the moment arrives while a volley is still playing out
-  // or the tab is in the background, hold the slot and retry shortly rather than
-  // dropping it, so a short gap isn't silently swallowed by a long one.
-  function run(){
-    if (busy || document.hidden){ setTimeout(run, 500); return; }
-    zap();
-    setTimeout(run, GAPS[gapIdx++ % GAPS.length]);
-  }
+// Walk the gap list. If the moment arrives while a volley is still playing out
+// or the tab is in the background, hold the slot and retry shortly rather than
+// dropping it, so a short gap isn't silently swallowed by a long one.
+function run(){
+  if (busy || document.hidden){ setTimeout(run, 500); return; }
+  zap();
+  setTimeout(run, GAPS[gapIdx++ % GAPS.length]);
+}
 
+// Re-measure after layout settles and whenever the viewport changes, so an
+// orientation flip or a late-loading font doesn't leave the device parked
+// outside the window with stale muzzle coordinates.
+function remeasure(){
+  DEV = dev.getBoundingClientRect().width || DEV;
+  SC  = DEV / GRID;
+  const maxP = Math.max(0, zone.clientWidth - DEV);
+  if (pos > maxP) pos = maxP;
   place(0);
-  if (!still){
-    setTimeout(run, FIRST);
-    setInterval(roam, ROAM);
-  }
+}
+
+place(0);
+if (!still){
+  let t = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(t);
+    t = setTimeout(remeasure, 150);
+  }, {passive:true});
+  window.addEventListener('load', remeasure);
+  setTimeout(remeasure, 400);
+  setTimeout(run, FIRST);
+  setInterval(roam, ROAM);
+}
 })();
 
-/* ---------- Buzzing-in counter ---------- */
+/* ---------- Visitor counter ---------- */
 (function(){
   fetch('/api/buzz', {method:'POST'})
     .then(r=>r.json())
@@ -553,49 +729,71 @@ const FACTS = [
     .catch(()=>{ window.__buzzCount = null; });
 })();
 
-/* ---------- Chatbot (self-contained FAQ + email fallback) ---------- */
-const EMAIL = "camden.m.towne@gmail.com";
+/* ---------- Project assistant (self-contained FAQ + email fallback) ---------- */
+const EMAIL = "camden@anophelyze.com";
 const KB = [
-  {k:["visitor","visitors","count","how many","people","buzzing","buzzed","traffic","views","stats"], count:true, a:""},
-  // Availability and evasion sit above the general "what is it" entry: that one
-  // matches on words as common as "how" and "do", and would otherwise win ties.
-  {k:["where can i get","how can i get","how do i get","get one","buy","purchase","order","for sale","sell","available","availability","in stock","ship","pre-order","preorder","price","cost","how much","when can i"],
-   a:"Anophelyze is still in progress &mdash; the device is in development and isn't available to buy yet. If you'd like to hear more about where it stands and what the process looks like, contact Camden at "+EMAIL+"."},
-  {k:["evade","evasion","avoid","escape","dodge","outrun","fly away","get away","swat","swatting","air current","miss it","too fast","outsmart"],
-   a:"Mosquitoes are famously good at escaping a swat &mdash; they ride the air current the swat pushes ahead of it and get carried clear. Anophelyze's device works differently, so that trick doesn't help: mosquitoes cannot evade its action."},
-  // Keep these phrases specific. Single words like "what", "do", "how" and
-  // "about" made this entry outscore every specific topic below it, so
-  // "how do I contact you" and "what does crepuscular mean" both landed here.
-  {k:["what is anophelyze","what does it do","what do you do","product","device","how does it work","work","tell me about anophelyze"],
-   a:"Anophelyze is developing a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in an environmentally neutral way that's safe for humans — no toxic chemicals and no lasers."},
-  {k:["safe","human","danger","harm","eye","laser","fire","burn","skin"],
-   a:"Yes — it's designed to be safe for humans. Anophelyze's device uses eye-safe liquids and is designed to prevent fires, corneal and retinal damage, and burning of the skin."},
-  {k:["name","anophelyze mean","etymology","why called","origin of the name"],
-   a:"'Anopheles' comes from the Ancient Greek 'an' (not) and 'ophelos' (benefit) — literally 'useless.' German entomologist Johann Wilhelm Meigen coined it in 1818 for a group of mosquitoes. 'Lyze' / 'lyse' means to break. The name was coined by Camden's clever friend, Dr. Stephan Elliott."},
-  {k:["logo","design","artist","who made the logo"],
-   a:"The logo is by Elia Boe, an artist and friend out of Philadelphia."},
-  {k:["invest","investment","funding","money","opportunit"],
-   a:"For investment opportunities, please reach out to Camden at "+EMAIL+"."},
-  {k:["who","team","owner","president","founder","camden","morgan","runs"],
-   a:"Camden Towne is the owner and president. Morgan Towne is an employee. Anophelyze was founded in 2026."},
-  {k:["found","start","2026","history","when"],
-   a:"Anophelyze was founded in 2026 after several years of preparation by Camden Towne, who saw the need for environmentally neutral approaches to disease-vector mitigation."},
-  {k:["patent","provisional","ip","intellectual"],
-   a:"The device is patent pending (U.S. Provisional Application No. 63/849,611, filed July 23, 2025)."},
-  {k:["environment","eco","green","chemical","ddt","neutral"],
-   a:"Anophelyze takes an environmentally neutral approach — avoiding the toxic chemicals (like DDT) that historic vector-control efforts relied on."},
-  {k:["crepuscular"],
-   a:"Crepuscular means active at dawn and dusk — which is when many mosquito species are busiest, and when our device is on watch."},
-  {k:["contact","email","reach","talk"],
-   a:"You can reach Camden at "+EMAIL+"."}
+{k:["visitor","visitors","count","how many","people","traffic","views","stats"], count:true, a:""},
+// Collaboration sits at the top: it's the question this page exists to invite.
+{k:["collaborate","collaboration","join","work with","work for","hire","hiring","job","role","contribute","partner","partnership","get involved","volunteer","apply","resume","cv","opening","position"],
+ a:"Anophelyze isn't running an open call at the moment &mdash; the team is small and brought together directly. If the work overlaps with yours, you're welcome to email Camden at "+EMAIL+"."},
+{k:["where can i get","how can i get","how do i get","get one","buy","purchase","order","for sale","sell","available","availability","in stock","ship","pre-order","preorder","price","cost","how much","when can i"],
+ a:"The device is in prototype development and isn't available to buy yet. If you'd like to hear where it stands, contact Camden at "+EMAIL+"."},
+{k:["evade","evasion","avoid","escape","dodge","outrun","fly away","get away","swat","swatting","air current","miss it","too fast","outsmart"],
+ a:"Mosquitoes are famously good at escaping a swat &mdash; they ride the air current the swat pushes ahead of it and get carried clear. Anophelyze's device works differently, so that trick doesn't help: mosquitoes cannot evade its action."},
+// Keep these phrases specific. Single words like "what", "do", "how" and
+// "about" made this entry outscore every specific topic below it, so
+// "how do I contact you" and "what does crepuscular mean" both landed here.
+{k:["what is anophelyze","what does it do","what do you do","product","device","how does it work","tell me about anophelyze"],
+ a:"Anophelyze is developing a patent-pending device that detects and incapacitates mosquitoes and other disease-carrying vectors in an environmentally neutral way that's safe for humans — no toxic chemicals and no lasers."},
+{k:["safe","human","danger","harm","eye","laser","fire","burn","skin"],
+ a:"Yes — it's designed to be safe for humans. Anophelyze's device uses eye-safe liquids and is designed to prevent fires, corneal and retinal damage, and burning of the skin."},
+{k:["where will it be used","where is it for","who is it for","market","deploy","deployment","africa","asia","backyard","back yard","yard","home use","consumer","third world","developing","global south","endemic"],
+ a:"The device is aimed at malaria- and dengue-endemic regions &mdash; places where mosquito-borne disease is a leading cause of death, and where bed nets and indoor spraying leave gaps. It isn't designed as a consumer product for backyards."},
+{k:["stage","status","prototype","progress","how far","timeline","when will"],
+ a:"The project is in prototype development. The provisional patent was filed in July 2025 and the company was formed in 2026."},
+{k:["name","anophelyze mean","etymology","why called","origin of the name"],
+ a:"'Anopheles' comes from the Ancient Greek 'an' (not) and 'ophelos' (benefit) — literally 'useless.' German entomologist Johann Wilhelm Meigen coined it in 1818 for a group of mosquitoes. 'Lyze' / 'lyse' means to break. The name was coined by Camden's clever friend, Dr. Stephan Elliott."},
+{k:["logo","design","artist","who made the logo","identity","brand"],
+ a:"The identity is by Elia Boe, an artist and friend out of Philadelphia."},
+{k:["invest","investment","funding","money","opportunit","raise"],
+ a:"For investment inquiries, please reach out to Camden at "+EMAIL+"."},
+{k:["training","background","credential","qualification","qualified","experience","education","degree","doctor","physician","md","mph","medical","expertise","why him","who is camden"],
+ a:"Camden Towne is a family physician with training in HIV and addiction care, and holds a Master of Public Health."},
+{k:["who","team","owner","president","founder","camden","morgan","runs"],
+ a:"Camden Towne is the owner and president. Morgan Towne is an employee. Anophelyze was founded in 2026."},
+{k:["found","start","2026","history","when"],
+ a:"Anophelyze was founded in 2026 after several years of preparation by Camden Towne, who saw the need for environmentally neutral approaches to disease-vector mitigation."},
+{k:["patent","provisional","ip","intellectual","serial"],
+ a:"The device is patent pending. A non-provisional application (Serial No. 19/751,195, &ldquo;A Device for Detecting and Incapacitating Hazardous Disease Vectors&rdquo;) was filed July 23, 2026, claiming priority to provisional application 63/849,611 filed July 23, 2025."},
+{k:["environment","eco","green","chemical","ddt","neutral","pesticide"],
+ a:"Anophelyze takes an environmentally neutral approach — avoiding the toxic chemicals (like DDT) that historic vector-control efforts relied on."},
+{k:["crepuscular"],
+ a:"Crepuscular means active at dawn and dusk — when many mosquito species are busiest, and when the device is on watch."},
+{k:["contact","email","reach","talk","speak"],
+ a:"You can reach Camden at "+EMAIL+"."}
 ];
+/* A different vector answers the door each visit. */
+const SPECIES = [
+  {latin:"Aedes aegypti",              common:"yellow fever mosquito"},
+  {latin:"Aedes albopictus",           common:"Asian tiger mosquito"},
+  {latin:"Culex pipiens",              common:"common house mosquito"},
+  {latin:"Anopheles gambiae",          common:"major malaria vector"},
+  {latin:"Anopheles quadrimaculatus",  common:"common malaria mosquito of North America"},
+  {latin:"Psorophora ciliata",         common:"shaggy-legged gallinipper"}
+];
+const SP = SPECIES[Math.floor(Math.random() * SPECIES.length)];
+
 const chat=document.getElementById('chat'), log=document.getElementById('log');
+document.getElementById('chatBtn').innerHTML = 'Ask <i>' + SP.latin + '</i>';
+document.getElementById('chatName').innerHTML = '<i>' + SP.latin + '</i>';
+chat.setAttribute('aria-label', 'Ask ' + SP.latin);
 document.getElementById('chatBtn').onclick=()=>{chat.classList.add('open');if(!log.dataset.init){greet();log.dataset.init=1;}document.getElementById('chatInput').focus();};
 document.getElementById('chatClose').onclick=()=>chat.classList.remove('open');
 
 function add(text,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
 function greet(){
-  add("Bzzt! I'm Skeeter Bot 🦟 Ask me about Anophelyze — what it is, whether it's safe, the team, and more.","bot");
+  add("<i>"+SP.latin+"</i> &mdash; the "+SP.common+
+      ". Ask about the device, where the project stands, or how to get involved.","bot");
 }
 function answer(q){
   add(q,'me');
@@ -603,8 +801,13 @@ function answer(q){
   let best=null,score=0;
   KB.forEach(item=>{let s=0;item.k.forEach(kw=>{if(low.includes(kw))s++;});if(s>score){score=s;best=item;}});
   setTimeout(()=>{
-    if(best&&score>0){ if(best.count){ const c=window.__buzzCount; add(c!=null ? ('\uD83E\uDD9F '+c.toLocaleString()+' people have buzzed in so far.') : 'The swarm is still gathering \u2014 I couldn\u2019t reach the counter just now.','bot'); } else { add(best.a,'bot'); } }
-    else{add("Hmm, I don't have that one yet. For anything I can't answer, email Camden at <a href='mailto:"+EMAIL+"?subject=Question%20from%20anophelyze.com'>"+EMAIL+"</a> and he'll get back to you.","bot");}
+    if(best&&score>0){
+      if(best.count){
+        const c=window.__buzzCount;
+        add(c!=null ? (c.toLocaleString()+' people have visited so far.') : 'The counter isn\u2019t reachable right now.','bot');
+      } else { add(best.a,'bot'); }
+    }
+    else{add("I don't have that one yet. For anything I can't answer, email Camden at <a href='mailto:"+EMAIL+"?subject=Question%20from%20anophelyze.com'>"+EMAIL+"</a>.","bot");}
   },250);
 }
 document.getElementById('chatForm').onsubmit=e=>{e.preventDefault();const i=document.getElementById('chatInput');const v=i.value.trim();if(!v)return;i.value='';answer(v);};
